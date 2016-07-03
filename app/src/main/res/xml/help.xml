@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory android:title="@string/help_category_example">
+        <Preference android:title="@string/help_example"
+            android:summary="@string/pref_example_summary"
+            android:selectable="false"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>
