@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/main_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +13,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="org.secuso.example.MainActivity"
     tools:showIn="@layout/app_bar_main"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    style="@style/AlertDialog.AppCompat">
 
     <TextView
         android:id="@+id/main_text_title"
@@ -25,7 +28,6 @@
         android:id="@+id/main_text_normalbutton_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
         android:text="@string/main_text_normalbutton_desc"/>
 
     <LinearLayout
@@ -42,45 +44,51 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@string/main_button_1"
             android:textColor="@color/white"
-            android:id="@+id/main_button_1"/>
+            android:id="@+id/main_button_1"
+            android:onClick="onClick"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_normal"
+            android:background="@drawable/button_middleblue"
             android:layout_weight="1"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@string/main_button_2"
             android:textColor="@color/white"
-            android:id="@+id/main_button_2"/>
+            android:id="@+id/main_button_2"
+            android:onClick="onClick"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_normal"
+            android:background="@drawable/button_highlighted"
             android:layout_weight="1"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@string/main_button_3"
             android:textColor="@color/white"
-            android:id="@+id/main_button_3"/>
+            android:id="@+id/main_button_3"
+            android:onClick="onClick"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_normal"
+            android:background="@drawable/button_highlighted_2"
             android:layout_weight="1"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@string/main_button_4"
             android:textColor="@color/white"
-            android:id="@+id/main_button_4"/>
+            android:id="@+id/main_button_4"
+            android:onClick="onClick"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_normal"
+            android:background="@drawable/button_highlighted_3"
             android:layout_weight="1"
             android:layout_marginEnd="0dp"
             android:text="@string/main_button_5"
             android:textColor="@color/white"
-            android:id="@+id/main_button_5"/>
+            android:id="@+id/main_button_5"
+            android:onClick="onClick"/>
 
     </LinearLayout>
+
     <Button
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_width="match_parent"
@@ -88,7 +96,8 @@
         android:textColor="@color/white"
         android:background="@drawable/button_fullwidth"
         android:text="@string/main_button_text"
-        android:id="@+id/main_button"/>
+        android:id="@+id/main_button"
+        android:onClick="onClick"/>
 
     <Button
         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -97,6 +106,12 @@
         android:textColor="@color/white"
         android:background="@drawable/button_disabled"
         android:text="@string/main_button_disabled_text"
-        android:id="@+id/main_button_disabled"/>
+        android:id="@+id/main_button_disabled"
+        android:onClick="onClick"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/main_button_welcomedialog_text"/>
 
 </LinearLayout>

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceScreen;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -34,7 +35,7 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends AppCompatPreferenceActivity {
+public class SettingsActivity extends BaseActivity {
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -97,23 +98,32 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupActionBar();
+
+        setContentView(R.layout.activity_settings);
+
+        //setupActionBar();
+
 
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    protected int getNavigationDrawerID() {
+        return R.id.nav_settings;
     }
 
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
      */
-    private void setupActionBar() {
+    /*private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             // Show the Up button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
@@ -130,24 +140,24 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             //return true;
         }
         return super.onMenuItemSelected(featureId, item);
-    }
+    }*/
 
     /**
      * {@inheritDoc}
      */
-    @Override
+    /*@Override
     public boolean onIsMultiPane() {
         return isXLargeTablet(this);
-    }
+    }*/
 
     /**
      * {@inheritDoc}
      */
-    @Override
+    /*@Override
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.pref_headers, target);
-    }
+    }*/
 
     /**
      * This method stops fragment injection in malicious applications.
@@ -168,7 +178,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
-            setHasOptionsMenu(true);
+            //setHasOptionsMenu(true);
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
