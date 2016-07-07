@@ -22,8 +22,8 @@
     <string name="main_button_5">5</string>
     <string name="main_text_fullwithbutton_desc">A button that uses the full width of the screen looks like this:</string>
     <string name="main_text_disabledbutton_desc">A disabled button looks like this (any size):</string>
-    <string name="main_text_title">This is an example app to demonstrate the design of a Privacy Friendly. For further explanations can be found in the Privacy Friendly App Guide.</string>
-    <string name="main_text_normalbutton_desc">There are multiple ways to display basic buttons. Button 1 is the basic button. If you wish to seperate a button visually, use button 2. The buttons 3&#8211;5 are examples for highlighted buttons. Depending on the app other colors are possible.</string>
+    <string name="main_text_title">This is an example app to demonstrate the design of a Privacy Friendly App. Further explanations can be found in the Privacy Friendly App Guide.</string>
+    <string name="main_text_normalbutton_desc">There are multiple ways to display basic buttons. Button 1 is the basic button. If you wish to separate a button visually, use button 2. The buttons 3&#8211;5 are examples for highlighted buttons. Depending on the app other colors are possible.</string>
     <string name="main_button_welcomedialog_text">Use the button in the lower left corner to call the Welcome Dialog.</string>
 
     <!-- ###GAME###-->
