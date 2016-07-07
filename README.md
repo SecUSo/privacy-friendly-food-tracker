@@ -21,8 +21,8 @@ Privacy Friendly App example is licensed under the GPLv3. The icons used in the 
 
 ## Contributors
 
-Github-Users:
-Yonjuni
+Github-Users: <br />
+Yonjuni <br />
 Kamuno
 
 
