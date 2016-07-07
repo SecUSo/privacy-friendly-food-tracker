@@ -1,4 +1,4 @@
-package org.secuso.example;
+package org.secuso.privacyfriendlyexample;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -6,16 +6,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 public class MainActivity extends BaseActivity {
 

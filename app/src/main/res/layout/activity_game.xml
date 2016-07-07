@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="org.secuso.example.GameActivity">
+        tools:context="org.secuso.privacyfriendlyexample.GameActivity">
 
         <include layout="@layout/toolbar"/>
 
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="org.secuso.example.GameActivity"
+            tools:context="org.secuso.privacyfriendlyexample.GameActivity"
             tools:showIn="@layout/activity_game"
             android:orientation="vertical"
             android:weightSum="10"
@@ -84,10 +84,14 @@
                 android:baselineAligned="false"
                 android:gravity="center_horizontal">
 
-                <android.support.v4.widget.Space
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="4"/>
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="@string/game_desc"/>
 
                 <Button
                     android:layout_marginBottom="@dimen/activity_vertical_margin"

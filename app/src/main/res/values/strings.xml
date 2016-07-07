@@ -30,6 +30,7 @@
     <string name="title_activity_game">Game</string>
     <string name="game_button_start">New Game</string>
     <string name="game_button_continue">Continue Game</string>
+    <string name="game_desc">This is the default main menu for games. Have a look at existing game apps to compare. The above viewpager should be used to switch between game modes.</string>
 
     <!--###HELP###-->
     <string name="help">Help</string>
@@ -41,7 +42,6 @@
     <string name="help_permissions_heading">Permissions</string>
     <string name="help_permissions_description">Privacy Friendly Example does not use any permissions</string>
     <string name="help_intro">Welcome to the help page. This app shows the basic design of Privacy Friendly Apps. The functionality of the app should be introduced with 1 to 2 sentences in this section.</string>
-
 
     <!--###ABOUT###-->
     <string name="about">About</string>

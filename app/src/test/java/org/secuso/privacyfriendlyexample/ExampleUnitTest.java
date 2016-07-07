@@ -1,4 +1,4 @@
-package org.secuso.example;
+package org.secuso.privacyfriendlyexample;
 
 import org.junit.Test;
 

@@ -1,10 +1,7 @@
-package org.secuso.example;
+package org.secuso.privacyfriendlyexample;
 
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by yonjuni on 17.06.16.

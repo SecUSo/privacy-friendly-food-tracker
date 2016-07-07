@@ -1,4 +1,4 @@
-package org.secuso.example;
+package org.secuso.privacyfriendlyexample;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
