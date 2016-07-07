@@ -23,8 +23,7 @@
             android:name="org.secuso.privacyfriendlyexample.AboutActivity"
             android:label="@string/about"
             android:parentActivityName="org.secuso.privacyfriendlyexample.MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlyexample.MainActivity" />

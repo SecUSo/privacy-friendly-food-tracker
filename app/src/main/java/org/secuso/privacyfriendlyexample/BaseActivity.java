@@ -24,11 +24,11 @@ import android.view.View;
 public class BaseActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
     // delay to launch nav drawer item, to allow close animation to play
-    private static final int NAVDRAWER_LAUNCH_DELAY = 250;
+    static final int NAVDRAWER_LAUNCH_DELAY = 250;
     // fade in and fade out durations for the main content when switching between
     // different Activities of the app through the Nav Drawer
-    private static final int MAIN_CONTENT_FADEOUT_DURATION = 150;
-    private static final int MAIN_CONTENT_FADEIN_DURATION = 250;
+    static final int MAIN_CONTENT_FADEOUT_DURATION = 150;
+    static final int MAIN_CONTENT_FADEIN_DURATION = 250;
 
     // Navigation drawer:
     private DrawerLayout mDrawerLayout;
