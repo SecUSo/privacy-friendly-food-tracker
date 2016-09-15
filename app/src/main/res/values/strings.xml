@@ -41,8 +41,8 @@
     <string name="help_permissionXY_heading">Permission XY</string>
     <string name="help_permissionXY_description">is needed because &#8230; If XY is not granted feature YZ is not usable.</string>
     <string name="help_permissions_heading">Permissions</string>
-    <string name="help_permissions_description">Privacy Friendly Example does not use any permissions</string>
-    <string name="help_intro">Welcome to the help page. This app shows the basic design of Privacy Friendly Apps. The functionality of the app should be introduced with 1 to 2 sentences in this section.</string>
+    <string name="help_permissions_description">Privacy Friendly Example does not use any permissions.</string>
+    <string name="help_intro">This app shows the basic design of Privacy Friendly Apps. The functionality of the app should be introduced with 1 to 2 sentences in this section.</string>
 
     <!--###ABOUT###-->
     <string name="about">About</string>
@@ -64,7 +64,7 @@
     <string name="pref_example_summary">Example Summary</string>
 
     <!-- ### WELCOME DIALOG ### -->
-    <string name="welcome_text">Welcome to the Privacy Friendly Example App. This App serves as a guideline to see the basic design of Privacy Friendly Apps. The sourcecode is available at GitHub. For further explanations have a look at the Privacy Friendly App Guide.\n\nThe welcome screen should introduce the app and the key elements of the start page.</string>
+    <string name="welcome_text">This App serves as a guideline to see the basic design of Privacy Friendly Apps. The sourcecode is available at GitHub. For further explanations have a look at the Privacy Friendly App Guide.\n\nThe welcome screen should introduce the app and the key elements of the start page.</string>
     <string name="welcome">Welcome</string>
     <string name="okay">Okay</string>
     <string name="viewhelp">View Help</string>

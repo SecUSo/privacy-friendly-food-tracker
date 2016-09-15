@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">Beispiel</string>
+    <string name="app_name_long">Privacy Friendly Beispiel</string>
+
+    <!-- ###DRAWER###-->
+    <string name="action_help">Hilfe</string>
+    <string name="action_about">Über</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_main">Hauptmenü</string>
+    <string name="action_game">Spiel</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- ###MAIN### -->
+    <string name="main_button_text">Button volle Breite</string>
+    <string name="main_button_disabled_text">Inaktiver Button</string>
+    <string name="main_button_1">1</string>
+    <string name="main_button_2">2</string>
+    <string name="main_button_3">3</string>
+    <string name="main_button_4">4</string>
+    <string name="main_button_5">5</string>
+    <string name="main_text_fullwithbutton_desc">Ein Button mit voller breite sieht folgendermaßen aus:</string>
+    <string name="main_text_disabledbutton_desc">Ein inaktiver Button sieht folgendermaßen aus (jede Größe):</string>
+    <string name="main_text_title">Das hier ist eine Beispiel-App zum das Design der Privacy Friendly Apps zu demonstrieren. Weitere Infos gibt es im Privacy Friendly App Guide.</string>
+    <string name="main_text_normalbutton_desc">Es gibt verschiedene Möglichkeiten, um einfache Buttons darzustellen. Button 1 entspricht der Basisform. Wenn Buttons visual abgetrennt werden sollen, ist Button 2 zu verwenden. Die Buttons 3&#8211;5 sind Beispiels für hevorgehobene Buttons. Je nach App können auch andere Farben zum Highlighten verwendet werden.</string>
+    <string name="main_button_welcomedialog_text">Der Button in der Ecke unten links öffnet einen Beispiel-Welcome Dialog.</string>
+
+    <!-- ###GAME###-->
+    <string name="title_activity_game">Spiel</string>
+    <string name="game_button_start">Neues Spiel</string>
+    <string name="game_button_continue">Spiel fortsetzen</string>
+    <string name="game_desc">Dies ist das Standard-Menü für Spiele-Apps. Der Viewpager oben sollte verwendet werden, um zwischen verschiedenen Spielmodi zu wechseln.</string>
+
+    <!--###HELP###-->
+    <string name="help">Hilfe</string>
+    <string name="help_overview_heading">Übersicht</string>
+    <string name="help_example">Beispiel Hilfe-Eintrag</string>
+    <string name="help_category_example">Beispiel Hilfe-Kategorie</string>
+    <string name="help_privacy_heading">Datenschutzinfo</string>
+    <string name="help_permissionXY_heading">Berechtigung XY</string>
+    <string name="help_permissionXY_description">wird benötigt um &#8230; Hier auch erklären, was passiert, wenn diese Berechtigung entzogen wird.</string>
+    <string name="help_permissions_heading">Berechtigungen</string>
+    <string name="help_permissions_description">Privacy Friendly Beispiel verwendet keine Berechtigungen. </string>
+    <string name="help_intro">Diese app demonstriert das Basis-Design einer Privacy Friendly App. Die Funktionalität der App sollte in 1 bis 2 Sätzen erklärt werden.</string>
+
+    <!--###ABOUT###-->
+    <string name="about">Über</string>
+    <string name="version_number">Version 1.6</string>
+    <string name="about_author">Autoren: </string>
+    <string name="about_author_names" translatable="false">Karola Marky</string>
+    <string name="about_author_contributors">und Mitwirkende.</string>
+    <string name="about_affiliation">In Zusammenarbeit mit</string>
+    <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps entwickelt von der Technischen Universität Darmstadt. Quelltext lizenziert unter GPLv3. Bilder copyright TU Darmstadt und Google Inc.</string>
+    <string name="more_info">Weitere Infos unter:</string>
+
+    <!-- ###SETTINGS### -->
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="pref_header_general">Allgemein</string>
+    <string name="pref_example_switch">Beispiel Switch</string>
+    <string name="pref_example_switch_summary">Beispiel Switch Summary</string>
+    <string name="pref_example_summary">Beispiel Summary</string>
+
+    <!-- ### WELCOME DIALOG ### -->
+    <string name="welcome_text">Diese App soll als Anleitung zum Design von Privacy Friendly Apps dienen. Ihr Quellcode ist auf GitHub verfügbar. Weitere Infos im Privacy Friendly App Guide. Im Welcome Dialog sollen Schlüsselfunktionalitäten der App vorgestellt werden.</string>
+    <string name="welcome">Willkommen</string>
+    <string name="okay">Okay</string>
+    <string name="viewhelp">Hilfe</string>
+    <string name="main_button_welcomedialog">Willkommen</string>
+
+</resources>
