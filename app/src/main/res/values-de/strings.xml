@@ -46,7 +46,7 @@
 
     <!--###ABOUT###-->
     <string name="about">Über</string>
-    <string name="version_number">Version 1.6</string>
+    <string name="version_number">Version 2.0</string>
     <string name="about_author">Autoren: </string>
     <string name="about_author_names" translatable="false">Karola Marky</string>
     <string name="about_author_contributors">und Mitwirkende.</string>
