@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * Created by karo on 22.10.16.
+ * Created by yonjuni on 22.10.16.
  */
 
 public class SplashActivity extends AppCompatActivity {
@@ -14,6 +14,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Starts the MainActivity immediately after the Splash Screen
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
