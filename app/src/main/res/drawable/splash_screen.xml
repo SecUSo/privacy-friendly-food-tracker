@@ -6,7 +6,6 @@
     <item>
         <bitmap
             android:src="@mipmap/pfa_splash"
-            android:tileMode="disabled"
-            android:gravity="center_horizontal|center_vertical"/>
+            android:gravity="center"/>
     </item>
 </layer-list>
