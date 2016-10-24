@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.widget.TextView;
 
 /**
  * Created by yonjuni on 15.06.16.
@@ -27,6 +29,9 @@ public class AboutActivity extends AppCompatActivity {
         }
 
         overridePendingTransition(0, 0);
+
+        ((TextView)findViewById(R.id.secusoWebsite)).setMovementMethod(LinkMovementMethod.getInstance());
+        ((TextView)findViewById(R.id.githubURL)).setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     //@Override
