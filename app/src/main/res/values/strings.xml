@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Example</string>
     <string name="app_name_long">Privacy Friendly Example</string>
+    <string name="app_prefix" translatable="false">Privacy Friendly</string>
 
     <!-- ###DRAWER###-->
     <string name="action_help">Help</string>
