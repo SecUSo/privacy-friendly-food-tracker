@@ -33,16 +33,19 @@
     <string name="game_desc">Dies ist das Standard-Menü für Spiele-Apps. Der Viewpager oben sollte verwendet werden, um zwischen verschiedenen Spielmodi zu wechseln.</string>
 
     <!--###HELP###-->
-    <string name="help">Hilfe</string>
-    <string name="help_overview_heading">Übersicht</string>
-    <string name="help_example">Beispiel Hilfe-Eintrag</string>
-    <string name="help_category_example">Beispiel Hilfe-Kategorie</string>
-    <string name="help_privacy_heading">Datenschutzinfo</string>
-    <string name="help_permissionXY_heading">Berechtigung XY</string>
-    <string name="help_permissionXY_description">wird benötigt um &#8230; Hier auch erklären, was passiert, wenn diese Berechtigung entzogen wird.</string>
-    <string name="help_permissions_heading">Berechtigungen</string>
-    <string name="help_permissions_description">Privacy Friendly Beispiel verwendet keine Berechtigungen. </string>
-    <string name="help_intro">Diese app demonstriert das Basis-Design einer Privacy Friendly App. Die Funktionalität der App sollte in 1 bis 2 Sätzen erklärt werden.</string>
+    <string name="help">Help</string>
+    <string name="help_general_heading">Übersicht</string>
+    <string name="help_feature_heading">Features</string>
+    <string name="help_privacy_heading">Datenschutz</string>
+
+    <string name="help_whatis">Was ist Privacy Friendly Beispiel?</string>
+    <string name="help_whatis_answer">Privacy Friendly Beispiel zeigt das Standard-Design einer Privacy Friendly App.</string>
+    <string name="help_feature_one">Feature 1</string>
+    <string name="help_feature_one_answer">Beschreibung vom 1. Feature.</string>
+    <string name="help_privacy">Was macht die App privatsphäre-freundlich?</string>
+    <string name="help_privacy_answer">Erklären welche Mechanismen verwendet wurden.</string>
+    <string name="help_permission">Welche Berechtigungen braucht die App?</string>
+    <string name="help_permission_answer">Privacy Friendly Beispiel benötigt keine Berechtigungen.</string>
 
     <!--###ABOUT###-->
     <string name="about">Über</string>

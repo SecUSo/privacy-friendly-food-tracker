@@ -35,15 +35,18 @@
 
     <!--###HELP###-->
     <string name="help">Help</string>
-    <string name="help_overview_heading">Overview</string>
-    <string name="help_example">Example Help Entry</string>
-    <string name="help_category_example">Example Help Category</string>
-    <string name="help_privacy_heading">Privacy Info</string>
-    <string name="help_permissionXY_heading">Permission XY</string>
-    <string name="help_permissionXY_description">is needed because &#8230; If XY is not granted feature YZ is not usable.</string>
-    <string name="help_permissions_heading">Permissions</string>
-    <string name="help_permissions_description">Privacy Friendly Example does not use any permissions.</string>
-    <string name="help_intro">This app shows the basic design of Privacy Friendly Apps. The functionality of the app should be introduced with 1 to 2 sentences in this section.</string>
+    <string name="help_general_heading">Overview</string>
+    <string name="help_feature_heading">Features</string>
+    <string name="help_privacy_heading">Privacy</string>
+
+    <string name="help_whatis">What is Privacy Friendly App Example?</string>
+    <string name="help_whatis_answer">Privacy Friendly App Example is an app that demonstrates the design of a Privacy Friendly App.</string>
+    <string name="help_feature_one">Feature 1</string>
+    <string name="help_feature_one_answer">Description of first feature.</string>
+    <string name="help_privacy">What makes the app privacy-friendly?</string>
+    <string name="help_privacy_answer">Privacy Friendly App Example does not require any permission. It further does not include any tracking mechanisms or advertisement.</string>
+    <string name="help_permission">Which permissions requires the app?</string>
+    <string name="help_permission_answer">Privacy Friendly App Example does not require any permission.</string>
 
     <!--###ABOUT###-->
     <string name="about">About</string>
