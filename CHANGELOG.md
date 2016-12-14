@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Version 2.1 *(2016-09-15)*
+----------------------------
+
+ * Tutorial added
+ * Welcome still there, but commented
+ * Help structure changed to List
+
 Version 2.0 *(2016-09-15)*
 ----------------------------
 
