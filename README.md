@@ -8,12 +8,12 @@ This application has been developed to be used as a basis for a Privacy Friendly
 
 ## Download and more Information
 
-Further development requires Android Studio, we recommend to use at least version 2.1.2
+Further development requires Android Studio, we recommend to use at least version 2.2.2
  
 ### API Reference
 
 Mininum SDK: 17
-Target SDK: 23 
+Target SDK: 24 
 
 ## License
 
@@ -41,7 +41,7 @@ App-Icon: <br />
 Markus Hau<br />
 
 Github-Users: <br />
-Yonjuni <br />
+Yonjuni (Karola Marky)<br />
 Kamuno
 
 
