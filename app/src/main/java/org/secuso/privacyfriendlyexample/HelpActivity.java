@@ -28,18 +28,6 @@ public class HelpActivity extends BaseActivity {
         expandableListAdapter = new ExpandableListAdapter(this, expandableListTitleGeneral, expandableListDetail);
         generalExpandableListView.setAdapter(expandableListAdapter);
 
-        ExpandableListView featuresExpandableListView = (ExpandableListView) findViewById(R.id.featuresExpandableListView);
-        expandableListDetail = helpDataDump.getDataFeatures();
-        List<String> expandableListTitleFeatures = new ArrayList<String>(expandableListDetail.keySet());
-        expandableListAdapter = new ExpandableListAdapter(this, expandableListTitleFeatures, expandableListDetail);
-        featuresExpandableListView.setAdapter(expandableListAdapter);
-
-        ExpandableListView privacyExpandableListView = (ExpandableListView) findViewById(R.id.privacyExpandableListView);
-        expandableListDetail = helpDataDump.getDataPrivacy();
-        List<String> expandableListTitlePrivacy = new ArrayList<String>(expandableListDetail.keySet());
-        expandableListAdapter = new ExpandableListAdapter(this, expandableListTitlePrivacy, expandableListDetail);
-        privacyExpandableListView.setAdapter(expandableListAdapter);
-
         overridePendingTransition(0, 0);
     }
 

@@ -35,14 +35,16 @@
 
     <!--###HELP###-->
     <string name="help">Help</string>
-    <string name="help_general_heading">Overview</string>
-    <string name="help_feature_heading">Features</string>
-    <string name="help_privacy_heading">Privacy</string>
 
     <string name="help_whatis">What is Privacy Friendly App Example?</string>
     <string name="help_whatis_answer">Privacy Friendly App Example is an app that demonstrates the design of a Privacy Friendly App.</string>
     <string name="help_feature_one">Feature 1</string>
-    <string name="help_feature_one_answer">Description of first feature.</string>
+    <string name="help_feature_one_answer">Description of first feature.
+Lorem ipsum dolor sit amet, eu ius alia fierent indoctum, ad pri sale tation. Elit dictas sit an, ad volumus urbanitas duo. Ei clita iracundia mel, eum et laoreet pertinax abhorreant. Nonumy suavitate dignissim quo id, ius audire prodesset adipiscing ei, altera saperet his et. Nostrud pertinax eu has, qui munere complectitur an.
+
+Ne albucius perfecto adolescens eum, id choro assueverit mea, sed viris constituto ex. Per soleat impedit delicatissimi cu. Inermis volumus his ea, id quo praesent eloquentiam conclusionemque. Dolores mediocrem ad sit, ex cibo evertitur cotidieque eos.
+
+    </string>
     <string name="help_privacy">What makes the app privacy-friendly?</string>
     <string name="help_privacy_answer">Privacy Friendly App Example does not require any permission. It further does not include any tracking mechanisms or advertisement.</string>
     <string name="help_permission">Which permissions requires the app?</string>
