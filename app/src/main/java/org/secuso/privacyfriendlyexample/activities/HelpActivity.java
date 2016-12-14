@@ -1,10 +1,14 @@
-package org.secuso.privacyfriendlyexample;
+package org.secuso.privacyfriendlyexample.activities;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import android.os.Bundle;
 import android.widget.ExpandableListView;
+
+import org.secuso.privacyfriendlyexample.helpers.ExpandableListAdapter;
+import org.secuso.privacyfriendlyexample.helpers.HelpDataDump;
+import org.secuso.privacyfriendlyexample.R;
 
 /**
  * Class structure taken from tutorial at http://www.journaldev.com/9942/android-expandablelistview-example-tutorial
@@ -23,7 +27,7 @@ public class HelpActivity extends BaseActivity {
 
         ExpandableListView generalExpandableListView = (ExpandableListView) findViewById(R.id.generalExpandableListView);
 
-        HashMap<String, List<String>> expandableListDetail = helpDataDump.getDataGeneral();
+        LinkedHashMap<String, List<String>> expandableListDetail = helpDataDump.getDataGeneral();
         List<String> expandableListTitleGeneral = new ArrayList<String>(expandableListDetail.keySet());
         expandableListAdapter = new ExpandableListAdapter(this, expandableListTitleGeneral, expandableListDetail);
         generalExpandableListView.setAdapter(expandableListAdapter);

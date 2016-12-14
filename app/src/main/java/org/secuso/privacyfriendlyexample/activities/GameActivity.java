@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlyexample;
+package org.secuso.privacyfriendlyexample.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.secuso.privacyfriendlyexample.R;
 
 public class GameActivity extends BaseActivity {
 

@@ -1,9 +1,11 @@
-package org.secuso.privacyfriendlyexample;
+package org.secuso.privacyfriendlyexample.helpers;
 
 import android.content.Context;
 
+import org.secuso.privacyfriendlyexample.R;
+
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -19,8 +21,8 @@ public class HelpDataDump {
         this.context = context;
     }
 
-    public HashMap<String, List<String>> getDataGeneral() {
-        HashMap<String, List<String>> expandableListDetail = new HashMap<String, List<String>>();
+    public LinkedHashMap<String, List<String>> getDataGeneral() {
+        LinkedHashMap<String, List<String>> expandableListDetail = new LinkedHashMap<String, List<String>>();
 
         List<String> general = new ArrayList<String>();
         general.add(context.getResources().getString(R.string.help_whatis_answer));

@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlyexample;
+package org.secuso.privacyfriendlyexample.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
