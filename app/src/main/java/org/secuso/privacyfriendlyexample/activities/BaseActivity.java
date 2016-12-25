@@ -21,9 +21,12 @@ import android.view.View;
 import org.secuso.privacyfriendlyexample.R;
 
 /**
- * Created by Chris on 04.07.2016.
+ * @author Chris
+ * @version 20161225
+ * This class is a parent class of all activities that can be accessed from the
+ * Navigation Drawer (example see MainActivity.java)
  */
-public class BaseActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
+public abstract class BaseActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
     // delay to launch nav drawer item, to allow close animation to play
     static final int NAVDRAWER_LAUNCH_DELAY = 250;
@@ -43,16 +46,9 @@ public class BaseActivity extends AppCompatActivity implements OnNavigationItemS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mHandler = new Handler();
-
-        //ActionBar ab = getSupportActionBar();
-        //if (ab != null) {
-        //    mActionBar = ab;
-        //    ab.setDisplayHomeAsUpEnabled(true);
-        //}
 
         overridePendingTransition(0, 0);
     }
@@ -67,9 +63,7 @@ public class BaseActivity extends AppCompatActivity implements OnNavigationItemS
         }
     }
 
-    protected int getNavigationDrawerID() {
-        return 0;
-    }
+    protected abstract int getNavigationDrawerID();
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -130,6 +124,11 @@ public class BaseActivity extends AppCompatActivity implements OnNavigationItemS
         }
     }
 
+    /**
+     * This method manages the behaviour of the navigation drawer
+     * Add your menu items (ids) to res/menu/activity_main_drawer.xml
+     * @param itemId Item that has been clicked by the user
+     */
     private void callDrawerItem(final int itemId) {
 
         Intent intent;
