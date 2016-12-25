@@ -19,22 +19,20 @@ import java.util.ArrayList;
  *          This class turns a database into a JSON string
  */
 
-public class DatabasePorter {
+public class DatabaseExporter {
 
-    private final String DEBUG_TAG = "DATABASE_PORTER";
+    private final String DEBUG_TAG = "DATABASE_EXPORTER";
 
     private String DB_PATH;
     private String DB_NAME;
 
-    public DatabasePorter(String DB_PATH, String DB_NAME) {
+    public DatabaseExporter(String DB_PATH, String DB_NAME) {
         this.DB_PATH = DB_PATH;
         this.DB_NAME = DB_NAME;
     }
 
-
     /**
      * Turns a single DB table into a JSON string
-     *
      * @return JSON string of the table
      */
     public JSONArray tableToJSON(String TABLE_NAME) {
@@ -90,7 +88,8 @@ public class DatabasePorter {
     }
 
     /**
-     * @return a list of all table names
+     * @return a list of all table names, including android_metadata and sqlite_sequence (table that
+     * contains current maximal ID of all tables)
      */
     public ArrayList<String> getTableNames() {
 
@@ -107,6 +106,11 @@ public class DatabasePorter {
         return arrTblNames;
     }
 
+    /**
+     *
+     * @return Entire DB as JSONObject
+     * @throws JSONException
+     */
     public JSONObject dbToJSON() throws JSONException {
         ArrayList<String> tables = getTableNames();
         JSONObject listList = new JSONObject();

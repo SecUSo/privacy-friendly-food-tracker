@@ -1,21 +1,14 @@
 package org.secuso.privacyfriendlyexample.activities;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
 import org.json.JSONException;
 import org.secuso.privacyfriendlyexample.R;
-import org.secuso.privacyfriendlyexample.database.DatabasePorter;
+import org.secuso.privacyfriendlyexample.database.DatabaseExporter;
 import org.secuso.privacyfriendlyexample.database.PFASQLiteHelper;
-import org.secuso.privacyfriendlyexample.database.PFASampleDataType;
 import org.secuso.privacyfriendlyexample.tutorial.PrefManager;
 import org.secuso.privacyfriendlyexample.tutorial.TutorialActivity;
 
@@ -26,14 +19,13 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        PFASQLiteHelper database = new PFASQLiteHelper(getBaseContext());
+//        PFASQLiteHelper database = new PFASQLiteHelper(getBaseContext());
 //        database.addSampleData(new PFASampleDataType(0, "eins.de", "hugo1", 11));
 //        database.addSampleData(new PFASampleDataType(0, "zwei.de", "hugo2", 12));
 //        database.addSampleData(new PFASampleDataType(0, "drei.de", "hugo3", 13));
 //        database.addSampleData(new PFASampleDataType(0, "vier.de", "hugo4", 14));
 
-        DatabasePorter porter = new DatabasePorter(getBaseContext().getDatabasePath(PFASQLiteHelper.DATABASE_NAME).toString(), "PF_EXAMPLE_DB");
-        //porter.tableToJSON("SAMPLE_DATA");
+        DatabaseExporter porter = new DatabaseExporter(getBaseContext().getDatabasePath(PFASQLiteHelper.DATABASE_NAME).toString(), "PF_EXAMPLE_DB");
 
         try {
             porter.dbToJSON();
