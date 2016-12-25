@@ -25,10 +25,10 @@ public class PFASampleDataType {
 
     /**
      * Always use this constructor to generate data with values.
-     * @param ID
-     * @param DOMAIN
-     * @param USERNAME
-     * @param LENGTH
+     * @param ID The primary key for the database (will be automatically set by the DB)
+     * @param DOMAIN Some sample String that could be in the DB
+     * @param USERNAME Some sample String that could be in the DB
+     * @param LENGTH Some sample int that could be in the DB
      */
     public PFASampleDataType(int ID, String DOMAIN, String USERNAME, int LENGTH) {
 
