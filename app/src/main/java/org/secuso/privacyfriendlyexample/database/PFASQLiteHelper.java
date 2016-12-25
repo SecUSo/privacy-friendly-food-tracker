@@ -28,7 +28,7 @@ public class PFASQLiteHelper extends SQLiteOpenHelper {
      * Use the following pattern for the name of the database
      * PF_[Name of the app]_DB
      */
-    private static final String DATABASE_NAME = "PF_EXAMPLE_DB";
+    public static final String DATABASE_NAME = "PF_EXAMPLE_DB";
 
     //Names of table in the database
     private static final String TABLE_SAMPLEDATA = "SAMPLE_DATA";
