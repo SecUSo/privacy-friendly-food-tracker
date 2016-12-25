@@ -42,6 +42,10 @@ public class MainActivity extends BaseActivity {
         overridePendingTransition(0, 0);
     }
 
+    /**
+     * This method connects the Activity to the menu item
+     * @return ID of the menu item it belongs to
+     */
     @Override
     protected int getNavigationDrawerID() {
         return R.id.nav_example;
