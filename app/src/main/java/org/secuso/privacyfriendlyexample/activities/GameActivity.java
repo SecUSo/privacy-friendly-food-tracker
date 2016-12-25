@@ -14,6 +14,12 @@ import android.widget.TextView;
 
 import org.secuso.privacyfriendlyexample.R;
 
+/**
+ * @author Chris
+ * @version 20161225
+ * This activity is an example for the main menu of gaming applications
+ */
+
 public class GameActivity extends BaseActivity {
 
     private ViewPager mViewPager;
