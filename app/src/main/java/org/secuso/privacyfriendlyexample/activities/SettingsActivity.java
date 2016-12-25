@@ -163,6 +163,8 @@ public class SettingsActivity extends BaseActivity {
     /**
      * This fragment shows general preferences only. It is used when the
      * activity is showing a two-pane settings UI.
+     * The commented method bindPrefenceSummaryToValue should be added for all preferences
+     * with a summary that is depended from the current value of the preference
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
