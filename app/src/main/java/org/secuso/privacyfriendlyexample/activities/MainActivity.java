@@ -31,8 +31,8 @@ public class MainActivity extends BaseActivity {
         database.addSampleData(new PFASampleDataType(0, "drei.de", "hugo3", 13));
         database.addSampleData(new PFASampleDataType(0, "vier.de", "hugo4", 14));
 
-        DatabasePorter porter = new DatabasePorter(getBaseContext().getDatabasePath(PFASQLiteHelper.DATABASE_NAME).toString(), "SAMPLE_DATA");
-        porter.getResults();
+        DatabasePorter porter = new DatabasePorter(getBaseContext().getDatabasePath(PFASQLiteHelper.DATABASE_NAME).toString());
+        porter.getResults("SAMPLE_DATA");
 
         // Use the a button to display the welcome screen
         Button b = (Button) findViewById(R.id.button_welcomedialog);

@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -22,21 +23,19 @@ public class DatabasePorter {
     private final String DEBUG_TAG = "DATABASE_PORTER";
 
     private String DB_PATH;
-    private String TABLE_NAME;
 
-
-    public DatabasePorter(String DB_PATH, String TABLE_NAME) {
-        this.TABLE_NAME = TABLE_NAME;
+    public DatabasePorter(String DB_PATH) {
         this.DB_PATH = DB_PATH;
     }
 
 
-    public JSONArray getResults() {
+    /**
+     * Turns a single DB table into a JSON string
+     * @return JSON string of the table
+     */
+    public JSONObject getResults(String TABLE_NAME) {
 
-        String myPath = DB_PATH;
-
-
-        SQLiteDatabase myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+        SQLiteDatabase myDataBase = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READONLY);
 
 
         String searchQuery = "SELECT  * FROM " + TABLE_NAME;
@@ -73,8 +72,16 @@ public class DatabasePorter {
         }
 
         cursor.close();
-        Log.d(DEBUG_TAG, resultSet.toString());
-        return resultSet;
+
+        JSONObject finalJSON = new JSONObject();
+        try {
+            finalJSON.put(TABLE_NAME, resultSet);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(DEBUG_TAG, finalJSON.toString());
+        return finalJSON;
 
     }
 
