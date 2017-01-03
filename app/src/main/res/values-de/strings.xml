@@ -34,9 +34,6 @@
 
     <!--###HELP###-->
     <string name="help">Help</string>
-    <string name="help_general_heading">Übersicht</string>
-    <string name="help_feature_heading">Features</string>
-    <string name="help_privacy_heading">Datenschutz</string>
 
     <string name="help_whatis">Was ist Privacy Friendly Beispiel?</string>
     <string name="help_whatis_answer">Privacy Friendly Beispiel zeigt das Standard-Design einer Privacy Friendly App.</string>
@@ -64,8 +61,6 @@
     <string name="pref_example_summary">Beispiel Summary</string>
 
     <!-- ### WELCOME DIALOG ### -->
-    <string name="welcome_text"> Ihr Quellcode ist auf GitHub verfügbar. Weitere Infos im Privacy Friendly App Guide. Im Welcome Dialog sollen Schlüsselfunktionalitäten der App vorgestellt werden.</string>
-    <string name="welcome">Willkommen</string>
     <string name="okay">Okay</string>
     <string name="viewhelp">Hilfe</string>
     <string name="main_button_welcomedialog">Willkommen</string>
