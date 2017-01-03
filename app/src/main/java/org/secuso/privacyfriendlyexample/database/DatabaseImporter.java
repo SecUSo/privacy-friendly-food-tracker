@@ -16,7 +16,7 @@ public class DatabaseImporter {
     }
 
     public void importDatabase(PFASQLiteHelper database, JSONObject JSONDB) {
-        
+
     }
 
 }

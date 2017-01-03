@@ -25,13 +25,13 @@ public class MainActivity extends BaseActivity {
 //        database.addSampleData(new PFASampleDataType(0, "drei.de", "hugo3", 13));
 //        database.addSampleData(new PFASampleDataType(0, "vier.de", "hugo4", 14));
 
-        DatabaseExporter porter = new DatabaseExporter(getBaseContext().getDatabasePath(PFASQLiteHelper.DATABASE_NAME).toString(), "PF_EXAMPLE_DB");
-
-        try {
-            porter.dbToJSON();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        DatabaseExporter porter = new DatabaseExporter(getBaseContext().getDatabasePath(PFASQLiteHelper.DATABASE_NAME).toString(), "PF_EXAMPLE_DB");
+//
+//        try {
+//            porter.dbToJSON();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         // Use the a button to display the welcome screen
         Button b = (Button) findViewById(R.id.button_welcomedialog);
