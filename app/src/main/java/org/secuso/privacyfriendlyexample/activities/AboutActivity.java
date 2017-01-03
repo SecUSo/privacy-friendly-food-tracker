@@ -7,6 +7,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
+import org.secuso.privacyfriendlyexample.BuildConfig;
 import org.secuso.privacyfriendlyexample.R;
 
 /**
@@ -33,6 +34,7 @@ public class AboutActivity extends AppCompatActivity {
 
         ((TextView)findViewById(R.id.secusoWebsite)).setMovementMethod(LinkMovementMethod.getInstance());
         ((TextView)findViewById(R.id.githubURL)).setMovementMethod(LinkMovementMethod.getInstance());
+        ((TextView)findViewById(R.id.textFieldVersionName)).setText(BuildConfig.VERSION_NAME);
     }
 
     //@Override
