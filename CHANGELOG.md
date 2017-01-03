@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 2.2 *(2017-01-03)*
+----------------------------
+
+ * Sample Database added
+ * Refinements to facilitate updates
+
 Version 2.1 *(2016-09-15)*
 ----------------------------
 
