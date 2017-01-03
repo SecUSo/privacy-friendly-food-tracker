@@ -31,7 +31,6 @@
         <activity
             android:name="org.secuso.privacyfriendlyexample.activities.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
@@ -47,7 +46,6 @@
             android:name="org.secuso.privacyfriendlyexample.activities.HelpActivity"
             android:label="@string/help"
             android:parentActivityName="org.secuso.privacyfriendlyexample.activities.MainActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -57,7 +55,6 @@
             android:name="org.secuso.privacyfriendlyexample.activities.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName="org.secuso.privacyfriendlyexample.activities.MainActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
