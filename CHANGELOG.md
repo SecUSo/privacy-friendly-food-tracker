@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 2.2.1 *(2017-06-30)*
+----------------------------
+
+ * Tutorial added to menu
+ * Updates of Icons
+
 Version 2.2 *(2017-01-03)*
 ----------------------------
 
