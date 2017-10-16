@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Version 2.2.2 *(2017-10-16)*
+----------------------------
+
+ * JavaDoc added to classes
+ * License added to classes
+ * Minor refinements
+
 Version 2.2.1 *(2017-06-30)*
 ----------------------------
 
