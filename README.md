@@ -1,4 +1,4 @@
-# Privacy Friendly App Example
+﻿# Privacy Friendly App Example
 
 This application contains the basic design of a Privacy Friendly App without any other functionality. It includes a Navigation Drawer, examples for buttons, a help page and the about page. It further shows an example of the main menu for a Privacy Friendly Game App. This app belongs to the group of Privacy Friendly Apps developed by the Technische Universität Darmstadt. 
 
@@ -8,17 +8,17 @@ This application has been developed to be used as a basis for a Privacy Friendly
 
 ## Download and more Information
 
-Further development requires Android Studio, we recommend to use at least version 2.2.2
+Further development requires Android Studio, we recommend to use at least version 2.3.3
  
 ### API Reference
 
 Mininum SDK: 17
-Target SDK: 25 
+Target SDK: 26 
 
 ## License
 
 Privacy Friendly App Example is licensed under the GPLv3.
-Copyright (C) 2016  Karola Marky
+Copyright (C) 2016-2017  Karola Marky
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
