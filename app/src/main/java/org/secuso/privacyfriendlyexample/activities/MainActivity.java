@@ -1,3 +1,20 @@
+/*
+ This file is part of Privacy Friendly App Example.
+
+ Privacy Friendly App Example is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly App Example is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly App Example. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package org.secuso.privacyfriendlyexample.activities;
 
 import android.content.Intent;
@@ -5,12 +22,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import org.json.JSONException;
 import org.secuso.privacyfriendlyexample.R;
-import org.secuso.privacyfriendlyexample.database.DatabaseExporter;
-import org.secuso.privacyfriendlyexample.database.PFASQLiteHelper;
 import org.secuso.privacyfriendlyexample.tutorial.PrefManager;
 import org.secuso.privacyfriendlyexample.tutorial.TutorialActivity;
+
+/**
+ * @author Christopher Beckmann, Karola Marky
+ * @version 20171016
+ */
 
 public class MainActivity extends BaseActivity {
 
@@ -19,28 +38,12 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        PFASQLiteHelper database = new PFASQLiteHelper(getBaseContext());
-//        database.addSampleData(new PFASampleDataType(0, "eins.de", "hugo1", 11));
-//        database.addSampleData(new PFASampleDataType(0, "zwei.de", "hugo2", 12));
-//        database.addSampleData(new PFASampleDataType(0, "drei.de", "hugo3", 13));
-//        database.addSampleData(new PFASampleDataType(0, "vier.de", "hugo4", 14));
-
-//        DatabaseExporter porter = new DatabaseExporter(getBaseContext().getDatabasePath(PFASQLiteHelper.DATABASE_NAME).toString(), "PF_EXAMPLE_DB");
-//
-//        try {
-//            porter.dbToJSON();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-
-        // Use the a button to display the welcome screen
+        // Use this a button to display the tutorial screen
         Button b = (Button) findViewById(R.id.button_welcomedialog);
         if(b != null) {
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    WelcomeDialog welcomeDialog = new WelcomeDialog();
-//                    welcomeDialog.show(getFragmentManager(), "WelcomeDialog");
                     PrefManager prefManager = new PrefManager(getBaseContext());
                     prefManager.setFirstTimeLaunch(true);
                     Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
@@ -61,34 +64,6 @@ public class MainActivity extends BaseActivity {
     protected int getNavigationDrawerID() {
         return R.id.nav_example;
     }
-
-
-//    public static class WelcomeDialog extends DialogFragment {
-//
-//        @Override
-//        public void onAttach(Activity activity) {
-//            super.onAttach(activity);
-//        }
-//
-//        @Override
-//        public Dialog onCreateDialog(Bundle savedInstanceState) {
-//
-//            LayoutInflater i = getActivity().getLayoutInflater();
-//            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//            builder.setView(i.inflate(R.layout.welcome_dialog, null));
-//            builder.setIcon(R.mipmap.icon);
-//            builder.setTitle(getActivity().getString(R.string.welcome));
-//            builder.setPositiveButton(getActivity().getString(R.string.okay), null);
-//            builder.setNegativeButton(getActivity().getString(R.string.viewhelp), new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    ((MainActivity)getActivity()).goToNavigationItem(R.id.nav_help);
-//                }
-//            });
-//
-//            return builder.create();
-//        }
-//    }
 
     public void onClick(View view) {
         switch(view.getId()) {

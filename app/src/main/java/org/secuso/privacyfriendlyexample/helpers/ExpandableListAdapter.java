@@ -1,7 +1,21 @@
-package org.secuso.privacyfriendlyexample.helpers;
+/*
+ This file is part of Privacy Friendly App Example.
 
-import java.util.HashMap;
-import java.util.List;
+ Privacy Friendly App Example is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly App Example is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly App Example. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package org.secuso.privacyfriendlyexample.helpers;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -13,7 +27,12 @@ import android.widget.TextView;
 
 import org.secuso.privacyfriendlyexample.R;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
+ * @author Karola Marky
+ * @version 20171016
  * Class structure taken from tutorial at http://www.journaldev.com/9942/android-expandablelistview-example-tutorial
  * last access 27th October 2016
  */
