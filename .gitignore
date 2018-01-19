@@ -33,6 +33,7 @@ Thumbs.db
 *.docx
 *.odt
 
-# APKs
+# APKs, release files
+app/release/*
 *.apk
 
