@@ -15,17 +15,20 @@
  along with Privacy Friendly App Example. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.secuso.privacyfriendlyexample.tutorial;
+package org.secuso.privacyfriendlyexample.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import org.secuso.privacyfriendlyexample.database.PFASQLiteHelper;
 
 /**
  * @author Karola Marky
  * @version 20161214
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/
  */
-public class PrefManager {
+public class FirstLaunchManager {
+    private PFASQLiteHelper dbHandler;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
 
@@ -37,8 +40,9 @@ public class PrefManager {
 
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
 
-    public PrefManager(Context context) {
+    public FirstLaunchManager(Context context) {
         pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
+        dbHandler = new PFASQLiteHelper(context);
         editor = pref.edit();
     }
 
@@ -49,6 +53,12 @@ public class PrefManager {
 
     public boolean isFirstTimeLaunch() {
         return pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
+    }
+
+    public void initFirstTimeLaunch() {
+        if(pref.getBoolean(IS_FIRST_TIME_LAUNCH, true)) {
+            // First time setup in here
+        }
     }
 
 }

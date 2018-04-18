@@ -47,7 +47,7 @@
 
     <!--###ABOUT###-->
     <string name="about">Über</string>
-    <string name="version_number">Version</string>
+    <string name="version_number">Version v%s</string>
     <string name="about_author">Autoren: </string>
     <string name="about_author_contributors">und Mitwirkende.</string>
     <string name="about_affiliation">In Zusammenarbeit mit</string>
@@ -57,14 +57,14 @@
     <!-- ###SETTINGS### -->
     <string name="title_activity_settings">Einstellungen</string>
     <string name="pref_header_general">Allgemein</string>
-    <string name="pref_example_switch">Beispiel Switch</string>
+    <string name="pref_example_switch">Schwebend</string>
     <string name="pref_example_switch_summary">Beispiel Switch Summary</string>
     <string name="pref_example_summary">Beispiel Summary</string>
 
     <!-- ### WELCOME DIALOG ### -->
     <string name="okay">Okay</string>
     <string name="viewhelp">Hilfe</string>
-    <string name="main_button_welcomedialog">Willkommen</string>
+    <string name="main_floating_button">Schwebender Knopf</string>
 
     <!-- ### TUTORIAL DIALOG ### -->
     <string name="slide1_heading">Willkommen!</string>

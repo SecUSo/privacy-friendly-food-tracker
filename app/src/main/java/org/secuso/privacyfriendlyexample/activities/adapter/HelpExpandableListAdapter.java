@@ -15,7 +15,7 @@
  along with Privacy Friendly App Example. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.secuso.privacyfriendlyexample.helpers;
+package org.secuso.privacyfriendlyexample.activities.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -37,14 +37,14 @@ import java.util.List;
  * last access 27th October 2016
  */
 
-public class ExpandableListAdapter extends BaseExpandableListAdapter {
+public class HelpExpandableListAdapter extends BaseExpandableListAdapter {
 
         private Context context;
         private List<String> expandableListTitle;
         private HashMap<String, List<String>> expandableListDetail;
 
-        public ExpandableListAdapter(Context context, List<String> expandableListTitle,
-                HashMap<String, List<String>> expandableListDetail) {
+        public HelpExpandableListAdapter(Context context, List<String> expandableListTitle,
+                                         HashMap<String, List<String>> expandableListDetail) {
             this.context = context;
             this.expandableListTitle = expandableListTitle;
             this.expandableListDetail = expandableListDetail;

@@ -45,7 +45,6 @@
             android:paddingTop="@dimen/activity_vertical_margin"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:context=".activities.AboutActivity"
-            tools:showIn="@layout/app_bar_main"
             android:weightSum="1">
 
             <LinearLayout

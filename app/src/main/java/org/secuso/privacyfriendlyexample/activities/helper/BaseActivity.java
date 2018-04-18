@@ -15,7 +15,7 @@
  along with Privacy Friendly App Example. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.secuso.privacyfriendlyexample.activities;
+package org.secuso.privacyfriendlyexample.activities.helper;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,7 +36,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.secuso.privacyfriendlyexample.R;
-import org.secuso.privacyfriendlyexample.tutorial.TutorialActivity;
+import org.secuso.privacyfriendlyexample.activities.AboutActivity;
+import org.secuso.privacyfriendlyexample.activities.GameActivity;
+import org.secuso.privacyfriendlyexample.activities.HelpActivity;
+import org.secuso.privacyfriendlyexample.activities.MainActivity;
+import org.secuso.privacyfriendlyexample.activities.SettingsActivity;
+import org.secuso.privacyfriendlyexample.activities.TutorialActivity;
 
 /**
  * @author Christopher Beckmann, Karola Marky
@@ -47,11 +52,11 @@ import org.secuso.privacyfriendlyexample.tutorial.TutorialActivity;
 public abstract class BaseActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
     // delay to launch nav drawer item, to allow close animation to play
-    static final int NAVDRAWER_LAUNCH_DELAY = 250;
+    public static final int NAVDRAWER_LAUNCH_DELAY = 250;
     // fade in and fade out durations for the main content when switching between
     // different Activities of the app through the Nav Drawer
-    static final int MAIN_CONTENT_FADEOUT_DURATION = 150;
-    static final int MAIN_CONTENT_FADEIN_DURATION = 250;
+    public static final int MAIN_CONTENT_FADEOUT_DURATION = 150;
+    public static final int MAIN_CONTENT_FADEIN_DURATION = 250;
 
     // Navigation drawer:
     private DrawerLayout mDrawerLayout;
@@ -163,7 +168,6 @@ public abstract class BaseActivity extends AppCompatActivity implements OnNaviga
                 break;
             case R.id.nav_tutorial:
                 intent = new Intent(this, TutorialActivity.class);
-                intent.setAction(TutorialActivity.ACTION_SHOW_ANYWAYS);
                 createBackStack(intent);
                 break;
             case R.id.nav_about:

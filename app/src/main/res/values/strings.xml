@@ -54,7 +54,7 @@ Ne albucius perfecto adolescens eum, id choro assueverit mea, sed viris constitu
 
     <!--###ABOUT###-->
     <string name="about">About</string>
-    <string name="version_number">Version</string>
+    <string name="version_number">Version v%s</string>
     <string name="about_author">Authors: </string>
     <string name="about_author_names" translatable="false">Karola Marky</string>
     <string name="about_author_contributors">and contributors.</string>
@@ -83,7 +83,7 @@ Ne albucius perfecto adolescens eum, id choro assueverit mea, sed viris constitu
 
     <string name="okay">Okay</string>
     <string name="viewhelp">View Help</string>
-    <string name="main_button_welcomedialog">Show Welcome</string>
+    <string name="main_floating_button">Floating Button</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
 

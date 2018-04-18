@@ -4,7 +4,7 @@
 
     <header
         android:fragment="org.secuso.privacyfriendlyexample.activities.SettingsActivity$GeneralPreferenceFragment"
-        android:icon="@mipmap/ic_info_black_24dp"
+        android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/pref_header_general" />
 
 </preference-headers>

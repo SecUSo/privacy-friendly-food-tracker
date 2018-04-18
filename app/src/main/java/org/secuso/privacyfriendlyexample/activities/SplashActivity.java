@@ -21,7 +21,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import org.secuso.privacyfriendlyexample.tutorial.TutorialActivity;
+import org.secuso.privacyfriendlyexample.helpers.FirstLaunchManager;
 
 /**
  * @author Karola Marky
@@ -35,9 +35,19 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent mainIntent = new Intent(SplashActivity.this, TutorialActivity.class);
-        SplashActivity.this.startActivity(mainIntent);
-        SplashActivity.this.finish();
 
+        FirstLaunchManager firstStartPref = new FirstLaunchManager(this);
+
+        if(firstStartPref.isFirstTimeLaunch()) {
+            firstStartPref.initFirstTimeLaunch();
+            mainIntent = new Intent(this, TutorialActivity.class);
+        } else {
+            mainIntent = new Intent(this, MainActivity.class);
+            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+
+        startActivity(mainIntent);
+        finish();
     }
 
 }

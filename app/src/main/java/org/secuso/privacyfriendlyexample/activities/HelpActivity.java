@@ -21,20 +21,20 @@ import android.os.Bundle;
 import android.widget.ExpandableListView;
 
 import org.secuso.privacyfriendlyexample.R;
-import org.secuso.privacyfriendlyexample.helpers.ExpandableListAdapter;
-import org.secuso.privacyfriendlyexample.helpers.HelpDataDump;
+import org.secuso.privacyfriendlyexample.activities.adapter.HelpExpandableListAdapter;
+import org.secuso.privacyfriendlyexample.activities.helper.BaseActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * @author Karola Marky
+ * @author Karola Marky, Christopher Beckmann
  * @version 20171016
  * Class structure taken from tutorial at http://www.journaldev.com/9942/android-expandablelistview-example-tutorial
  * last access 27th October 2016
  */
-
 public class HelpActivity extends BaseActivity {
 
     @Override
@@ -42,17 +42,23 @@ public class HelpActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
-        ExpandableListAdapter expandableListAdapter;
-        HelpDataDump helpDataDump = new HelpDataDump(this);
+        LinkedHashMap<String, List<String>> expandableListDetail = buildData();
 
-        ExpandableListView generalExpandableListView = (ExpandableListView) findViewById(R.id.generalExpandableListView);
-
-        LinkedHashMap<String, List<String>> expandableListDetail = helpDataDump.getDataGeneral();
-        List<String> expandableListTitleGeneral = new ArrayList<String>(expandableListDetail.keySet());
-        expandableListAdapter = new ExpandableListAdapter(this, expandableListTitleGeneral, expandableListDetail);
-        generalExpandableListView.setAdapter(expandableListAdapter);
+        ExpandableListView generalExpandableListView = findViewById(R.id.generalExpandableListView);
+        generalExpandableListView.setAdapter(new HelpExpandableListAdapter(this, new ArrayList<>(expandableListDetail.keySet()), expandableListDetail));
 
         overridePendingTransition(0, 0);
+    }
+
+    private LinkedHashMap<String, List<String>> buildData() {
+        LinkedHashMap<String, List<String>> expandableListDetail = new LinkedHashMap<String, List<String>>();
+
+        expandableListDetail.put(getString(R.string.help_whatis), Collections.singletonList(getString(R.string.help_whatis_answer)));
+        expandableListDetail.put(getString(R.string.help_feature_one), Collections.singletonList(getString(R.string.help_feature_one_answer)));
+        expandableListDetail.put(getString(R.string.help_privacy), Collections.singletonList(getString(R.string.help_privacy_answer)));
+        expandableListDetail.put(getString(R.string.help_permission), Collections.singletonList(getString(R.string.help_permission_answer)));
+
+        return expandableListDetail;
     }
 
     protected int getNavigationDrawerID() {

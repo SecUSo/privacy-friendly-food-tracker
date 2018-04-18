@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.secuso.privacyfriendlyexample.R;
+import org.secuso.privacyfriendlyexample.activities.helper.BaseActivity;
 
 /**
  * @author Christopher Beckmann
@@ -42,7 +43,6 @@ public class GameActivity extends BaseActivity {
     private ViewPager mViewPager;
     private ImageView mArrowLeft;
     private ImageView mArrowRight;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +162,7 @@ public class GameActivity extends BaseActivity {
                 id = getArguments().getInt(ARG_SECTION_NUMBER);
             }
 
-            View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_game_mode, container, false);
 
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText("Mode: "+String.valueOf(id));

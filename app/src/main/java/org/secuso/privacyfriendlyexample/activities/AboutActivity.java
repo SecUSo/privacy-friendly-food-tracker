@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import org.secuso.privacyfriendlyexample.BuildConfig;
 import org.secuso.privacyfriendlyexample.R;
+import org.secuso.privacyfriendlyexample.activities.helper.BaseActivity;
 
 /**
  * Created by yonjuni on 15.06.16.
@@ -51,7 +52,7 @@ public class AboutActivity extends AppCompatActivity {
 
         ((TextView)findViewById(R.id.secusoWebsite)).setMovementMethod(LinkMovementMethod.getInstance());
         ((TextView)findViewById(R.id.githubURL)).setMovementMethod(LinkMovementMethod.getInstance());
-        ((TextView)findViewById(R.id.textFieldVersionName)).setText(BuildConfig.VERSION_NAME);
+        ((TextView)findViewById(R.id.textFieldVersionName)).setText(getString(R.string.version_number, BuildConfig.VERSION_NAME));
     }
 
     //@Override
