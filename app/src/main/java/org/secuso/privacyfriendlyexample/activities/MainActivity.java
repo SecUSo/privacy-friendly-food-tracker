@@ -18,6 +18,7 @@
 package org.secuso.privacyfriendlyexample.activities;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import org.secuso.privacyfriendlyexample.R;
@@ -47,10 +48,18 @@ public class MainActivity extends BaseActivity {
         return R.id.nav_example;
     }
 
-    public void onClick(View view) {
-        switch(view.getId()) {
-            // do something with all these buttons?
-            default:
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item != null) switch(item.getItemId()) {
+            case R.id.main_button:
+                // do something
+                return true;
+            case R.id.main_button_1:
+                // do something
+                return true;
+            // ... etc
         }
+
+        return super.onOptionsItemSelected(item);
     }
 }
