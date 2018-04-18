@@ -48,6 +48,14 @@ import org.secuso.privacyfriendlyexample.activities.TutorialActivity;
  * @version 20171017
  * This class is a parent class of all activities that can be accessed from the
  * Navigation Drawer (example see MainActivity.java)
+ *
+ * The default NavigationDrawer functionality is implemented in this class. If you wish to inherit
+ * the default behaviour, make sure the content view has a NavigationDrawer with the id 'nav_view',
+ * the header should point to 'nav_header_main' and the menu should be loaded from 'main_drawer'.
+ *
+ * Also the main layout that holds the content of the activity should have the id 'main_content'.
+ * This way it will automatically fade in and out every time a transition is happening.
+ *
  */
 public abstract class BaseActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
