@@ -44,7 +44,8 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@string/main_button_1"
             android:textColor="@color/white"
-            android:id="@+id/main_button_1"/>
+            android:id="@+id/main_button_1"
+            android:onClick="onClick"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -53,7 +54,8 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@string/main_button_2"
             android:textColor="@color/white"
-            android:id="@+id/main_button_2"/>
+            android:id="@+id/main_button_2"
+            android:onClick="onClick"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -62,7 +64,8 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@string/main_button_3"
             android:textColor="@color/white"
-            android:id="@+id/main_button_3"/>
+            android:id="@+id/main_button_3"
+            android:onClick="onClick"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -71,7 +74,8 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@string/main_button_4"
             android:textColor="@color/white"
-            android:id="@+id/main_button_4"/>
+            android:id="@+id/main_button_4"
+            android:onClick="onClick"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -80,7 +84,8 @@
             android:layout_marginEnd="0dp"
             android:text="@string/main_button_5"
             android:textColor="@color/white"
-            android:id="@+id/main_button_5"/>
+            android:id="@+id/main_button_5"
+            android:onClick="onClick"/>
 
     </LinearLayout>
 
@@ -91,7 +96,8 @@
         android:textColor="@color/white"
         android:background="@drawable/button_fullwidth"
         android:text="@string/main_button_text"
-        android:id="@+id/main_button"/>
+        android:id="@+id/main_button"
+        android:onClick="onClick"/>
 
     <Button
         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -100,6 +106,7 @@
         android:textColor="@color/white"
         android:background="@drawable/button_disabled"
         android:text="@string/main_button_disabled_text"
-        android:id="@+id/main_button_disabled"/>
+        android:id="@+id/main_button_disabled"
+        android:onClick="onClick"/>
 
 </LinearLayout>
