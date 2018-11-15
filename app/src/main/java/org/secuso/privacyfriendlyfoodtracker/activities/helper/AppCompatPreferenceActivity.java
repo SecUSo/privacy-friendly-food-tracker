@@ -15,7 +15,7 @@
  along with Privacy Friendly App Example. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.secuso.privacyfriendlyexample.activities.helper;
+package org.secuso.privacyfriendlyfoodtracker.activities.helper;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

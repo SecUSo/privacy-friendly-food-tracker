@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.secuso.privacyfriendlyexample">
+    package="org.secuso.privacyfriendlyfoodtracker">
 
     <supports-screens
         android:anyDensity="true"
@@ -28,49 +28,49 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyexample.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyexample.activities.MainActivity"
+            android:name="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyexample.activities.AboutActivity"
+            android:name="org.secuso.privacyfriendlyfoodtracker.activities.AboutActivity"
             android:label="@string/about"
-            android:parentActivityName="org.secuso.privacyfriendlyexample.activities.MainActivity"
+            android:parentActivityName="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyexample.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyexample.activities.HelpActivity"
+            android:name="org.secuso.privacyfriendlyfoodtracker.activities.HelpActivity"
             android:label="@string/help"
-            android:parentActivityName="org.secuso.privacyfriendlyexample.activities.MainActivity"
+            android:parentActivityName="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyexample.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyexample.activities.SettingsActivity"
+            android:name="org.secuso.privacyfriendlyfoodtracker.activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="org.secuso.privacyfriendlyexample.activities.MainActivity"
+            android:parentActivityName="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyexample.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyexample.activities.GameActivity"
+            android:name="org.secuso.privacyfriendlyfoodtracker.activities.GameActivity"
             android:label="@string/title_activity_game"
-            android:parentActivityName="org.secuso.privacyfriendlyexample.activities.MainActivity"
+            android:parentActivityName="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyexample.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity" />
         </activity>
     </application>
 

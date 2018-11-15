@@ -15,7 +15,7 @@
  along with Privacy Friendly App Example. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.secuso.privacyfriendlyexample.activities;
+package org.secuso.privacyfriendlyfoodtracker.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -36,8 +36,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.secuso.privacyfriendlyexample.R;
-import org.secuso.privacyfriendlyexample.helpers.FirstLaunchManager;
+import org.secuso.privacyfriendlyfoodtracker.R;
+import org.secuso.privacyfriendlyfoodtracker.helpers.FirstLaunchManager;
 
 /**
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/

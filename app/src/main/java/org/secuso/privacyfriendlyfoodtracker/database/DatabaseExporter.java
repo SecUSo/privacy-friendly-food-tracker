@@ -15,7 +15,7 @@
  along with Privacy Friendly App Example. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.secuso.privacyfriendlyexample.database;
+package org.secuso.privacyfriendlyfoodtracker.database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
