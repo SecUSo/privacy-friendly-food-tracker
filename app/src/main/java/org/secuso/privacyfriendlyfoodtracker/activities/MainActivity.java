@@ -38,9 +38,6 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         overridePendingTransition(0, 0);
-        Intent intent = new Intent(MainActivity.this, OverviewActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 
     /**
