@@ -15,7 +15,7 @@
  along with Privacy Friendly App Example. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.secuso.privacyfriendlyexample.activities.adapter;
+package org.secuso.privacyfriendlyfoodtracker.activities.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import org.secuso.privacyfriendlyexample.R;
+import org.secuso.privacyfriendlyfoodtracker.R;
 
 import java.util.HashMap;
 import java.util.List;

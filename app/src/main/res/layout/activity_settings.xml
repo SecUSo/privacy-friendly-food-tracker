@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="org.secuso.privacyfriendlyexample.activities.SettingsActivity">
+        tools:context="org.secuso.privacyfriendlyfoodtracker.activities.SettingsActivity">
 
         <include layout="@layout/toolbar"/>
 
@@ -28,7 +28,7 @@
             android:layout_marginTop="?attr/actionBarSize"
             android:weightSum="1">
 
-        <fragment android:name="org.secuso.privacyfriendlyexample.activities.SettingsActivity$GeneralPreferenceFragment"
+        <fragment android:name="org.secuso.privacyfriendlyfoodtracker.activities.SettingsActivity$GeneralPreferenceFragment"
             android:id="@+id/settings_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

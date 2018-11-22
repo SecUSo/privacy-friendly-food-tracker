@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlyexample;
+package org.secuso.privacyfriendlyfoodtracker;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

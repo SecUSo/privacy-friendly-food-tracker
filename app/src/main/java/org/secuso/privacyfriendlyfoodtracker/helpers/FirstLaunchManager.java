@@ -15,12 +15,12 @@
  along with Privacy Friendly App Example. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.secuso.privacyfriendlyexample.helpers;
+package org.secuso.privacyfriendlyfoodtracker.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import org.secuso.privacyfriendlyexample.database.PFASQLiteHelper;
+import org.secuso.privacyfriendlyfoodtracker.database.PFASQLiteHelper;
 
 /**
  * @author Karola Marky

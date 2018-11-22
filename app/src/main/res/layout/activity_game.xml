@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="org.secuso.privacyfriendlyexample.activities.GameActivity">
+        tools:context="org.secuso.privacyfriendlyfoodtracker.activities.GameActivity">
 
         <include layout="@layout/toolbar"/>
 
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="org.secuso.privacyfriendlyexample.activities.GameActivity"
+            tools:context="org.secuso.privacyfriendlyfoodtracker.activities.GameActivity"
             tools:showIn="@layout/activity_game"
             android:orientation="vertical"
             android:weightSum="10"

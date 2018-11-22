@@ -15,7 +15,7 @@
  along with Privacy Friendly App Example. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.secuso.privacyfriendlyexample.activities.helper;
+package org.secuso.privacyfriendlyfoodtracker.activities.helper;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,13 +35,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import org.secuso.privacyfriendlyexample.R;
-import org.secuso.privacyfriendlyexample.activities.AboutActivity;
-import org.secuso.privacyfriendlyexample.activities.GameActivity;
-import org.secuso.privacyfriendlyexample.activities.HelpActivity;
-import org.secuso.privacyfriendlyexample.activities.MainActivity;
-import org.secuso.privacyfriendlyexample.activities.SettingsActivity;
-import org.secuso.privacyfriendlyexample.activities.TutorialActivity;
+import org.secuso.privacyfriendlyfoodtracker.R;
+import org.secuso.privacyfriendlyfoodtracker.activities.AboutActivity;
+import org.secuso.privacyfriendlyfoodtracker.activities.GameActivity;
+import org.secuso.privacyfriendlyfoodtracker.activities.HelpActivity;
+import org.secuso.privacyfriendlyfoodtracker.activities.MainActivity;
+import org.secuso.privacyfriendlyfoodtracker.activities.SettingsActivity;
+import org.secuso.privacyfriendlyfoodtracker.activities.TutorialActivity;
 
 /**
  * @author Christopher Beckmann, Karola Marky

@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlyexample;
+package org.secuso.privacyfriendlyfoodtracker;
 
 import org.junit.Test;
 

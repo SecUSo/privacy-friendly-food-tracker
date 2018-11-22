@@ -15,15 +15,15 @@
  along with Privacy Friendly App Example. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.secuso.privacyfriendlyexample.activities;
+package org.secuso.privacyfriendlyfoodtracker.activities;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import org.secuso.privacyfriendlyexample.R;
-import org.secuso.privacyfriendlyexample.activities.helper.BaseActivity;
+import org.secuso.privacyfriendlyfoodtracker.R;
+import org.secuso.privacyfriendlyfoodtracker.activities.helper.BaseActivity;
 
 /**
  * @author Christopher Beckmann, Karola Marky
