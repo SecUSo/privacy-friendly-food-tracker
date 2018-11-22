@@ -87,4 +87,9 @@ Ne albucius perfecto adolescens eum, id choro assueverit mea, sed viris constitu
     <string name="next">Next</string>
     <string name="skip">Skip</string>
 
+    <string name="setup_step_generating_key">Generating Key</string>
+    <string name="setup_step_generating_passphrase">Generating Passphrase</string>
+    <string name="setup_step_creating_encrypted_databas">Encrypting Database</string>
+    <string name="generate_key_header">Preparation</string>
+
 </resources>
