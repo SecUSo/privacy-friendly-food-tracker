@@ -47,7 +47,7 @@
 
     <!--###ABOUT###-->
     <string name="about">Über</string>
-    <string name="version_number">Version v%s</string>
+    <string name="version_number">Version 1.0</string>
     <string name="about_author">Autoren: </string>
     <string name="about_author_contributors">und Mitwirkende.</string>
     <string name="about_affiliation">In Zusammenarbeit mit</string>
