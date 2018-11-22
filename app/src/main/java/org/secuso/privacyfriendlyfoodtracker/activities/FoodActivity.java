@@ -34,7 +34,9 @@ public class FoodActivity extends AppCompatActivity {
 
         final String id = intent.getStringExtra("ID");
 
-        if (!"".equals(id)){
+        // default is new entry
+        mode = NEWENTRY;
+        if (!("".equals(id)) && null != id){
             mode = EDIT;
             getSupportActionBar().setTitle(R.string.edit_entry);
         }
