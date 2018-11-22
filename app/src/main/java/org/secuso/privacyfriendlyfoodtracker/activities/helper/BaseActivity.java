@@ -37,7 +37,6 @@ import android.view.View;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.AboutActivity;
-import org.secuso.privacyfriendlyfoodtracker.activities.GameActivity;
 import org.secuso.privacyfriendlyfoodtracker.activities.HelpActivity;
 import org.secuso.privacyfriendlyfoodtracker.activities.MainActivity;
 import org.secuso.privacyfriendlyfoodtracker.activities.SettingsActivity;
@@ -169,10 +168,6 @@ public abstract class BaseActivity extends AppCompatActivity implements OnNaviga
                 intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                break;
-            case R.id.nav_game:
-                intent = new Intent(this, GameActivity.class);
-                createBackStack(intent);
                 break;
             case R.id.nav_tutorial:
                 intent = new Intent(this, TutorialActivity.class);
