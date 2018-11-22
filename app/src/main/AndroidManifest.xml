@@ -35,7 +35,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.AboutActivity"
             android:label="@string/about"
@@ -73,7 +73,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlyexample.activities.MainActivity" />
         </activity>
-        <activity android:name=".activities.CalendarActivity"></activity>
+        <activity android:name=".activities.CalendarActivity" />
+        <activity android:name=".activities.GenerateKeyActivity"></activity>
     </application>
 
 </manifest>

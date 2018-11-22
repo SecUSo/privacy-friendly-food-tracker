@@ -3,13 +3,16 @@ package org.secuso.privacyfriendlyexample.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
 import org.secuso.privacyfriendlyexample.R;
+import org.secuso.privacyfriendlyexample.activities.helper.BaseActivity;
 
-public class CalendarActivity extends AppCompatActivity {
+public class CalendarActivity extends BaseActivity {
     private CalendarView calendarView;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,5 +29,10 @@ public class CalendarActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected int getNavigationDrawerID() {
+        return R.id.nav_game;
     }
 }
