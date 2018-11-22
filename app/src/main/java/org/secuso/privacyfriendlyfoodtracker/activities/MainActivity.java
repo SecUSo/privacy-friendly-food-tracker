@@ -22,26 +22,41 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CalendarView;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.helper.BaseActivity;
+
+import java.util.Date;
 
 /**
  * @author Christopher Beckmann, Karola Marky
  * @version 20171016
  */
 public class MainActivity extends BaseActivity {
+    private CalendarView calendarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        calendarView = (CalendarView) findViewById(R.id.CalendarView); // get the reference of CalendarView
+        calendarView.setDate(System.currentTimeMillis(), false, true);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                Intent intent = new Intent(MainActivity.this, OverviewActivity.class); // TODO correct navigation
+                // returns current date as milliseconds (long)
+                intent.putExtra("DATE", calendarView.getDate());
+                startActivity(intent);
+            }
+        });
         overridePendingTransition(0, 0);
     }
 
     /**
      * This method connects the Activity to the menu item
+     *
      * @return ID of the menu item it belongs to
      */
     @Override
@@ -50,13 +65,13 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClick(View v) {
-        if(v != null) switch(v.getId()) {
-            case R.id.main_button:
+        if (v != null) switch (v.getId()) {
+            /*case R.id.main_button:
                 // do something
                 return;
             case R.id.main_button_1:
                 // do something
-                return;
+                return;*/
             // ... etc
         }
     }
