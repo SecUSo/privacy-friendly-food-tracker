@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import org.secuso.privacyfriendlyfoodtracker.R;
 
-import java.time.LocalDate;
 import java.util.Date;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseEntry;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseAdapter;
@@ -46,12 +45,12 @@ public class OverviewActivity extends AppCompatActivity {
         }
 
 
-        TextView heading = this.findViewById(R.id.overviewHeading);
-        heading.setText(formattedDate);
+
 
         DatabaseEntry[] entries = adapter.getEntriesForDay(d);
 
         LinearLayout foodList = this.findViewById(R.id.DailyList);
+        int totalCalories = 0;
         for(DatabaseEntry e : entries) {
             //set up CardView for every entry
             CardView c = new CardView(this);
@@ -86,6 +85,7 @@ public class OverviewActivity extends AppCompatActivity {
 
             TextView calories = new TextView(this);
             int consumedEnergy = (e.amount*e.energy)/100;
+            totalCalories += consumedEnergy;
             calories.setText(Integer.toString(consumedEnergy) + " kCal");
             calories.setId(View.generateViewId());
             set.constrainWidth(calories.getId(), ConstraintSet.WRAP_CONTENT);
@@ -110,6 +110,13 @@ public class OverviewActivity extends AppCompatActivity {
 
             set.applyTo(cl);
             final DatabaseEntry entry = e;
+            c.setOnLongClickListener(new View.OnLongClickListener(){
+                @Override
+                public boolean onLongClick(View v) {
+                    getSupportActionBar().setTitle("Delete Entry?");
+                    return true;
+                }
+            });
             c.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -121,6 +128,7 @@ public class OverviewActivity extends AppCompatActivity {
                     intent.putExtra("CALORIES", entry.energy);
                     startActivity(intent);
                 }
+
             });
         }
         FloatingActionButton fab = this.findViewById(R.id.addFoodItem);
@@ -134,6 +142,10 @@ public class OverviewActivity extends AppCompatActivity {
             }
 
         });
+
+        TextView heading = this.findViewById(R.id.overviewHeading);
+        String cal =  getString(R.string.total_calories);
+        heading.setText(formattedDate + ": " + totalCalories + " " + cal);
 
     }
 }

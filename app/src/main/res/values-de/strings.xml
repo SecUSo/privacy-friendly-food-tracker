@@ -90,6 +90,8 @@
     <string name="error_amount_nan">"Bitte gib für die Menge nur Zahlen ein"</string>
     <string name="error_calories_nan">"Bitte gib für die Kalorien nur Zahlen ein"</string>
     <string name="error_database">"Konnte den Eintrag nicht Speichern"</string>
+    <string name="total_calories">"kCal"</string>
+
 
     <string name="setup_step_generating_key">Erstelle Key</string>
     <string name="setup_step_generating_passphrase">Erstelle Passphrase</string>
