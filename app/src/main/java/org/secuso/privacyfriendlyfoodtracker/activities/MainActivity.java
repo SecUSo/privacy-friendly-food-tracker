@@ -24,6 +24,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.helper.BaseActivity;
 
@@ -46,8 +49,18 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 Intent intent = new Intent(MainActivity.this, OverviewActivity.class); // TODO correct navigation
-                // returns current date as milliseconds (long)
-                intent.putExtra("DATE", calendarView.getDate());
+                // Build string from chosen date to parse into Date object
+                // (month+1) because months count from 0 in java but SimpleDateFormat parses it as 1-12
+                String chosenDate = dayOfMonth + "/" + (month+1) + "/" + year;
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                try{
+                    Date date = sdf.parse(chosenDate);
+                    long millis = date.getTime();
+                    intent.putExtra("DATE", millis);
+                } catch (ParseException e){
+                    e.printStackTrace();
+                }
+
                 startActivity(intent);
             }
         });
