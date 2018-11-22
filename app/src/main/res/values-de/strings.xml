@@ -78,6 +78,18 @@
 
     <string name="next">Weiter</string>
     <string name="skip">Überspringen</string>
+    <string name="title_activity_food">Einen Eintrag hinzufügen</string>
+    <string name="edit_entry">Eintrag bearbeiten</string>
+    <string name="title_activity_overview">Übersicht</string>
+    <string name="hint_food_name">Name</string>
+    <string name="hint_food_amount">Menge</string>
+    <string name="hint_food_calories">kCal/100</string>
+    <string name="error_food_missing">"Bitte gib deinem Eintrag einen Name"</string>
+    <string name="error_amount_missing">"Bitte gib ein, wieviel du gegessen hast"</string>
+    <string name="error_calories_missing">"Bitte gib an, wieviele kCal dein Essen pro 100 hat"</string>
+    <string name="error_amount_nan">"Bitte gib für die Menge nur Zahlen ein"</string>
+    <string name="error_calories_nan">"Bitte gib für die Kalorien nur Zahlen ein"</string>
+    <string name="error_database">"Konnte den Eintrag nicht Speichern"</string>
 
     <string name="setup_step_generating_key">Erstelle Key</string>
     <string name="setup_step_generating_passphrase">Erstelle Passphrase</string>
