@@ -33,40 +33,40 @@
                 android:value="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="org.secuso.privacyfriendlyfoodtracker.activities.AboutActivity"
+            android:name=".activities.AboutActivity"
             android:label="@string/about"
-            android:parentActivityName="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyfoodtracker.activities.HelpActivity"
+            android:name=".activities.HelpActivity"
             android:label="@string/help"
-            android:parentActivityName="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyfoodtracker.activities.SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyfoodtracker.activities.GameActivity"
+            android:name=".activities.GameActivity"
             android:label="@string/title_activity_game"
-            android:parentActivityName="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -75,6 +75,13 @@
         </activity>
         <activity android:name="org.secuso.privacyfriendlyfoodtracker.activities.CalendarActivity" />
         <activity android:name="org.secuso.privacyfriendlyfoodtracker.activities.GenerateKeyActivity"></activity>
+        <activity android:name=".activities.OverviewActivity"
+            android:label="@string/title_activity_overview"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activities.FoodActivity"
+            android:label="@string/title_activity_food"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
