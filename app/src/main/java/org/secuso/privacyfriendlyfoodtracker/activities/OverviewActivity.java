@@ -11,8 +11,10 @@ import org.secuso.privacyfriendlyfoodtracker.R;
 import java.util.Date;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseEntry;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseAdapter;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -146,6 +148,20 @@ public class OverviewActivity extends AppCompatActivity {
         TextView heading = this.findViewById(R.id.overviewHeading);
         String cal =  getString(R.string.total_calories);
         heading.setText(formattedDate + ": " + totalCalories + " " + cal);
+        setupActionBar();
 
+    }
+
+    private void setupActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // Show the Up button in the action bar.
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return true;
     }
 }
