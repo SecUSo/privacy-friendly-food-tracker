@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlyexample.helpers;
+package org.secuso.privacyfriendlyfoodtracker.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;

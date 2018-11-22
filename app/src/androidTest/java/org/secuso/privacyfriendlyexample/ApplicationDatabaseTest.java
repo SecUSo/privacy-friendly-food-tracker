@@ -1,13 +1,9 @@
 package org.secuso.privacyfriendlyexample;
 
-import android.arch.persistence.room.Room;
-import android.content.Context;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.secuso.privacyfriendlyexample.database.ApplicationDatabase;
+import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
 
 import java.io.IOException;
 

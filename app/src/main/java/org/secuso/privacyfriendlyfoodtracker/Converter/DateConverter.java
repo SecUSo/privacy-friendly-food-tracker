@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlyexample.Converter;
+package org.secuso.privacyfriendlyfoodtracker.Converter;
 
 import android.arch.persistence.room.TypeConverter;
 

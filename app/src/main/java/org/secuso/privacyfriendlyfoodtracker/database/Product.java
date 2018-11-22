@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlyexample.database;
+package org.secuso.privacyfriendlyfoodtracker.database;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

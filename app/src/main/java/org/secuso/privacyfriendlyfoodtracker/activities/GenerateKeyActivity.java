@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlyexample.activities;
+package org.secuso.privacyfriendlyfoodtracker.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,16 +7,12 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 
-import org.secuso.privacyfriendlyexample.R;
-import org.secuso.privacyfriendlyexample.database.ApplicationDatabase;
-import org.secuso.privacyfriendlyexample.database.ConsumedEntries;
-import org.secuso.privacyfriendlyexample.database.Product;
-import org.secuso.privacyfriendlyexample.helpers.KeyGenHelper;
+import org.secuso.privacyfriendlyfoodtracker.R;
+import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
+import org.secuso.privacyfriendlyfoodtracker.database.Product;
+import org.secuso.privacyfriendlyfoodtracker.helpers.KeyGenHelper;
 
 import java.security.Key;
-import java.sql.Date;
-import java.time.LocalDateTime;
-import java.util.Calendar;
 
 public class GenerateKeyActivity extends AppCompatActivity {
     CheckBox mCheckBox1;

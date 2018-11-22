@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlyexample.database;
+package org.secuso.privacyfriendlyfoodtracker.database;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -6,7 +6,6 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import java.sql.Date;
 import java.util.List;
 
 @Dao

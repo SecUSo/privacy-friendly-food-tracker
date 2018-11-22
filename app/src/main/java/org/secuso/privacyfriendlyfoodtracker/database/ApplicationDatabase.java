@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlyexample.database;
+package org.secuso.privacyfriendlyfoodtracker.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
@@ -11,13 +11,10 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.commonsware.cwac.saferoom.SQLCipherUtils;
 import com.commonsware.cwac.saferoom.SafeHelperFactory;
 
-import org.secuso.privacyfriendlyexample.Converter.DateConverter;
-import org.secuso.privacyfriendlyexample.helpers.KeyGenHelper;
-
-import java.io.Console;
+import org.secuso.privacyfriendlyfoodtracker.Converter.DateConverter;
+import org.secuso.privacyfriendlyfoodtracker.helpers.KeyGenHelper;
 
 import static com.commonsware.cwac.saferoom.SQLCipherUtils.encrypt;
 import static com.commonsware.cwac.saferoom.SQLCipherUtils.getDatabaseState;
