@@ -91,6 +91,10 @@
     <string name="error_calories_nan">"Bitte gib für die Kalorien nur Zahlen ein"</string>
     <string name="error_database">"Konnte den Eintrag nicht Speichern"</string>
     <string name="total_calories">"kCal"</string>
+    <string name="action_confirm">Bestätigen</string>
+    <string name="action_cancel">Abbrechen</string>
+    <string name="delete_entry_prompt">Löschen?</string>
+
 
 
     <string name="setup_step_generating_key">Erstelle Key</string>

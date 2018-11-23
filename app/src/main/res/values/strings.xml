@@ -98,6 +98,9 @@ Ne albucius perfecto adolescens eum, id choro assueverit mea, sed viris constitu
     <string name="error_calories_nan">"Only numbers are allowed for Calories"</string>
     <string name="error_database">"Could not write to database"</string>
     <string name="total_calories">"kCal"</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="delete_entry_prompt">Delete?</string>
 
 
 

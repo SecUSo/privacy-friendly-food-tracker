@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/delete_menu">
+
+    <!-- "Mark Favorite", should appear as action button if possible -->
+    <item
+        android:id="@+id/action_confirm_deletion"
+        android:icon="@drawable/button_confirm"
+        android:title="@string/action_confirm"
+        app:showAsAction="ifRoom"
+        />
+
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/action_cancel_deletion"
+        android:icon="@drawable/button_cancel"
+        android:title="@string/action_cancel"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>
