@@ -10,6 +10,7 @@ import org.secuso.privacyfriendlyfoodtracker.network.ApiManager;
 import org.secuso.privacyfriendlyfoodtracker.network.ProductApiService;
 import org.secuso.privacyfriendlyfoodtracker.network.models.ProductResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -22,6 +23,8 @@ import static org.junit.Assert.assertTrue;
 
 public class ApiManagerTest {
     ProductApiService mProductApiService = null ;
+    ProductResponse productResponse = new ProductResponse();
+
 
     @Before
     public void createManager() {
@@ -32,18 +35,28 @@ public class ApiManagerTest {
     @Test
     public void readProductInformations() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
-        Call<List<ProductResponse>> call = mProductApiService.listProducts();
-        call.enqueue(new Callback<List<ProductResponse>>() {
+        Call<ProductResponse> call = mProductApiService.listProducts("banane");
+        call.enqueue(new Callback<ProductResponse>() {
             @Override
-            public void onResponse(Call<List<ProductResponse>> call, Response<List<ProductResponse>> response) {
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.isSuccessful())  {
+                    productResponse = response.body();
+                    }
+                else{
+                    //show error
+                }
                 signal.countDown();
+
             }
 
             @Override
-            public void onFailure(Call<List<ProductResponse>> call, Throwable t) {
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+                signal.countDown();
 
             }
         });
-        assertTrue("", ((List<ProductResponse>)call).size() == 1 );
+        signal.await();// wait for callback
+        // uses the current location. To pass the test, the location must be "de"
+        assertTrue("Responds should contains 20 product informations ", productResponse.getProducts().size() == 20 );
     }
 }

@@ -9,6 +9,10 @@ import java.util.List;
 
 public class ProductResponse {
 
+    public List<Product> getProducts() {
+        return products;
+    }
+
     String skip;
     String count;
     String page;
