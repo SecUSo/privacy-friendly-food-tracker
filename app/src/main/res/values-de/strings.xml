@@ -6,7 +6,7 @@
     <string name="action_help">Hilfe</string>
     <string name="action_about">Über</string>
     <string name="action_settings">Einstellungen</string>
-    <string name="action_main">Hauptmenü</string>
+    <string name="action_main">Kalender</string>
     <string name="action_game">Spiel</string>
     <string name="action_tutorial">Tutorial</string>
 
@@ -47,7 +47,7 @@
 
     <!--###ABOUT###-->
     <string name="about">Über</string>
-    <string name="version_number">Version v%s</string>
+    <string name="version_number">Version 1.0</string>
     <string name="about_author">Autoren: </string>
     <string name="about_author_contributors">und Mitwirkende.</string>
     <string name="about_affiliation">In Zusammenarbeit mit</string>
@@ -91,6 +91,10 @@
     <string name="error_calories_nan">"Bitte gib für die Kalorien nur Zahlen ein"</string>
     <string name="error_database">"Konnte den Eintrag nicht Speichern"</string>
     <string name="total_calories">"kCal"</string>
+    <string name="action_confirm">Bestätigen</string>
+    <string name="action_cancel">Abbrechen</string>
+    <string name="delete_entry_prompt">Löschen?</string>
+
 
 
     <string name="setup_step_generating_key">Erstelle Key</string>
