@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Product {
 
@@ -26,6 +27,7 @@ public class Product {
     @Expose
     private String manufactureUrl;
     private String url;
+
     private String code;
     @SerializedName("traces_tags")
     @Expose
@@ -129,6 +131,7 @@ public class Product {
     @Expose
     private List<String> editorsTags = new ArrayList<>();
 
+    private Map<String, Object> nutriments;
 
     /**
      * @return The statesTags
@@ -458,6 +461,15 @@ public class Product {
         return imageUrl;
     }
 
+    /**
+     * @return The nutriments
+     */
+    public String getNutrimentEnergy() {
+        if(nutriments.containsKey("energy_100g")){
+            return nutriments.get("energy_100g").toString();
+        }
+        return "";
+    }
 
     /**
      * @return The Emb_codes

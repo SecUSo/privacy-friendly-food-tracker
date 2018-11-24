@@ -8,7 +8,9 @@ import org.junit.Test;
 import org.secuso.privacyfriendlyfoodtracker.activities.MainActivity;
 import org.secuso.privacyfriendlyfoodtracker.network.ApiManager;
 import org.secuso.privacyfriendlyfoodtracker.network.ProductApiService;
+import org.secuso.privacyfriendlyfoodtracker.network.models.Product;
 import org.secuso.privacyfriendlyfoodtracker.network.models.ProductResponse;
+import org.secuso.privacyfriendlyfoodtracker.network.utils.ProductConversionHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class ApiManagerTest {
     ProductApiService mProductApiService = null ;
     ProductResponse productResponse = new ProductResponse();
+    List<org.secuso.privacyfriendlyfoodtracker.database.Product> products = new ArrayList<>();
 
 
     @Before
@@ -58,5 +61,41 @@ public class ApiManagerTest {
         signal.await();// wait for callback
         // uses the current location. To pass the test, the location must be "de"
         assertTrue("Responds should contains 20 product informations ", productResponse.getProducts().size() == 20 );
+    }
+
+    @Test
+    public void readProductInformationConvertet() throws Exception {
+        final CountDownLatch signal = new CountDownLatch(1);
+        Call<ProductResponse> call = mProductApiService.listProducts("banane");
+
+        call.enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.isSuccessful())  {
+                    // Conversion to db product
+                    productResponse = response.body();
+                    for(int i = 0; i < productResponse.getProducts().size();i++){
+                        Product product = productResponse.getProducts().get(i);
+                        if(product != null){
+                        products.add(ProductConversionHelper.conversionProduct(product));
+                        }
+                    }
+                }
+                else{
+                    //show error
+                }
+                signal.countDown();
+
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+                signal.countDown();
+
+            }
+        });
+        signal.await();// wait for callback
+        // uses the current location. To pass the test, the location must be "de"
+        assertTrue("Responds should contains 20 product informations ", products.get(0).energy != 0 );
     }
 }
