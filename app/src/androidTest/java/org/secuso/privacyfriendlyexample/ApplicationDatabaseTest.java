@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlyexample;
+/*package org.secuso.privacyfriendlyexample;
 
 import org.junit.After;
 import org.junit.Before;
@@ -24,13 +24,10 @@ public class ApplicationDatabaseTest {
 
         @Test
         public void writeUserAndReadInList() throws Exception {
-            User user = TestUtil.createUser(3);
-            user.setName("george");
-            mUserDao.insert(user);
-            List<User> byName = mUserDao.findUsersByName("george");
-            assertThat(byName.get(0), equalTo(user));
+
         }
     }
 
 
 
+*/
