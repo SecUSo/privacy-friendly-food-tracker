@@ -6,6 +6,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.sql.Date;
 import java.util.List;
 
 @Dao
@@ -26,6 +27,12 @@ public interface ConsumedEntriesDao {
     @Query("SELECT * FROM consumedEntries WHERE productId=:consumedEntriesId")
     List<ConsumedEntries> findConsumedEntriesForProduct(final int consumedEntriesId);
 
-    /*@Query("SELECT * FROM consumedEntries WHERE date=:date")
-    List<ConsumedEntries> findConsumedEntriesForDate(final Date date);*/
+    @Query("SELECT productId FROM consumedEntries GROUP BY productId ORDER BY COUNT(productId) DESC  LIMIT 20")
+    List<Integer> findMostCommonProducts();
+
+    @Query("SELECT * FROM consumedEntries WHERE date=:date")
+    List<ConsumedEntries> findConsumedEntriesForDate(final Date date);
+
+    @Query("DELETE FROM consumedEntries")
+    void deleteAll();
 }
