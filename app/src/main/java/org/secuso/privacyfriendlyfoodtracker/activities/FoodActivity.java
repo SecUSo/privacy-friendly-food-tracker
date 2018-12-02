@@ -41,6 +41,8 @@ public class FoodActivity extends AppCompatActivity {
         if (!("".equals(id)) && null != id){
             mode = EDIT;
             getSupportActionBar().setTitle(R.string.edit_entry);
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addEntry);
+            fab.setImageResource(R.drawable.button_confirm);
         }
 
         if( mode == NEWENTRY) {
