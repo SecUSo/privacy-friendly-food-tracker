@@ -18,28 +18,6 @@
 
         <include layout="@layout/content_main" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_dialog_email"
-            android:onClick="onClick" />
-
-        <Button
-            android:id="@+id/button_welcomedialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingEnd="@dimen/activity_horizontal_margin"
-            android:layout_gravity="bottom|start"
-            android:background="@drawable/button_normal"
-            android:text="@string/main_floating_button"
-            android:textColor="@color/white"
-            android:layout_margin="@dimen/fab_margin"
-            android:onClick="onClick"/>
-
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
