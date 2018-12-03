@@ -38,6 +38,7 @@ import android.widget.TextView;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.helpers.FirstLaunchManager;
+import org.secuso.privacyfriendlyfoodtracker.helpers.KeyGenHelper;
 
 /**
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/
@@ -109,7 +110,14 @@ public class TutorialActivity extends AppCompatActivity {
                     // move to next screen
                     viewPager.setCurrentItem(current);
                 } else {
-                    launchHomeScreen();
+                    if(!KeyGenHelper.isKeyGenerated()){
+                        Intent intent = new Intent(TutorialActivity.this, GenerateKeyActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        firstLaunchManager.setFirstTimeLaunch(false);
+                        startActivity(intent);
+                    } else {
+                        launchHomeScreen();
+                    }
                 }
             }
         });

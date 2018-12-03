@@ -55,8 +55,8 @@ public class DatabaseFacade {
         try {
             List<ConsumedEntries> res = consumedEntriesDao.findConsumedEntriesById(id);
             if(res.size() != 1){return false;}
-            ConsumedEntries consumedEntrie = res.get(0);
-            consumedEntrie.amount = amount;
+            ConsumedEntries consumedEntry = res.get(0);
+            consumedEntry.amount = amount;
             consumedEntriesDao.update(res.get(0));
             return true;
         } catch (Exception e){
@@ -68,7 +68,7 @@ public class DatabaseFacade {
 
     public boolean insertProduct( String name, int energy,  String barcode){
         try{
-            List<ConsumedEntries> res = productDao.findExistingProducts(name, energy,barcode);
+            List<Product> res = productDao.findExistingProducts(name, energy,barcode);
             if(res.size() != 1){return false;}
             productDao.insert(new Product(0,name, energy, barcode));
             return true;
