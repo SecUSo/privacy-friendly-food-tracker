@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ProductResponse {
 
-    public List<Product> getProducts() {
+    public List<NetworkProduct> getProducts() {
         return products;
     }
 
@@ -17,10 +17,10 @@ public class ProductResponse {
     String count;
     String page;
     String page_size;
-    List<Product> products;
+    List<NetworkProduct> products;
 
     public ProductResponse() {
-        products = new ArrayList<Product>();
+        products = new ArrayList<NetworkProduct>();
     }
 
     public static ProductResponse parseJSON(String response) {

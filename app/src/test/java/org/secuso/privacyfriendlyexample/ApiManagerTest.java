@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.secuso.privacyfriendlyfoodtracker.activities.MainActivity;
 import org.secuso.privacyfriendlyfoodtracker.network.ApiManager;
 import org.secuso.privacyfriendlyfoodtracker.network.ProductApiService;
-import org.secuso.privacyfriendlyfoodtracker.network.models.Product;
+import org.secuso.privacyfriendlyfoodtracker.network.models.NetworkProduct;
 import org.secuso.privacyfriendlyfoodtracker.network.models.ProductResponse;
 import org.secuso.privacyfriendlyfoodtracker.network.utils.ProductConversionHelper;
 
@@ -31,12 +31,12 @@ public class ApiManagerTest {
 
     @Before
     public void createManager() {
-        this.mProductApiService =  ApiManager.getInstance().getProductApiService();
+        this.mProductApiService =  ApiManager.getInstance().getProductApiService("de");
 
     }
 
     @Test
-    public void readProductInformations() throws Exception {
+    public void readProductInformation() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         Call<ProductResponse> call = mProductApiService.listProducts("banane");
         call.enqueue(new Callback<ProductResponse>() {
@@ -64,7 +64,7 @@ public class ApiManagerTest {
     }
 
     @Test
-    public void readProductInformationConvertet() throws Exception {
+    public void readProductInformationConverter() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         Call<ProductResponse> call = mProductApiService.listProducts("banane");
 
@@ -75,7 +75,7 @@ public class ApiManagerTest {
                     // Conversion to db product
                     productResponse = response.body();
                     for(int i = 0; i < productResponse.getProducts().size();i++){
-                        Product product = productResponse.getProducts().get(i);
+                        NetworkProduct product = productResponse.getProducts().get(i);
                         if(product != null){
                         products.add(ProductConversionHelper.conversionProduct(product));
                         }

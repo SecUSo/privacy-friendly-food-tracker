@@ -3,7 +3,7 @@ package org.secuso.privacyfriendlyfoodtracker.network.utils;
 import org.secuso.privacyfriendlyfoodtracker.database.Product;
 
 public class ProductConversionHelper {
-    public static Product conversionProduct(org.secuso.privacyfriendlyfoodtracker.network.models.Product product) {
+    public static Product conversionProduct(org.secuso.privacyfriendlyfoodtracker.network.models.NetworkProduct product) {
         String energyS = product.getNutrimentEnergy();
         if(energyS == ""){
             return null;

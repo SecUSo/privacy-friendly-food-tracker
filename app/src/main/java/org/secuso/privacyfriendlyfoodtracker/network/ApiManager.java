@@ -32,6 +32,14 @@ public class ApiManager implements IApiManager {
         return productApiService;
     }
 
+    @Override
+    public ProductApiService getProductApiService(String languageCode) {
+        if (productApiService == null) {
+            productApiService = createProductApiService(languageCode);
+        }
+
+        return productApiService;
+    }
 
     private ProductApiService createProductApiService() {
         String languageCode = Locale.getDefault().getLanguage();
@@ -40,6 +48,13 @@ public class ApiManager implements IApiManager {
         }else{
             languageCode = "world";
         }
+        productApiService = createProductApiService(languageCode);
+
+        return productApiService;
+    }
+
+
+    private ProductApiService createProductApiService(String languageCode) {
         productApiService = new Retrofit.Builder()
                 .baseUrl("https://"+languageCode+".openfoodfacts.org/")
                 .addConverterFactory(GsonConverterFactory.create())

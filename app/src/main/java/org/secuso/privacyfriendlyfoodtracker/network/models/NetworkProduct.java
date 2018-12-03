@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Product {
+public class NetworkProduct {
 
     private static final long serialVersionUID = 1L;
 
