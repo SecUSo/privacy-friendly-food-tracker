@@ -95,9 +95,9 @@ public class DatabaseFacade {
         try {
             List<ConsumedEntries> res = consumedEntriesDao.findConsumedEntriesForDate(new java.sql.Date(date.getTime()));
             for (int i = 0; i < res.size(); i++) {
-                ConsumedEntries consumedEntrie = res.get(i);
-                Product product = productDao.findProductById(consumedEntrie.productId);
-                databaseEntries.add(new DatabaseEntry( String.valueOf(consumedEntrie.id),consumedEntrie.name, consumedEntrie.amount, product.energy));
+                ConsumedEntries consumedEntry = res.get(i);
+                Product product = productDao.findProductById(consumedEntry.productId);
+                databaseEntries.add(new DatabaseEntry( String.valueOf(consumedEntry.id),consumedEntry.name, consumedEntry.amount, product.energy));
             }
 
         } catch (Exception e) {

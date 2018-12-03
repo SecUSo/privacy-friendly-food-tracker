@@ -45,13 +45,12 @@ public class ApplicationDatabaseTest {
         try {
             this.applicationDatabase = ApplicationDatabase.getInstance(appContext);
         } catch (Exception e) {
-            Log.e("Error:", "database are not created");
+            Log.e("Error:", "database was not created");
         }
     }
 
     @After
     public void closeDb() throws IOException {
-      //  if (applicationDatabase != null) applicationDatabase.close();
     }
 
     @Test
@@ -62,7 +61,7 @@ public class ApplicationDatabaseTest {
         applicationDatabase.getProductDao().insert(new Product(0, "Test1", 2, "Barcode"));
         applicationDatabase.getProductDao().insert(new Product(0, "Test1", 2, "Barcode"));
         int size = applicationDatabase.getProductDao().getAllProducts().size();
-        assertTrue("Database should contains 4 elements", size == 4);
+        assertTrue("Database should contain 4 elements", size == 4);
     }
 
     @Test
@@ -78,7 +77,7 @@ public class ApplicationDatabaseTest {
         applicationDatabase.getConsumedEntriesDao().insert(new ConsumedEntries(0, 2, new java.sql.Date(Calendar.getInstance().getTime().getTime()), "test", 2));
         applicationDatabase.getConsumedEntriesDao().insert(new ConsumedEntries(0, 2, new java.sql.Date(Calendar.getInstance().getTime().getTime()), "test", 3));
         int size = applicationDatabase.getConsumedEntriesDao().getAllConsumedEntries().size();
-        assertTrue("Database should contains 4 elements", size == 4);
+        assertTrue("Database should contain 4 elements", size == 4);
     }
 
     @Test
