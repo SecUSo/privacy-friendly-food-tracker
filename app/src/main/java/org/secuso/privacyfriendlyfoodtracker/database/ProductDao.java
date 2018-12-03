@@ -27,7 +27,7 @@ public interface ProductDao {
     List<Product> getAllProducts();
 
     @Query("SELECT * FROM product WHERE id=:id")
-    List<Product> findProductById(final int id);
+    Product findProductById(final int id);
 
 
     @Query("SELECT * FROM product WHERE name=:name AND energy=:energy AND barcode=:barcode")
