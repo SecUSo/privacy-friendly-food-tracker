@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import org.secuso.privacyfriendlyfoodtracker.helpers.FirstLaunchManager;
+import org.secuso.privacyfriendlyfoodtracker.helpers.KeyGenHelper;
 
 /**
  * @author Karola Marky
@@ -39,6 +40,9 @@ public class SplashActivity extends AppCompatActivity {
         FirstLaunchManager firstStartPref = new FirstLaunchManager(this);
 
         if(firstStartPref.isFirstTimeLaunch()) {
+            firstStartPref.initFirstTimeLaunch();
+            mainIntent = new Intent(this, TutorialActivity.class);
+        } else if(!KeyGenHelper.isKeyGenerated()) {
             firstStartPref.initFirstTimeLaunch();
             mainIntent = new Intent(this, TutorialActivity.class);
         } else {

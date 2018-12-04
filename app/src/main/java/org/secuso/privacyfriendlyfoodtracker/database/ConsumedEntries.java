@@ -20,7 +20,7 @@ public class ConsumedEntries {
     @PrimaryKey(autoGenerate = true)
     public final int id;
     public final int productId;
-    public final int amount;
+    public int amount;
     @TypeConverters({DateConverter.class}) public final Date date;
     public final String name;
 

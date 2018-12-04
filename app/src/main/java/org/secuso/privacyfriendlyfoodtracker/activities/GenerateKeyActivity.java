@@ -1,5 +1,7 @@
 package org.secuso.privacyfriendlyfoodtracker.activities;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,16 +12,18 @@ import android.widget.ProgressBar;
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
 import org.secuso.privacyfriendlyfoodtracker.database.Product;
+import org.secuso.privacyfriendlyfoodtracker.helpers.FirstLaunchManager;
 import org.secuso.privacyfriendlyfoodtracker.helpers.KeyGenHelper;
 
 import java.security.Key;
 
 public class GenerateKeyActivity extends AppCompatActivity {
+    FirstLaunchManager mFirstLaunchManager;
     CheckBox mCheckBox1;
     CheckBox mCheckBox2;
     CheckBox mCheckBox3;
     ProgressBar mProgressBar;
-
+    FloatingActionButton mFloatingActionButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +36,20 @@ public class GenerateKeyActivity extends AppCompatActivity {
         mCheckBox1.setEnabled(false);
         mCheckBox2.setEnabled(false);
         mCheckBox3.setEnabled(false);
+        mFloatingActionButton = findViewById(R.id.fab);
+        mFirstLaunchManager = new FirstLaunchManager(this);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                launchHomeScreen();
+            }
+        });
+    }
+
+    private void launchHomeScreen() {
+            Intent intent = new Intent(GenerateKeyActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            mFirstLaunchManager.setFirstTimeLaunch(false);
+            startActivity(intent);
     }
 
     @Override
@@ -53,9 +71,7 @@ public class GenerateKeyActivity extends AppCompatActivity {
                         KeyGenHelper.generatePassphrase(getApplicationContext());
                         mCheckBox2.setChecked(true);
                         Key key = KeyGenHelper.getSecretKey(getApplicationContext()); // TODO: Remove test code
-                        ApplicationDatabase applicationDatabase = ApplicationDatabase.getInstance(getApplicationContext());
-                        //applicationDatabase.getConsumedEntriesDao().insert(new ConsumedEntries(0, 2, new java.sql.Date(Calendar.getInstance().getTime().getTime()), "test", 0));
-                      //  applicationDatabase.getProductDao().insert(new Product( 0, "name", 200, "df"));
+                        ApplicationDatabase.getInstance(getApplicationContext());
                         mCheckBox3.setChecked(true);
                         mProgressBar.setVisibility(View.INVISIBLE);
                     } catch (Exception e) {
@@ -67,13 +83,6 @@ public class GenerateKeyActivity extends AppCompatActivity {
                     mCheckBox3.setChecked(true);
                     mProgressBar.setVisibility(View.INVISIBLE);
                 }
-                try {
-                    ApplicationDatabase.getInstance(getApplicationContext()).getProductDao().insert(new Product( 0, "name", 200, "df"));
-
-                }catch (Exception e){
-
-                }
-
             }
         };
 
