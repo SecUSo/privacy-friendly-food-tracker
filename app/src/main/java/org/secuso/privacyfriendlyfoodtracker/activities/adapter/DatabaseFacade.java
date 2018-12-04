@@ -24,21 +24,32 @@ public class DatabaseFacade {
     /**
      * Insert a new consumed entry.
      * @param amount the amount
-     * @param date the consuming date
+     * @param date the consumption date in UNIX format
      * @param name the name
      * @param productId the consumed product id
      * @return true if no error occurs
      */
-    public boolean insertEntry( int amount,  java.util.Date date,  String name,  int productId){
+    public boolean insertEntry(int amount, java.util.Date date, String name, int energy, int productId){
+        int existingProductId = 0;
+        //If the productId is 0 we need to create a new product in the database
+        if (0 == productId) {
+            insertProduct(name, energy, "");
+            // retrieve ProductId of newly created Product from database
+            List<Product> existingProducts = productDao.findExistingProducts(name, energy, "");
+            // There is only one existing product so we take the first one from the List
+            Product p = existingProducts.get(0);
+            existingProductId = p.id;
+        } else {
+            existingProductId = productId;
+        }
         try {
-            List<ConsumedEntries> res = consumedEntriesDao.findExistingConsumedEntries(productId, amount,new java.sql.Date(date.getTime()),name);
-            if(res.size() != 1){return false;}
-            consumedEntriesDao.insert(new ConsumedEntries(0,amount,new java.sql.Date(date.getTime()),name,productId));
+            consumedEntriesDao.insert(new ConsumedEntries(0, amount, new java.sql.Date(date.getTime()), name, existingProductId));
             return true;
         } catch (Exception e){
             return false;
         }
     }
+
 
     public boolean deleteEntryById(int id ){
         try {
@@ -51,7 +62,7 @@ public class DatabaseFacade {
         }
     }
 
-    public boolean editEntryById(int id, int amount ){
+    public boolean editEntryById(int id, int amount){
         try {
             List<ConsumedEntries> res = consumedEntriesDao.findConsumedEntriesById(id);
             if(res.size() != 1){return false;}
@@ -68,12 +79,15 @@ public class DatabaseFacade {
 
     public boolean insertProduct( String name, int energy,  String barcode){
         try{
-            List<Product> res = productDao.findExistingProducts(name, energy,barcode);
-            if(res.size() != 1){return false;}
+            List<Product> res = productDao.findExistingProducts(name, energy, barcode);
+            if(res.size() != 0){
+                return false;
+            }
             productDao.insert(new Product(0,name, energy, barcode));
             return true;
         }catch (Exception e){
-            return false;}
+            return false;
+        }
     }
 
     public List<Product> findMostCommonProducts() {

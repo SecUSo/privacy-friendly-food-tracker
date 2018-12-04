@@ -12,8 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
-import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseAdapter;
-import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseEntry;
+import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseFacade;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -96,7 +95,7 @@ public class FoodActivity extends AppCompatActivity {
                     if(mode == NEWENTRY){
                         entrySuccessful = makeDatabaseEntry(name, amount, calories);
                     }else if (mode == EDIT){
-                        entrySuccessful = editDatabaseEntry(name, amount, calories, id);
+                        entrySuccessful = editDatabaseEntry(amount, id);
                     }
                     if (!entrySuccessful){
                         Snackbar.make(view, R.string.error_database, Snackbar.LENGTH_LONG)
@@ -115,20 +114,28 @@ public class FoodActivity extends AppCompatActivity {
 
     }
 
-    private boolean editDatabaseEntry(String name, String amountString, String caloriesString, String id){
-        DatabaseAdapter da = new DatabaseAdapter();
+    private boolean editDatabaseEntry(String amountString, String idString){
+        DatabaseFacade facade = getDbFacade();
         int amount = Integer.parseInt(amountString);
-        int calories = Integer.parseInt(caloriesString);
-        return da.editEntry(id, name, amount, calories);
+        int id = Integer.parseInt(idString);
+        return facade.editEntryById(id, amount);
     }
 
     private boolean makeDatabaseEntry(String name, String amountString, String caloriesString) {
-        DatabaseAdapter da = new DatabaseAdapter();
-        int amount = Integer.parseInt(amountString);
-        int calories = Integer.parseInt(caloriesString);
-        return da.insertEntry(name, amount, calories, date);
-
+        try {
+            DatabaseFacade df = new DatabaseFacade(this);
+            int amount = Integer.parseInt(amountString);
+            int calories = Integer.parseInt(caloriesString);
+            // We haven't explicitly chosen a product so the productId is 0 for unknown
+            df.insertEntry(amount, date, name, calories, 0);
+        } catch (Exception e) {
+            // something went wrong so the entry wasn't successful
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
+
     private boolean validateResponses(String name, String amount, String calories, View view) {
         if("".equals(name)){
             Snackbar.make(view, R.string.error_food_missing, Snackbar.LENGTH_LONG)
@@ -170,6 +177,18 @@ public class FoodActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
+
+    private DatabaseFacade getDbFacade(){
+        DatabaseFacade facade = null;
+        try {
+            facade = new DatabaseFacade(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return facade;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
