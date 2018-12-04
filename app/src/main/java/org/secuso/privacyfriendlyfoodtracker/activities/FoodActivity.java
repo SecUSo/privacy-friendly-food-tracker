@@ -41,6 +41,9 @@ public class FoodActivity extends AppCompatActivity {
         if (!("".equals(id)) && null != id){
             mode = EDIT;
             getSupportActionBar().setTitle(R.string.edit_entry);
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addEntry);
+            fab.setImageResource(R.drawable.button_confirm);
+
         }
 
         if( mode == NEWENTRY) {
@@ -53,9 +56,22 @@ public class FoodActivity extends AppCompatActivity {
 
             EditText amountField = findViewById(R.id.input_amount);
             amountField.setText(Integer.toString(intent.getIntExtra("AMOUNT", 0)));
+            amountField.requestFocus();
 
             EditText caloriesField = findViewById(R.id.input_calories);
             caloriesField.setText(Integer.toString(intent.getIntExtra("CALORIES", 0)));
+
+            nameField.setKeyListener(null);
+            nameField.setClickable(false);
+            nameField.setFocusable(false);
+            nameField.setTextColor(getResources().getColor(R.color.middlegrey));
+            nameField.setHighlightColor(getResources().getColor(R.color.middlegrey));
+
+            caloriesField.setKeyListener(null);
+            caloriesField.setClickable(false);
+            caloriesField.setFocusable(false);
+            caloriesField.setTextColor(getResources().getColor(R.color.middlegrey));
+            caloriesField.setHighlightColor(getResources().getColor(R.color.middlegrey));
         }
 
 

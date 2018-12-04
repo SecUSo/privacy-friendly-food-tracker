@@ -84,6 +84,12 @@ public class OverviewActivity extends AppCompatActivity {
             set.constrainWidth(amount.getId(), ConstraintSet.WRAP_CONTENT);
             set.constrainHeight(amount.getId(), ConstraintSet.WRAP_CONTENT);
 
+            TextView energy = new TextView(this);
+            energy.setId(View.generateViewId());
+            energy.setText(Integer.toString(e.energy) + " kCal/100");
+            set.constrainWidth(energy.getId(), ConstraintSet.WRAP_CONTENT);
+            set.constrainHeight(energy.getId(), ConstraintSet.WRAP_CONTENT);
+
 
             TextView calories = new TextView(this);
             int consumedEnergy = (e.amount*e.energy)/100;
@@ -100,6 +106,7 @@ public class OverviewActivity extends AppCompatActivity {
             cl.addView(name);
             cl.addView(calories);
             cl.addView(amount);
+            cl.addView(energy);
             c.addView(cl);
             c.addView(id);
             foodList.addView(c);
@@ -111,9 +118,13 @@ public class OverviewActivity extends AppCompatActivity {
             set.connect(calories.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 20);
             set.connect(calories.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 20);
 
-            set.connect(amount.getId(), ConstraintSet.TOP, name.getId(), ConstraintSet.BOTTOM, 20);
-            set.connect(amount.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 20);
+            set.connect(amount.getId(), ConstraintSet.TOP, calories.getId(), ConstraintSet.BOTTOM, 20);
+            set.connect(amount.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 20);
             set.connect(amount.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 20);
+
+            set.connect(energy.getId(), ConstraintSet.TOP, name.getId(), ConstraintSet.BOTTOM, 20);
+            set.connect(energy.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 20);
+            set.connect(energy.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 20);
 
             set.applyTo(cl);
             final DatabaseEntry entry = e;
