@@ -41,7 +41,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
                     SafeHelperFactory factory= new SafeHelperFactory(KeyGenHelper.getSecretKeyAsChar(context));
 
                     sInstance = Room.databaseBuilder(context.getApplicationContext(),
-                            ApplicationDatabase.class, DATABASE_NAME).openHelperFactory(factory).addCallback(new Callback() {
+                            ApplicationDatabase.class, DATABASE_NAME).openHelperFactory(factory).allowMainThreadQueries().addCallback(new Callback() {
                         @Override
                         public void onCreate(@NonNull SupportSQLiteDatabase db) {
                             super.onCreate(db);
