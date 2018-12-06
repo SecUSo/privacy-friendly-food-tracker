@@ -37,6 +37,7 @@ public class GenerateKeyActivity extends AppCompatActivity {
         mCheckBox2.setEnabled(false);
         mCheckBox3.setEnabled(false);
         mFloatingActionButton = findViewById(R.id.fab);
+        methodWhereFabIsHidden();
         mFirstLaunchManager = new FirstLaunchManager(this);
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -46,10 +47,10 @@ public class GenerateKeyActivity extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
-            Intent intent = new Intent(GenerateKeyActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            mFirstLaunchManager.setFirstTimeLaunch(false);
-            startActivity(intent);
+        Intent intent = new Intent(GenerateKeyActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        mFirstLaunchManager.setFirstTimeLaunch(false);
+        startActivity(intent);
     }
 
     @Override
@@ -70,7 +71,6 @@ public class GenerateKeyActivity extends AppCompatActivity {
                         mCheckBox1.setChecked(true);
                         KeyGenHelper.generatePassphrase(getApplicationContext());
                         mCheckBox2.setChecked(true);
-                        Key key = KeyGenHelper.getSecretKey(getApplicationContext()); // TODO: Remove test code
                         ApplicationDatabase.getInstance(getApplicationContext());
                         mCheckBox3.setChecked(true);
                         mProgressBar.setVisibility(View.INVISIBLE);
@@ -83,10 +83,53 @@ public class GenerateKeyActivity extends AppCompatActivity {
                     mCheckBox3.setChecked(true);
                     mProgressBar.setVisibility(View.INVISIBLE);
                 }
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // update gui
+                        methodWhereFabIsShown();
+                    }
+                });
             }
         };
 
         task.start();
+
+    }
+
+    boolean fabShouldBeShown;
+    FloatingActionButton.OnVisibilityChangedListener fabListener = new FloatingActionButton.OnVisibilityChangedListener() {
+        @Override
+        public void onShown(FloatingActionButton fab) {
+            super.onShown(fab);
+            if(!fabShouldBeShown){
+                fab.hide();
+            }
+        }
+
+        @Override
+        public void onHidden(FloatingActionButton fab) {
+            super.onHidden(fab);
+            if(fabShouldBeShown){
+                fab.show();
+            }
+        }
+    };
+
+    public void methodWhereFabIsHidden() {
+        fabShouldBeShown = false;
+        mFloatingActionButton.hide(fabListener);
+    }
+
+    public void methodWhereFabIsShown() {
+        fabShouldBeShown = true;
+        mFloatingActionButton.show(fabListener);
+    }
+
+
+    @Override
+    public void onBackPressed() {
 
     }
 }
