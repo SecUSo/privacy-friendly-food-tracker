@@ -52,13 +52,15 @@
 
     <!-- ### TUTORIAL DIALOG ### -->
     <string name="slide1_heading">Willkommen!</string>
-    <string name="slide1_text">Diese App soll als Anleitung zum Design von Privacy Friendly Apps dienen. Hier wird die App in ein bis zwei Sätzen vorgestellt.</string>
-
-    <string name="slide2_heading">Schlüsselelements</string>
-    <string name="slide2_text">Hier können Schlüsselelemente vorgestellt werden. Achtung: Nicht zu detailliert werden.</string>
+    <string name="slide1_text">Diese App soll dir die Möglichkeit geben, deine konsumierten Kalorien zu verfolgen,
+        ohne deine Essgewohnheiten mit dritten Parteien teilen zu müssen.
+        Wir verlangen nur die minimale Anzahl an Berechtigungen, die für diese App unbedingt nötig ist..</string>
+    <string name="slide2_heading">Schlüsselelemente</string>
+    <string name="slide2_text">Du kannst einen Eintrag hinzufügen, indem du auf der Übersichtsseite auf das "+"-Symbol klickst.
+    Deine Kalorien werden für jeden Tag gespeichert, einen bestimmten Tag kannst du in der Kalender-Übersicht aussuchen.</string>
 
     <string name="slide3_heading">Github und Guide</string>
-    <string name="slide3_text">Der Quellcode dieser App ist auf GitHub. Weitere Infos gibt es im Privacy Friendly App Guide.</string>
+    <string name="slide3_text">Der Quellcode dieser App ist auf GitHub. Weitere Infos gibt es auf der "Hilfe"-Seite.</string>
 
     <string name="next">Weiter</string>
     <string name="skip">Überspringen</string>
@@ -68,13 +70,13 @@
     <string name="hint_food_name">Name</string>
     <string name="hint_food_amount">Menge</string>
     <string name="hint_food_calories">kCal/100</string>
-    <string name="error_food_missing">"Bitte gib deinem Eintrag einen Namen"</string>
-    <string name="error_amount_missing">"Bitte gib ein, wieviel du gegessen hast"</string>
-    <string name="error_calories_missing">"Bitte gib an, wieviele kCal dein Essen pro 100 hat"</string>
-    <string name="error_amount_nan">"Bitte gib für die Menge nur Zahlen ein"</string>
-    <string name="error_calories_nan">"Bitte gib für die Kalorien nur Zahlen ein"</string>
-    <string name="error_database">"Konnte den Eintrag nicht speichern"</string>
-    <string name="total_calories">"kCal"</string>
+    <string name="error_food_missing">Bitte gib deinem Eintrag einen Namen</string>
+    <string name="error_amount_missing">Bitte gib ein, wieviel du gegessen hast</string>
+    <string name="error_calories_missing">Bitte gib an, wieviele kCal dein Essen pro 100 hat</string>
+    <string name="error_amount_nan">Bitte gib für die Menge nur Zahlen ein</string>
+    <string name="error_calories_nan">Bitte gib für die Kalorien nur Zahlen ein</string>
+    <string name="error_database">Konnte den Eintrag nicht speichern</string>
+    <string name="total_calories">kCal</string>
     <string name="action_confirm">Bestätigen</string>
     <string name="action_cancel">Abbrechen</string>
     <string name="delete_entry_prompt">Löschen?</string>
