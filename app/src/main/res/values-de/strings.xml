@@ -1,49 +1,34 @@
 <resources>
     <string name="app_name">Ernährungstracker</string>
-    <string name="app_name_long">Datenschutz freundlicher Ernährungstracker</string>
+    <string name="app_name_long">Privacy Friendly Ernährungstracker</string>
 
     <!-- ###DRAWER###-->
     <string name="action_help">Hilfe</string>
     <string name="action_about">Über</string>
     <string name="action_settings">Einstellungen</string>
     <string name="action_main">Kalender</string>
-    <string name="action_game">Spiel</string>
     <string name="action_tutorial">Tutorial</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <!-- ###MAIN### -->
-    <string name="main_button_text">Button volle Breite</string>
-    <string name="main_button_disabled_text">Inaktiver Button</string>
-    <string name="main_button_1">1</string>
-    <string name="main_button_2">2</string>
-    <string name="main_button_3">3</string>
-    <string name="main_button_4">4</string>
-    <string name="main_button_5">5</string>
-    <string name="main_text_fullwithbutton_desc">Ein Button mit voller breite sieht folgendermaßen aus:</string>
-    <string name="main_text_disabledbutton_desc">Ein inaktiver Button sieht folgendermaßen aus (jede Größe):</string>
-    <string name="main_text_title">Das hier ist eine Beispiel-App zum das Design der Privacy Friendly Apps zu demonstrieren. Weitere Infos gibt es im Privacy Friendly App Guide.</string>
-    <string name="main_text_normalbutton_desc">Es gibt verschiedene Möglichkeiten, um einfache Buttons darzustellen. Button 1 entspricht der Basisform. Wenn Buttons visual abgetrennt werden sollen, ist Button 2 zu verwenden. Die Buttons 3&#8211;5 sind Beispiels für hevorgehobene Buttons. Je nach App können auch andere Farben zum Highlighten verwendet werden.</string>
-    <string name="main_button_welcomedialog_text">Der Button in der Ecke unten links öffnet einen Beispiel-Welcome Dialog.</string>
-
-    <!-- ###GAME###-->
-    <string name="title_activity_game">Spiel</string>
-    <string name="game_button_start">Neues Spiel</string>
-    <string name="game_button_continue">Spiel fortsetzen</string>
-    <string name="game_desc">Dies ist das Standard-Menü für Spiele-Apps. Der Viewpager oben sollte verwendet werden, um zwischen verschiedenen Spielmodi zu wechseln.</string>
+    <string name="navigation_drawer_open">Öffne Navigation Drawer</string>
+    <string name="navigation_drawer_close">Schliesse navigation drawer</string>
 
     <!--###HELP###-->
-    <string name="help">Help</string>
+    <string name="help">Hilfe</string>
 
-    <string name="help_whatis">Was ist Privacy Friendly Beispiel?</string>
-    <string name="help_whatis_answer">Privacy Friendly Beispiel zeigt das Standard-Design einer Privacy Friendly App.</string>
-    <string name="help_feature_one">Feature 1</string>
-    <string name="help_feature_one_answer">Beschreibung vom 1. Feature.</string>
+    <string name="help_whatis">Was ist Privacy Friendly Ernährungstracker?</string>
+    <string name="help_whatis_answer">Privacy Friendly Ernährungstracker ist ein Werkzeug, mit dem du deinen Kalorienverbrauch verfolgen kannst, ohne
+        diese Informationen mit anderen Parteien zu teilen.</string>
+    <string name="help_feature_one">Wie funktioniert die App?</string>
+    <string name="help_feature_one_answer">Um einen Eintrag hinzuzufügen, wähle zunächst im Kalender das Datum aus, an dem du den Eintrag hinzufügen möchtest.
+    Dann klicke auf der Übersichtsseite auf den Button unten rechts. Trage auf der folgenden Seite deine Kalorien ein und klicke wieder auf den Button in der unteren rechten Ecke.
+    Einen Eintrag kannst du bearbeiten, indem du in der Übersichtsseite auf den Eintrag drückst.
+    Einen Eintrag löschen kannst du dadurch, dass du lang auf ihn drückst und dann bestätigst.</string>
     <string name="help_privacy">Was macht die App privatsphäre-freundlich?</string>
-    <string name="help_privacy_answer">Erklären welche Mechanismen verwendet wurden.</string>
+    <string name="help_privacy_answer">Die App braucht keine Berechtigungen, die nicht unbedingt für den Betrieb der App benötigt werden. Außerdem enthält die App keine Tracker oder Werbung.
+    Alle Informationen, die du in dieser App einträgst, werden verschlüsselt auf deinem Handy gespeichert. </string>
     <string name="help_permission">Welche Berechtigungen braucht die App?</string>
-    <string name="help_permission_answer">Privacy Friendly Beispiel benötigt keine Berechtigungen.</string>
+    <string name="help_permission_answer">Privacy Friendly Ernährungstracker benötigt den Zugriff auf deinen Speicher, um die verschlüsselte Datenbank auf deinem Handy zu speichern.
+    Außerdem muss die App aufs Internet zugreifen können, um Informationen aus der Datenbank von Open Food Facts zu holen.</string>
 
     <!--###ABOUT###-->
     <string name="about">Über</string>
@@ -64,7 +49,6 @@
     <!-- ### WELCOME DIALOG ### -->
     <string name="okay">Okay</string>
     <string name="viewhelp">Hilfe</string>
-    <string name="main_floating_button">Schwebender Knopf</string>
 
     <!-- ### TUTORIAL DIALOG ### -->
     <string name="slide1_heading">Willkommen!</string>
@@ -84,12 +68,12 @@
     <string name="hint_food_name">Name</string>
     <string name="hint_food_amount">Menge</string>
     <string name="hint_food_calories">kCal/100</string>
-    <string name="error_food_missing">"Bitte gib deinem Eintrag einen Name"</string>
+    <string name="error_food_missing">"Bitte gib deinem Eintrag einen Namen"</string>
     <string name="error_amount_missing">"Bitte gib ein, wieviel du gegessen hast"</string>
     <string name="error_calories_missing">"Bitte gib an, wieviele kCal dein Essen pro 100 hat"</string>
     <string name="error_amount_nan">"Bitte gib für die Menge nur Zahlen ein"</string>
     <string name="error_calories_nan">"Bitte gib für die Kalorien nur Zahlen ein"</string>
-    <string name="error_database">"Konnte den Eintrag nicht Speichern"</string>
+    <string name="error_database">"Konnte den Eintrag nicht speichern"</string>
     <string name="total_calories">"kCal"</string>
     <string name="action_confirm">Bestätigen</string>
     <string name="action_cancel">Abbrechen</string>

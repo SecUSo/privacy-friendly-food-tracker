@@ -14,42 +14,23 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <!-- ###MAIN### -->
-    <string name="main_button_text">Full Width Button</string>
-    <string name="main_button_disabled_text">Inactive Button</string>
-    <string name="main_button_1">1</string>
-    <string name="main_button_2">2</string>
-    <string name="main_button_3">3</string>
-    <string name="main_button_4">4</string>
-    <string name="main_button_5">5</string>
-    <string name="main_text_fullwithbutton_desc">A button that uses the full width of the screen looks like this:</string>
-    <string name="main_text_disabledbutton_desc">A disabled button looks like this (any size):</string>
-    <string name="main_text_title">This is an example app to demonstrate the design of a Privacy Friendly App. Further explanations can be found in the Privacy Friendly App Guide.</string>
-    <string name="main_text_normalbutton_desc">There are multiple ways to display basic buttons. Button 1 is the basic button. If you wish to separate a button visually, use button 2. The buttons 3&#8211;5 are examples for highlighted buttons. Depending on the app other colors are possible.</string>
-    <string name="main_button_welcomedialog_text">Use the button in the lower left corner to call the Welcome Dialog.</string>
-
-    <!-- ###GAME###-->
-    <string name="title_activity_game">Game</string>
-    <string name="game_button_start">New Game</string>
-    <string name="game_button_continue">Continue Game</string>
-    <string name="game_desc">This is the default main menu for game apps. The viewpager above should be used to switch between game modes.</string>
-
     <!--###HELP###-->
     <string name="help">Help</string>
 
-    <string name="help_whatis">What is Privacy Friendly App Example?</string>
-    <string name="help_whatis_answer">Privacy Friendly App Example is an app that demonstrates the design of a Privacy Friendly App.</string>
-    <string name="help_feature_one">Feature 1</string>
-    <string name="help_feature_one_answer">Description of first feature.
-Lorem ipsum dolor sit amet, eu ius alia fierent indoctum, ad pri sale tation. Elit dictas sit an, ad volumus urbanitas duo. Ei clita iracundia mel, eum et laoreet pertinax abhorreant. Nonumy suavitate dignissim quo id, ius audire prodesset adipiscing ei, altera saperet his et. Nostrud pertinax eu has, qui munere complectitur an.
-
-Ne albucius perfecto adolescens eum, id choro assueverit mea, sed viris constituto ex. Per soleat impedit delicatissimi cu. Inermis volumus his ea, id quo praesent eloquentiam conclusionemque. Dolores mediocrem ad sit, ex cibo evertitur cotidieque eos.
-
+    <string name="help_whatis">What is Privacy Friendly Food Tracker?</string>
+    <string name="help_whatis_answer">Privacy Friendly Food Tracker is an app that allows you to track your calorie intake while maintaining your privacy.</string>
+    <string name="help_feature_one">Tracking your food intake</string>
+    <string name="help_feature_one_answer">To track your calorie intake, touch a date on the calendar. It will take you to an overview for the chosen date,
+        displaying everything you ate on that particular date. To add an item, touch the button in the bottom right corner. <br />
+        To edit an item, touch an entry. <br />
+        To delete one or more entries, press on the item you want to delete for a long time and confirm the deletion.
     </string>
     <string name="help_privacy">What makes the app privacy-friendly?</string>
-    <string name="help_privacy_answer">Privacy Friendly App Example does not require any permission. It further does not include any tracking mechanisms or advertisement.</string>
-    <string name="help_permission">Which permissions requires the app?</string>
-    <string name="help_permission_answer">Privacy Friendly App Example does not require any permission.</string>
+    <string name="help_privacy_answer">Privacy Friendly Food Tracker does not require any permissions it does not need. It furthermore does not include any tracking mechanisms or advertisement.
+    All information you store with this app are encrypted and only visible to you.</string>
+    <string name="help_permission">Which permissions does the app require</string>
+    <string name="help_permission_answer">The storage permission is required to store the encrypted database on your device.
+    The internet permission is needed to find information about products from an online database.</string>
 
     <!--###ABOUT###-->
     <string name="about">About</string>
