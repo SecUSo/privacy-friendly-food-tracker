@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Ernährungstracker</string>
-    <string name="app_name_long">Datenschutzfreundlicher Ernährungstracker</string>
+    <string name="app_name_long">Privacy Friendly Ernährungstracker</string>
 
     <!-- ###DRAWER###-->
     <string name="action_help">Hilfe</string>
@@ -9,8 +9,8 @@
     <string name="action_main">Kalender</string>
     <string name="action_tutorial">Tutorial</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Öffne Navigation Drawer</string>
+    <string name="navigation_drawer_close">Schliesse navigation drawer</string>
 
     <!--###HELP###-->
     <string name="help">Hilfe</string>
@@ -49,7 +49,6 @@
     <!-- ### WELCOME DIALOG ### -->
     <string name="okay">Okay</string>
     <string name="viewhelp">Hilfe</string>
-    <string name="main_floating_button">Schwebender Knopf</string>
 
     <!-- ### TUTORIAL DIALOG ### -->
     <string name="slide1_heading">Willkommen!</string>
@@ -69,12 +68,12 @@
     <string name="hint_food_name">Name</string>
     <string name="hint_food_amount">Menge</string>
     <string name="hint_food_calories">kCal/100</string>
-    <string name="error_food_missing">"Bitte gib deinem Eintrag einen Name"</string>
+    <string name="error_food_missing">"Bitte gib deinem Eintrag einen Namen"</string>
     <string name="error_amount_missing">"Bitte gib ein, wieviel du gegessen hast"</string>
     <string name="error_calories_missing">"Bitte gib an, wieviele kCal dein Essen pro 100 hat"</string>
     <string name="error_amount_nan">"Bitte gib für die Menge nur Zahlen ein"</string>
     <string name="error_calories_nan">"Bitte gib für die Kalorien nur Zahlen ein"</string>
-    <string name="error_database">"Konnte den Eintrag nicht Speichern"</string>
+    <string name="error_database">"Konnte den Eintrag nicht speichern"</string>
     <string name="total_calories">"kCal"</string>
     <string name="action_confirm">Bestätigen</string>
     <string name="action_cancel">Abbrechen</string>
