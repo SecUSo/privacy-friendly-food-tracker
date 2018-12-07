@@ -11,11 +11,8 @@ import android.widget.ProgressBar;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
-import org.secuso.privacyfriendlyfoodtracker.database.Product;
 import org.secuso.privacyfriendlyfoodtracker.helpers.FirstLaunchManager;
 import org.secuso.privacyfriendlyfoodtracker.helpers.KeyGenHelper;
-
-import java.security.Key;
 
 public class GenerateKeyActivity extends AppCompatActivity {
     FirstLaunchManager mFirstLaunchManager;
@@ -37,7 +34,7 @@ public class GenerateKeyActivity extends AppCompatActivity {
         mCheckBox2.setEnabled(false);
         mCheckBox3.setEnabled(false);
         mFloatingActionButton = findViewById(R.id.fab);
-        methodWhereFabIsHidden();
+        hideFAB();
         mFirstLaunchManager = new FirstLaunchManager(this);
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -88,7 +85,7 @@ public class GenerateKeyActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         // update gui
-                        methodWhereFabIsShown();
+                        showFAB();
                     }
                 });
             }
@@ -117,12 +114,12 @@ public class GenerateKeyActivity extends AppCompatActivity {
         }
     };
 
-    public void methodWhereFabIsHidden() {
+    public void hideFAB() {
         fabShouldBeShown = false;
         mFloatingActionButton.hide(fabListener);
     }
 
-    public void methodWhereFabIsShown() {
+    public void showFAB() {
         fabShouldBeShown = true;
         mFloatingActionButton.show(fabListener);
     }

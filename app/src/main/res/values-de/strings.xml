@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Beispiel</string>
-    <string name="app_name_long">Privacy Friendly Beispiel</string>
+    <string name="app_name">Ernährungstracker</string>
+    <string name="app_name_long">Datenschutz freundlicher Ernährungstracker</string>
 
     <!-- ###DRAWER###-->
     <string name="action_help">Hilfe</string>
