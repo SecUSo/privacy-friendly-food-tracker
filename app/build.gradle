@@ -10,7 +10,6 @@ android {
         targetSdkVersion 27
         versionCode 8
         versionName "2.3"
-        //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -46,7 +45,7 @@ dependencies {
     // Gson
     implementation 'com.google.code.gson:gson:2.8.0'
 
-    // Saferroom
+    // Saferoom
     implementation "com.commonsware.cwac:saferoom:0.4.4"
     implementation 'com.android.support:cardview-v7:28.0.0'
 

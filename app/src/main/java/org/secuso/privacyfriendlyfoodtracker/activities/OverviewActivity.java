@@ -1,17 +1,9 @@
 package org.secuso.privacyfriendlyfoodtracker.activities;
 
-import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import org.secuso.privacyfriendlyfoodtracker.R;
-
-import java.util.Date;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseEntry;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.customviews.CheckableCardView;
+import org.secuso.privacyfriendlyfoodtracker.R;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
@@ -19,15 +11,23 @@ import android.view.Menu;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import java.text.SimpleDateFormat;
-import java.util.LinkedList;
-import java.util.List;
-
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Date;
 
 public class OverviewActivity extends AppCompatActivity {
 
@@ -68,20 +68,17 @@ public class OverviewActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.action_cancel_deletion:
                 unselectAllCards();
-                selectedCards = 0;
-                toggleDeletionMenuVisibility();
-                refreshTotalCalorieCounter();
                 break;
             case R.id.action_confirm_deletion:
                 deleteSelectedCards();
-                selectedCards = 0;
-                toggleDeletionMenuVisibility();
-                refreshTotalCalorieCounter();
                 break;
             default:
                 finish();
                 break;
         }
+        selectedCards = 0;
+        toggleDeletionMenuVisibility();
+        refreshTotalCalorieCounter();
         return true;
     }
 
@@ -89,24 +86,31 @@ public class OverviewActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.overview_actionbar, menu);
-        MenuItem del = menu.findItem(R.id.action_cancel_deletion);
-        MenuItem conf = menu.findItem(R.id.action_confirm_deletion);
         if (selectedCards > 0) {
             // if more than one card is selected, we want to enable the 'cancel' and 'confirm' buttons
-            del.setVisible(true);
-            del.setEnabled(true);
-            conf.setVisible(true);
-            conf.setEnabled(true);
+            setMenuVisibility(true, menu);
             getSupportActionBar().setTitle(R.string.delete_entry_prompt);
         } else {
-            del.setVisible(false);
-            del.setEnabled(false);
-            conf.setVisible(false);
-            conf.setEnabled(false);
+            // if no card is selected, hide the menu
+            setMenuVisibility(false, menu);
             getSupportActionBar().setTitle(R.string.title_activity_overview);
-
         }
         return true;
+    }
+
+    /**
+     * sets the visibility of the Deletion menu
+     * @param isVisible The visibility. false for invisible, true for visible.
+     * @param menu The deletion menu
+     */
+    private void setMenuVisibility(boolean isVisible, Menu menu){
+        MenuItem del = menu.findItem(R.id.action_cancel_deletion);
+        MenuItem conf = menu.findItem(R.id.action_confirm_deletion);
+        del.setVisible(isVisible);
+        del.setEnabled(isVisible);
+        conf.setVisible(isVisible);
+        conf.setEnabled(isVisible);
+
     }
 
     @Override
@@ -116,6 +120,9 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * unselects all selected cards when called.
+     */
     private void unselectAllCards() {
         LinearLayout foodList = this.findViewById(R.id.DailyList);
         for (int i = 0; i<foodList.getChildCount(); i++){
@@ -130,13 +137,20 @@ public class OverviewActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * toggles deletion menu visibility.
+     */
     private void toggleDeletionMenuVisibility() {
+        // Causes onCreateOptionsMenu to be called and the menu to be inflated
         invalidateOptionsMenu();
     }
 
+    /**
+     * deletes all currently selected cards and associatedEntries
+     */
     private void deleteSelectedCards() {
-        LinearLayout foodList = this.findViewById(R.id.DailyList);
-        List<View> cardsToRemove = new LinkedList<View>();
+        ViewGroup foodList = getEntryList();
+        List<View> cardsToRemove = new LinkedList<>();
         for (int i = 0; i<foodList.getChildCount(); i++){
             View v = foodList.getChildAt(i);
             if (v instanceof CheckableCardView) {
@@ -150,15 +164,26 @@ public class OverviewActivity extends AppCompatActivity {
                 }
             }
         }
-
         for (View v : cardsToRemove) {
             foodList.removeView(v);
         }
-
     }
 
+    /**
+     * Gets the list where all entries are stores
+     * @return A ViewGroup containing all CheckedCardViews
+     */
+    private ViewGroup getEntryList(){
+        LinearLayout foodlist = this.findViewById(R.id.DailyList);
+        return foodlist;
+    }
+
+    /**
+     * creates a database facade that can be used to call database functions
+     * @return a DatabaseFacade object
+     */
     private DatabaseFacade getDbFacade(){
-        DatabaseFacade facade = null;
+        DatabaseFacade facade;
         try {
             facade = new DatabaseFacade(this);
         } catch (Exception e) {
@@ -167,37 +192,40 @@ public class OverviewActivity extends AppCompatActivity {
         }
         return facade;
     }
+
+    /**
+     * Refreshes the calorie counter at the top of the activity.
+     * Recounts calories for all Entries of the day.
+     */
     private void refreshTotalCalorieCounter() {
-        LinearLayout foodList = this.findViewById(R.id.DailyList);
         int totalCalories = 0;
         TextView heading = this.findViewById(R.id.overviewHeading);
         String cal =  getString(R.string.total_calories);
-        Date d = new Date();
-        d.setTime(date);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        String formattedDate = "";
-        try{
-            formattedDate = dateFormat.format(d);
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-
+        Date d = getDateForActivity();
+        String formattedDate = getFormattedDate(d);
         DatabaseFacade facade = getDbFacade();
         DatabaseEntry[] entries = facade.getEntriesForDay(d);
         for(DatabaseEntry e : entries) {
             totalCalories += (e.energy * e.amount) / 100;
         }
-
         heading.setText(formattedDate + ": " + totalCalories + " " + cal);
-
     }
 
+    /**
+     * java.util.Date object for the activity
+     * @return The Date object created from the date long variable.
+     */
     private Date getDateForActivity(){
         Date d = new Date();
         d.setTime(date);
         return d;
     }
 
+    /**
+     * formats a given Date in dd.MM.yyyy format
+     * @param d the Date object to format
+     * @return a String containing the formatted date
+     */
     private String getFormattedDate(Date d) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String formattedDate = "";
@@ -209,6 +237,9 @@ public class OverviewActivity extends AppCompatActivity {
         return formattedDate;
     }
 
+    /**
+     * sets up the floating action button to add an entry
+     */
     private void setUpFloatingActionButton() {
         FloatingActionButton fab = this.findViewById(R.id.addFoodItem);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -223,28 +254,39 @@ public class OverviewActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * The consumed energy per entry
+     * @param e a DatabaseEntry
+     * @return the calculated consumed calories
+     */
     private int getConsumedCaloriesForEntry(DatabaseEntry e) {
+        // energy is kCal/100 so divide by 100 at the end
         int consumedEnergy = (e.amount*e.energy)/100;
         return consumedEnergy;
     }
 
+    /**
+     * Creates a CheckedCardView from the entry
+     * @param e
+     * @return
+     */
     private CardView createCardViewForEntry(DatabaseEntry e) {
-        //set up CardView for entry
+        // set up CardView for entry
         CheckableCardView c = new CheckableCardView(this);
         setCardViewOptions(c);
 
-        //set up Layout that gets used inside the CardView
+        // set up Layout that gets used inside the CardView
         ConstraintLayout cl = new ConstraintLayout(this);
         ConstraintSet set = new ConstraintSet();
 
+        // set up Textviews for cards
         TextView name = new TextView(this);
         TextView amount = new TextView(this);
         TextView energy = new TextView(this);
         TextView calories = new TextView(this);
         TextView id = new TextView(this);
 
-
-
+        // Each CardView needs an ID to reference in the ConstraintText
         name.setId(View.generateViewId());
         amount.setId(View.generateViewId());
         energy.setId(View.generateViewId());
@@ -255,6 +297,7 @@ public class OverviewActivity extends AppCompatActivity {
         amount.setText(Integer.toString(e.amount) + "g");
         energy.setText(Integer.toString(e.energy) + " kCal/100");
         calories.setText(Integer.toString(getConsumedCaloriesForEntry(e)) + " kCal");
+        // id is just an invisible attribute on each card
         id.setVisibility(View.INVISIBLE);
 
         set.constrainWidth(name.getId(), ConstraintSet.WRAP_CONTENT);
@@ -263,8 +306,6 @@ public class OverviewActivity extends AppCompatActivity {
         set.constrainWidth(energy.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainHeight(energy.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainWidth(calories.getId(), ConstraintSet.WRAP_CONTENT);
-
-
 
         cl.addView(name);
         cl.addView(calories);
@@ -295,6 +336,7 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     private void setListenersForCardView(CardView c, DatabaseEntry e){
+        // need to make final to use in Listener methods
         final DatabaseEntry entry = e;
         c.setOnLongClickListener(new View.OnLongClickListener(){
             @Override
@@ -336,12 +378,10 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     private void refreshFoodList() {
-        Date d = new Date();
-        d.setTime(date);
-
+        Date d = getDateForActivity();
         DatabaseFacade facade = getDbFacade();
         DatabaseEntry[] entries = facade.getEntriesForDay(d);
-        LinearLayout foodList = this.findViewById(R.id.DailyList);
+        ViewGroup foodList = getEntryList();
         foodList.removeAllViews();
         for(DatabaseEntry e : entries) {
             CardView c = createCardViewForEntry(e);
@@ -360,7 +400,7 @@ public class OverviewActivity extends AppCompatActivity {
 
     private int countSelectedCards(){
         int count = 0;
-        LinearLayout foodList = this.findViewById(R.id.DailyList);
+        ViewGroup foodList = getEntryList();
         for (int i = 0; i<foodList.getChildCount(); i++){
             View v = foodList.getChildAt(i);
             if (v instanceof CheckableCardView) {
