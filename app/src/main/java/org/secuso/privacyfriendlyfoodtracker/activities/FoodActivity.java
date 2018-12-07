@@ -14,21 +14,20 @@ import android.widget.EditText;
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseFacade;
 
-import java.text.ParseException;
 import java.util.Date;
 
 public class FoodActivity extends AppCompatActivity {
 
     private Date date;
     private int EDIT = 1;
-    private int NEWENTRY = 0;
-    private int mode = 0;
+    private int NEW_ENTRY = 0;
+    private int mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
@@ -36,16 +35,15 @@ public class FoodActivity extends AppCompatActivity {
         final String id = intent.getStringExtra("ID");
 
         // default is new entry
-        mode = NEWENTRY;
+        mode = NEW_ENTRY;
         if (!("".equals(id)) && null != id){
             mode = EDIT;
             getSupportActionBar().setTitle(R.string.edit_entry);
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addEntry);
             fab.setImageResource(R.drawable.button_confirm);
-
         }
 
-        if( mode == NEWENTRY) {
+        if( mode == NEW_ENTRY) {
             long dateLong = intent.getLongExtra("DATE", System.currentTimeMillis());
             date = new Date();
             date.setTime(dateLong);
@@ -74,7 +72,7 @@ public class FoodActivity extends AppCompatActivity {
         }
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addEntry);
+        FloatingActionButton fab = findViewById(R.id.addEntry);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,22 +90,18 @@ public class FoodActivity extends AppCompatActivity {
 
                 if(validated) {
                     boolean entrySuccessful = false;
-                    if(mode == NEWENTRY){
+                    if(mode == NEW_ENTRY){
                         entrySuccessful = makeDatabaseEntry(name, amount, calories);
                     }else if (mode == EDIT){
                         entrySuccessful = editDatabaseEntry(amount, id);
                     }
                     if (!entrySuccessful){
-                        Snackbar.make(view, R.string.error_database, Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
+                        showErrorMessage(view, R.string.error_database);
                     } else {
                         finish();
                     }
                 }
-
-
             }
-
             });
         setupActionBar();
 
@@ -138,32 +132,27 @@ public class FoodActivity extends AppCompatActivity {
 
     private boolean validateResponses(String name, String amount, String calories, View view) {
         if("".equals(name)){
-            Snackbar.make(view, R.string.error_food_missing, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            showErrorMessage(view, R.string.error_food_missing);
             return false;
         } else if ("".equals(amount)) {
-            Snackbar.make(view, R.string.error_amount_missing, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            showErrorMessage(view, R.string.error_amount_missing);
             return false;
         } else if ("".equals(calories)) {
-            Snackbar.make(view, R.string.error_calories_missing, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            showErrorMessage(view, R.string.error_calories_missing);
             return false;
         }
 
         try {
             Integer.parseInt(amount);
         } catch (NumberFormatException e) {
-            Snackbar.make(view, R.string.error_amount_nan, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            showErrorMessage(view, R.string.error_amount_nan);
             return false;
         }
 
         try {
             Integer.parseInt(calories);
         } catch (NumberFormatException e) {
-            Snackbar.make(view, R.string.error_calories_nan, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            showErrorMessage(view, R.string.error_calories_nan);
             return false;
         }
 
@@ -178,8 +167,13 @@ public class FoodActivity extends AppCompatActivity {
         }
     }
 
+    private void showErrorMessage(View view, int errorMessageId){
+        Snackbar.make(view, errorMessageId, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
     private DatabaseFacade getDbFacade(){
-        DatabaseFacade facade = null;
+        DatabaseFacade facade;
         try {
             facade = new DatabaseFacade(this);
         } catch (Exception e) {
