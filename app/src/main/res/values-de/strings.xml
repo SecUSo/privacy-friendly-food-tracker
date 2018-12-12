@@ -93,8 +93,8 @@
     </string-array>
     <string name="month">Monat</string>
     <string name="week">Woche</string>
-    <string name="caloriePerWeek">Gesamte Kalorien</string>
-    <string name="caloriePerMonth">Gesamte Kalorien</string>
+    <string name="caloriePerWeek">Durchschnittliche Kalorien</string>
+    <string name="caloriePerMonth">Durchschnittliche Kalorien</string>
     <string name="period">Zeitraum</string>
 
 </resources>

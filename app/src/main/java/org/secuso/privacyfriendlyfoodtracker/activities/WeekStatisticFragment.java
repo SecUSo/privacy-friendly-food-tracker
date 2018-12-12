@@ -1,4 +1,5 @@
-package org.secuso.privacyfriendlyfoodtracker;
+package org.secuso.privacyfriendlyfoodtracker.activities;
+
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -20,11 +21,14 @@ import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.helper.DateHelper;
 import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
 import org.secuso.privacyfriendlyfoodtracker.viewmodels.SharedStatisticViewModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,16 +37,14 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
  */
-public class MonthStatisticFragment extends Fragment {
+public class WeekStatisticFragment extends Fragment {
     SharedStatisticViewModel sharedStatisticViewModel;
     Activity referenceActivity;
     View parentHolder;
     TextView textView;
 
-    public MonthStatisticFragment() {
+    public WeekStatisticFragment() {
         // Required empty public constructor
     }
 
@@ -66,7 +68,8 @@ public class MonthStatisticFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
                                           int dayOfMonth) {
-                        sharedStatisticViewModel.setDate(dayOfMonth, monthOfYear, year);
+                        sharedStatisticViewModel.setDate(dayOfMonth, monthOfYear , year);
+                    //    editText.setText(DateHelper.dateToString(sharedStatisticViewModel.getDate()));
                         UpdateGraph();
                     }
                 };
@@ -83,23 +86,23 @@ public class MonthStatisticFragment extends Fragment {
         left_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeMonthByValue(-1);
-                UpdateGraph();
+                changeWeekByValue(-1);
+                // UpdateGraph();
             }
         });
         final Button right_arrow = parentHolder.findViewById(R.id.right_arrow);
         right_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeMonthByValue(+1);
-                UpdateGraph();
+                changeWeekByValue(+1);
+                //UpdateGraph();
             }
         });
         UpdateGraph();
         sharedStatisticViewModel.getLiveCalendar().observe(this, new Observer<Calendar>() {
             @Override
             public void onChanged(@Nullable Calendar calendar) {
-                editText.setText(DateHelper.dateToString(getMonthByValue(-1)) + System.getProperty("line.separator") + " - " + System.getProperty("line.separator") + DateHelper.dateToString(calendar.getTime()));
+                editText.setText(DateHelper.dateToString(getWeekByValue(-1)) + System.getProperty("line.separator") + " - " + System.getProperty("line.separator") + DateHelper.dateToString(calendar.getTime()));
                 UpdateGraph();
             }
         });
@@ -111,8 +114,8 @@ public class MonthStatisticFragment extends Fragment {
         List<ConsumedEntrieAndProductDao.DateCalories> calories = new ArrayList<>();
         try {
 
-            long startDate = getMonthByValue(-1).getTime();
-            long endDate = getMonthByValue(0).getTime();
+            long startDate = getWeekByValue(-1).getTime();
+            long endDate = getWeekByValue(0).getTime();
             consumedEntriesList = ApplicationDatabase.getInstance(referenceActivity.getApplicationContext()).getConsumedEntrieAndProductDao().getAllConsumedEntries1(new java.sql.Date(startDate), new java.sql.Date(endDate));
             calories = ApplicationDatabase.getInstance(referenceActivity.getApplicationContext()).getConsumedEntrieAndProductDao().getCaloriesPeriod(new java.sql.Date(startDate), new java.sql.Date(endDate));
             DataPoint[] dataPointInterfaces = new DataPoint[consumedEntriesList.size()];
@@ -120,7 +123,7 @@ public class MonthStatisticFragment extends Fragment {
                 dataPointInterfaces[i] = (new DataPoint(consumedEntriesList.get(i).unique1.getTime(), consumedEntriesList.get(i).unique2));
             }
             if (calories.size() != 0) {
-                textView.setText(Integer.toString(calories.get(0).unique2 / sharedStatisticViewModel.getCalendar().get(Calendar.DAY_OF_MONTH) ));
+                textView.setText(Integer.toString(calories.get(0).unique2 / 7));
             }
             GraphView graph = (GraphView) parentHolder.findViewById(R.id.graph);
             LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPointInterfaces);
@@ -130,7 +133,7 @@ public class MonthStatisticFragment extends Fragment {
             graph.getViewport().setMinX(startDate);
             graph.getViewport().setMaxX(endDate);
             graph.getViewport().setXAxisBoundsManual(true);
-            //  graph.getGridLabelRenderer().setNumHorizontalLabels(7); // only 4 because of the space
+            graph.getGridLabelRenderer().setNumHorizontalLabels(7); // only 4 because of the space
             graph.getGridLabelRenderer().setTextSize(40);
             graph.getViewport().setScrollable(true);
             // graph.getGridLabelRenderer().setVerticalAxisTitle(getApplicationContext().getString(R.string.total_calories));
@@ -140,14 +143,16 @@ public class MonthStatisticFragment extends Fragment {
         }
     }
 
-    Date changeMonthByValue(int value) {
-        Date date = getMonthByValue(value);
+    Date changeWeekByValue(int value) {
+        Date date = getWeekByValue(value);
         sharedStatisticViewModel.setCalendarWithDateObj(date);
         return date;
     }
 
-    Date getMonthByValue(int value) {
-        Date date = DateHelper.changeMonth(sharedStatisticViewModel.getDate(), value);
+
+    Date getWeekByValue(int value) {
+        Date date = DateHelper.changeWeek(sharedStatisticViewModel.getDate(), value);
         return date;
     }
+
 }

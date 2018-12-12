@@ -1,9 +1,13 @@
-package org.secuso.privacyfriendlyfoodtracker;
+package org.secuso.privacyfriendlyfoodtracker.activities.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import org.secuso.privacyfriendlyfoodtracker.R;
+import org.secuso.privacyfriendlyfoodtracker.activities.MonthStatisticFragment;
+import org.secuso.privacyfriendlyfoodtracker.activities.WeekStatisticFragment;
 
 public class StatisticPagerAdapter extends FragmentStatePagerAdapter {
     private Context context;

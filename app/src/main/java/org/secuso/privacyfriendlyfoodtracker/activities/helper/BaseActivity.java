@@ -35,7 +35,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import org.secuso.privacyfriendlyfoodtracker.BaseStatisticActivity;
+import org.secuso.privacyfriendlyfoodtracker.activities.BaseStatisticActivity;
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.AboutActivity;
 import org.secuso.privacyfriendlyfoodtracker.activities.HelpActivity;
