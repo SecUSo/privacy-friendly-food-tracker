@@ -37,7 +37,9 @@ import java.util.List;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link Fragment} subclass. Contains the statistic for a week.
+ *
+ * @author Andre Lutz
  */
 public class WeekStatisticFragment extends Fragment {
     SharedStatisticViewModel sharedStatisticViewModel;

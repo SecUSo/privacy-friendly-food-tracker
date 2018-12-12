@@ -14,6 +14,11 @@ import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
 import org.secuso.privacyfriendlyfoodtracker.helpers.FirstLaunchManager;
 import org.secuso.privacyfriendlyfoodtracker.helpers.KeyGenHelper;
 
+/**
+ * Generate key activity. Manages the key creation and shows the current state.
+ *
+ * @author Andre Lutz
+ */
 public class GenerateKeyActivity extends AppCompatActivity {
     FirstLaunchManager mFirstLaunchManager;
     CheckBox mCheckBox1;

@@ -34,9 +34,9 @@ import java.util.List;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
+ * A simple {@link Fragment} subclass. Contains the statistic for a month.
+ *
+ * @author Andre Lutz
  */
 public class MonthStatisticFragment extends Fragment {
     SharedStatisticViewModel sharedStatisticViewModel;

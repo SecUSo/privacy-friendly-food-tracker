@@ -11,6 +11,11 @@ import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.StatisticPagerAdapter;
 import org.secuso.privacyfriendlyfoodtracker.activities.helper.BaseActivity;
 
+/**
+ * Base code for tapped activity.
+ *
+ * @author Andre Lutz
+ */
 public class BaseStatisticActivity extends BaseActivity {
 
     @Override
