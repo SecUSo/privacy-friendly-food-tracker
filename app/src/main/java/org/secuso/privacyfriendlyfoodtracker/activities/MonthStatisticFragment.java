@@ -21,6 +21,7 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
+import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.activities.helper.DateHelper;
 import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
@@ -42,6 +43,7 @@ public class MonthStatisticFragment extends Fragment {
     Activity referenceActivity;
     View parentHolder;
     TextView textView;
+    DatabaseFacade databaseFacade;
 
     public MonthStatisticFragment() {
         // Required empty public constructor
@@ -55,7 +57,11 @@ public class MonthStatisticFragment extends Fragment {
         referenceActivity = getActivity();
         parentHolder = inflater.inflate(R.layout.fragment_month_statistic, container, false);
         sharedStatisticViewModel = ViewModelProviders.of(getActivity()).get(SharedStatisticViewModel.class);
-
+        try {
+            databaseFacade = new DatabaseFacade(referenceActivity.getApplicationContext());
+        } catch (Exception e){
+            Log.e("Error", e.getMessage());
+        }
         textView = parentHolder.findViewById(R.id.periodCalories1);
         final TextView editText = (TextView) parentHolder.findViewById(R.id.datepicker);
         editText.setText(DateHelper.dateToString(sharedStatisticViewModel.getDate()));
@@ -112,10 +118,10 @@ public class MonthStatisticFragment extends Fragment {
         List<ConsumedEntrieAndProductDao.DateCalories> calories = new ArrayList<>();
         try {
 
-            long startDate = getMonthByValue(-1).getTime();
-            long endDate = getMonthByValue(0).getTime();
-            consumedEntriesList = ApplicationDatabase.getInstance(referenceActivity.getApplicationContext()).getConsumedEntrieAndProductDao().getAllConsumedEntries1(new java.sql.Date(startDate), new java.sql.Date(endDate));
-            calories = ApplicationDatabase.getInstance(referenceActivity.getApplicationContext()).getConsumedEntrieAndProductDao().getCaloriesPeriod(new java.sql.Date(startDate), new java.sql.Date(endDate));
+            Date startDate = getMonthByValue(-1);
+            Date endDate = getMonthByValue(0);
+            consumedEntriesList = databaseFacade.getCaloriesPerDayinPeriod(startDate,endDate);
+            calories = databaseFacade.getPeriodCalories(startDate,endDate);
             DataPoint[] dataPointInterfaces = new DataPoint[consumedEntriesList.size()];
             for (int i = 0; i < consumedEntriesList.size(); i++) {
                 dataPointInterfaces[i] = (new DataPoint(consumedEntriesList.get(i).unique1.getTime(), consumedEntriesList.get(i).unique2));
@@ -128,8 +134,8 @@ public class MonthStatisticFragment extends Fragment {
             graph.addSeries(series);
             graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(referenceActivity));
             graph.getGridLabelRenderer().setHumanRounding(false, true);
-            graph.getViewport().setMinX(startDate);
-            graph.getViewport().setMaxX(endDate);
+            graph.getViewport().setMinX(startDate.getTime());
+            graph.getViewport().setMaxX(endDate.getTime());
             graph.getViewport().setXAxisBoundsManual(true);
             //  graph.getGridLabelRenderer().setNumHorizontalLabels(7); // only 4 because of the space
             graph.getGridLabelRenderer().setTextSize(40);

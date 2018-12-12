@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
+import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntries;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntriesDao;
 import org.secuso.privacyfriendlyfoodtracker.database.Product;
@@ -16,9 +17,11 @@ import java.util.List;
 public class DatabaseFacade {
     ProductDao productDao;
     ConsumedEntriesDao consumedEntriesDao;
+    ConsumedEntrieAndProductDao consumedEntrieAndProductDao;
     public DatabaseFacade(Context context) throws Exception{
         this.productDao = ApplicationDatabase.getInstance(context).getProductDao();
         this.consumedEntriesDao = ApplicationDatabase.getInstance(context).getConsumedEntriesDao();
+        this.consumedEntrieAndProductDao = ApplicationDatabase.getInstance(context).getConsumedEntrieAndProductDao();
     }
 
     /**
@@ -120,5 +123,12 @@ public class DatabaseFacade {
         return databaseEntries.toArray(new DatabaseEntry[databaseEntries.size()]);
     }
 
+    public List<ConsumedEntrieAndProductDao.DateCalories> getPeriodCalories(java.util.Date startDate, java.util.Date endDate){
+        return    consumedEntrieAndProductDao.getCaloriesPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
+
+    public List<ConsumedEntrieAndProductDao.DateCalories> getCaloriesPerDayinPeriod(java.util.Date startDate, java.util.Date endDate){
+        return    consumedEntrieAndProductDao.getCaloriesPerDayinPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
 
 }
