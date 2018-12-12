@@ -35,6 +35,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import org.secuso.privacyfriendlyfoodtracker.BaseStatisticActivity;
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.AboutActivity;
 import org.secuso.privacyfriendlyfoodtracker.activities.HelpActivity;
@@ -171,6 +172,10 @@ public abstract class BaseActivity extends AppCompatActivity implements OnNaviga
                 break;
             case R.id.nav_tutorial:
                 intent = new Intent(this, TutorialActivity.class);
+                createBackStack(intent);
+                break;
+            case R.id.nav_statistic:
+                intent = new Intent(this, BaseStatisticActivity.class);
                 createBackStack(intent);
                 break;
             case R.id.nav_about:
