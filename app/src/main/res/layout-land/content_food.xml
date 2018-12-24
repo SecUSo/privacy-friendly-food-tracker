@@ -31,7 +31,8 @@
             android:id="@+id/input_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_food_amount" />
+            android:hint="@string/hint_food_amount"
+            android:inputType="number"/>
 
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
@@ -44,7 +45,8 @@
             android:id="@+id/input_calories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_food_calories" />
+            android:hint="@string/hint_food_calories"
+            android:inputType="number"/>
 
     </android.support.design.widget.TextInputLayout>
 
