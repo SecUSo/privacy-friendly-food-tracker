@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -132,27 +133,27 @@ public class FoodActivity extends AppCompatActivity {
 
     private boolean validateResponses(String name, String amount, String calories, View view) {
         if("".equals(name)){
-            showErrorMessage(view, R.string.error_food_missing);
+            showErrorMessage(findViewById(R.id.inputFoodName), R.string.error_food_missing);
             return false;
         } else if ("".equals(amount)) {
-            showErrorMessage(view, R.string.error_amount_missing);
+            showErrorMessage(findViewById(R.id.inputFoodAmount), R.string.error_amount_missing);
             return false;
         } else if ("".equals(calories)) {
-            showErrorMessage(view, R.string.error_calories_missing);
+            showErrorMessage(findViewById(R.id.inputCalories), R.string.error_calories_missing);
             return false;
         }
 
         try {
             Integer.parseInt(amount);
         } catch (NumberFormatException e) {
-            showErrorMessage(view, R.string.error_amount_nan);
+            showErrorMessage(findViewById(R.id.inputFoodAmount), R.string.error_amount_nan);
             return false;
         }
 
         try {
             Integer.parseInt(calories);
         } catch (NumberFormatException e) {
-            showErrorMessage(view, R.string.error_calories_nan);
+            showErrorMessage(findViewById(R.id.inputCalories), R.string.error_calories_nan);
             return false;
         }
 
@@ -168,8 +169,20 @@ public class FoodActivity extends AppCompatActivity {
     }
 
     private void showErrorMessage(View view, int errorMessageId){
-        Snackbar.make(view, errorMessageId, Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        // reset error messages
+        ((TextInputLayout) findViewById(R.id.inputFoodName)).setError("");
+        ((TextInputLayout) findViewById(R.id.inputCalories)).setError("");
+        ((TextInputLayout) findViewById(R.id.inputFoodAmount)).setError("");
+
+        // if the view that this is called on is a TextInputlayout, we can show the error on the TextinputLayout
+        if(view instanceof TextInputLayout){
+            TextInputLayout til = (TextInputLayout) view;
+            til.setError(getString(errorMessageId));
+        } else {
+            //otherwise show a generic error message
+            Snackbar.make(view, errorMessageId, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
     }
 
     private DatabaseFacade getDbFacade(){

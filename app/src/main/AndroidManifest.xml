@@ -70,7 +70,8 @@
         <activity
             android:name=".activities.FoodActivity"
             android:label="@string/title_activity_food"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"></activity>
     </application>
 
 </manifest>
