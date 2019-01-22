@@ -97,13 +97,11 @@ public class KeyGenHelper {
     public static void generatePassphrase(Context context) throws Exception {
         SharedPreferences pref = context.getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         String enryptedKeyB64 = pref.getString(ENCRYPTED_KEY, null);
-        if (enryptedKeyB64 == null) {
-            byte[] encryptedKey = rsaEncrypt(generateKeyPassphrase());
-            enryptedKeyB64 = Base64.encodeToString(encryptedKey, Base64.DEFAULT);
-            SharedPreferences.Editor edit = pref.edit();
-            edit.putString(ENCRYPTED_KEY, enryptedKeyB64);
-            edit.apply();
-        }
+        byte[] encryptedKey = rsaEncrypt(generateKeyPassphrase());
+        enryptedKeyB64 = Base64.encodeToString(encryptedKey, Base64.DEFAULT);
+        SharedPreferences.Editor edit = pref.edit();
+        edit.putString(ENCRYPTED_KEY, enryptedKeyB64);
+        edit.apply();
     }
 
     public static Key getSecretKey(Context context) throws Exception {

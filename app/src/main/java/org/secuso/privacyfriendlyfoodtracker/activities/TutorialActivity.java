@@ -95,7 +95,7 @@ public class TutorialActivity extends AppCompatActivity {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchHomeScreen();
+                launchKeyGen();
             }
         });
 
@@ -109,14 +109,7 @@ public class TutorialActivity extends AppCompatActivity {
                     // move to next screen
                     viewPager.setCurrentItem(current);
                 } else {
-                    if(!KeyGenHelper.isKeyGenerated()){
-                        Intent intent = new Intent(TutorialActivity.this, GenerateKeyActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        firstLaunchManager.setFirstTimeLaunch(false);
-                        startActivity(intent);
-                    } else {
-                        launchHomeScreen();
-                    }
+                    launchKeyGen();
                 }
             }
         });
@@ -143,6 +136,17 @@ public class TutorialActivity extends AppCompatActivity {
 
     private int getItem(int i) {
         return viewPager.getCurrentItem() + i;
+    }
+
+    private void launchKeyGen(){
+        if(!KeyGenHelper.isKeyGenerated()){
+            Intent intent = new Intent(TutorialActivity.this, GenerateKeyActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            firstLaunchManager.setFirstTimeLaunch(false);
+            startActivity(intent);
+        } else {
+            launchHomeScreen();
+        }
     }
 
     private void launchHomeScreen() {
