@@ -82,11 +82,20 @@
     <string name="action_cancel">Abbrechen</string>
     <string name="delete_entry_prompt">Löschen?</string>
 
-
-
     <string name="setup_step_generating_key">Erstelle Key</string>
     <string name="setup_step_generating_passphrase">Erstelle Passphrase</string>
     <string name="setup_step_creating_encrypted_databas">Verschlüssle Datenbank</string>
     <string name="generate_key_header">Vorbereitung</string>
+
+    <string name="action_statistic">Statistik</string>
+    <string-array name="statisticPicker">
+        <item>Woche</item>
+        <item>Monat</item>
+    </string-array>
+    <string name="month">Monat</string>
+    <string name="week">Woche</string>
+    <string name="caloriePerWeek">Durchschnittliche Kalorien</string>
+    <string name="caloriePerMonth">Durchschnittliche Kalorien</string>
+    <string name="period">Zeitraum</string>
 
 </resources>

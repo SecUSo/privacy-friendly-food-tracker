@@ -10,7 +10,6 @@
     <string name="action_main">Calendar</string>
     <string name="action_tutorial">Tutorial</string>
 
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -87,10 +86,19 @@
     <string name="delete_entry_prompt">Delete?</string>
 
 
-
     <string name="setup_step_generating_key">Generating Key</string>
     <string name="setup_step_generating_passphrase">Generating Passphrase</string>
     <string name="setup_step_creating_encrypted_databas">Encrypting Database</string>
     <string name="generate_key_header">Preparation</string>
 
+    <string name="action_statistic">Statistic</string>
+    <string-array name="statisticPicker">
+        <item>Week</item>
+        <item>Month</item>
+    </string-array>
+    <string name="caloriePerWeek">Average calories:</string>
+    <string name="caloriePerMonth">Average calories:</string>
+    <string name="month">Month</string>
+    <string name="week">Week</string>
+    <string name="period">Period</string>
 </resources>

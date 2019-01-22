@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
+import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntries;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntriesDao;
 import org.secuso.privacyfriendlyfoodtracker.database.Product;
@@ -16,9 +17,11 @@ import java.util.List;
 public class DatabaseFacade {
     ProductDao productDao;
     ConsumedEntriesDao consumedEntriesDao;
+    ConsumedEntrieAndProductDao consumedEntrieAndProductDao;
     public DatabaseFacade(Context context) throws Exception{
         this.productDao = ApplicationDatabase.getInstance(context).getProductDao();
         this.consumedEntriesDao = ApplicationDatabase.getInstance(context).getConsumedEntriesDao();
+        this.consumedEntrieAndProductDao = ApplicationDatabase.getInstance(context).getConsumedEntrieAndProductDao();
     }
 
     /**
@@ -51,6 +54,11 @@ public class DatabaseFacade {
     }
 
 
+    /**
+     * Deletes a database entry by id.
+     * @param id the id
+     * @return successfully or not
+     */
     public boolean deleteEntryById(int id ){
         try {
             List<ConsumedEntries> res = consumedEntriesDao.findConsumedEntriesById(id);
@@ -62,6 +70,12 @@ public class DatabaseFacade {
         }
     }
 
+    /**
+     * Edit a database entry.
+     * @param id the id
+     * @param amount the new amount
+     * @return successfully or not
+     */
     public boolean editEntryById(int id, int amount){
         try {
             List<ConsumedEntries> res = consumedEntriesDao.findConsumedEntriesById(id);
@@ -75,8 +89,13 @@ public class DatabaseFacade {
         }
     }
 
-
-
+    /**
+     * Crate a new Product
+     * @param name the name
+     * @param energy the energy
+     * @param barcode the barcode
+     * @return successfully or not
+     */
     public boolean insertProduct( String name, int energy,  String barcode){
         try{
             List<Product> res = productDao.findExistingProducts(name, energy, barcode);
@@ -90,6 +109,10 @@ public class DatabaseFacade {
         }
     }
 
+    /**
+     * Find the most common products.
+     * @return Returns a list with the most common products
+     */
     public List<Product> findMostCommonProducts() {
         List<Product> products = new ArrayList<>();
         try {
@@ -104,6 +127,11 @@ public class DatabaseFacade {
         return products;
     }
 
+    /**
+     * Returns a database entry for a specified date.
+     * @param date the date
+     * @return DatabaseEntry
+     */
     public DatabaseEntry[] getEntriesForDay(java.util.Date date) {
         List<DatabaseEntry> databaseEntries = new ArrayList<>();
         try {
@@ -120,5 +148,24 @@ public class DatabaseFacade {
         return databaseEntries.toArray(new DatabaseEntry[databaseEntries.size()]);
     }
 
+    /**
+     * Returns the sum of calories per day for a time period.
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the calories sum per day and the associated date
+     */
+    public List<ConsumedEntrieAndProductDao.DateCalories> getPeriodCalories(java.util.Date startDate, java.util.Date endDate){
+        return    consumedEntrieAndProductDao.getCaloriesPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
+
+    /**
+     * Returns the sum of calories between two dates.
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the calories sum (list position 0)
+     */
+    public List<ConsumedEntrieAndProductDao.DateCalories> getCaloriesPerDayinPeriod(java.util.Date startDate, java.util.Date endDate){
+        return    consumedEntrieAndProductDao.getCaloriesPerDayinPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
 
 }

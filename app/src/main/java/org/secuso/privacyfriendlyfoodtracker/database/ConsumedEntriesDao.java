@@ -30,14 +30,17 @@ public interface ConsumedEntriesDao {
     @Query("SELECT productId FROM consumedEntries GROUP BY productId ORDER BY COUNT(productId) DESC")
     List<Integer> findMostCommonProducts();
 
-    @Query("SELECT * FROM consumedEntries WHERE date=:date")
-    List<ConsumedEntries> findConsumedEntriesForDate(final Date date);
+    @Query("SELECT * FROM consumedEntries, product WHERE date BETWEEN DATE(:dayst) AND DATE(:dayet)")
+    List<ConsumedEntries> findConsumedEntriesBetweenDates(final Date dayst, final Date dayet);
 
     @Query("SELECT * FROM consumedEntries WHERE id=:id")
     List<ConsumedEntries> findConsumedEntriesById(final int id);
 
     @Query("SELECT * FROM consumedEntries WHERE productId=:productId AND amount=:amount AND date=:date AND name=:name  ")
     List<ConsumedEntries> findExistingConsumedEntries( int productId, int amount,  Date date, String name);
+
+    @Query("SELECT * FROM consumedEntries WHERE date=:date")
+    List<ConsumedEntries> findConsumedEntriesForDate(final Date date);
 
 
     @Query("DELETE FROM consumedEntries")

@@ -30,6 +30,9 @@ public abstract class ApplicationDatabase extends RoomDatabase {
 
     public abstract ProductDao getProductDao();
 
+    public abstract ConsumedEntrieAndProductDao getConsumedEntrieAndProductDao();
+
+
     private static ApplicationDatabase sInstance;
 
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
