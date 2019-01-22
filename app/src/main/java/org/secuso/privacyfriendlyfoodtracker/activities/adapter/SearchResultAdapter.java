@@ -50,6 +50,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         // - replace the contents of the view with that element
         ((TextView) holder.mCardView.findViewById(R.id.resultName)).setText(mDataset.get(position).name);
         ((TextView) holder.mCardView.findViewById(R.id.resultCalories)).setText(Integer.toString(mDataset.get(position).energy) + " kCal");
+        ((TextView) holder.mCardView.findViewById(R.id.resultId)).setText(Integer.toString(mDataset.get(position).id));
     }
 
     // Return the size of your dataset (invoked by the layout manager)

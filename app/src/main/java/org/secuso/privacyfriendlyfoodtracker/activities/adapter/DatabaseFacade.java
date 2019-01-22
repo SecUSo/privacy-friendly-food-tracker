@@ -168,4 +168,8 @@ public class DatabaseFacade {
         return    consumedEntrieAndProductDao.getCaloriesPerDayinPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
     }
 
+    public List<Product> getProductByName(String name){
+        return productDao.findProductsByName("%" + name + "%");
+    }
+
 }

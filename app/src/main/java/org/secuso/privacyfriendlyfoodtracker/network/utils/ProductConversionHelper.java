@@ -8,7 +8,13 @@ public class ProductConversionHelper {
         if(energyS == ""){
             return null;
         }
-        int energy_100g = Integer.parseInt(product.getNutrimentEnergy());
+        int energy_100g;
+        try {
+            energy_100g = Integer.parseInt(product.getNutrimentEnergy());
+        } catch (NumberFormatException e){
+            float energy = Float.parseFloat(product.getNutrimentEnergy());
+            energy_100g = (int) energy;
+        }
         Product product1 = new Product(0, product.getProductName(), energy_100g,  product.getCode()); // TODO: read correct values
         return product1;
     }
