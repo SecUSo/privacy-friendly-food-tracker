@@ -15,7 +15,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/resultName"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/resultCalories"
             android:paddingLeft="10dp"
+            app:layout_constrainedWidth="true"
             android:text="test"
             />
         <TextView
@@ -23,8 +25,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/resultCalories"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="@id/resultName"
+            app:layout_constraintLeft_toRightOf="@id/resultName"
             android:text="test"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/resultId"
+            android:visibility="invisible"
             />
     </android.support.constraint.ConstraintLayout>
 
