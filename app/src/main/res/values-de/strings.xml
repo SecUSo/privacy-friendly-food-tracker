@@ -100,4 +100,6 @@
     <string name="caloriePerMonth">Durchschnittliche Kalorien</string>
     <string name="period">Zeitraum</string>
 
+    <string name="search_for">Nach einem Produkt suchen</string>
+
 </resources>
