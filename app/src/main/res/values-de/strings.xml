@@ -102,4 +102,6 @@
     <string name="decline">Abbrechen</string>
     <string name="save">Speichern</string>
 
+    <string name="search_for">Nach einem Produkt suchen</string>
+
 </resources>

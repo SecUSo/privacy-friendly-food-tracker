@@ -78,12 +78,13 @@
             android:name=".activities.BaseStatisticActivity"
             android:label="@string/action_statistic"
             android:parentActivityName=".activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">></activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.BaseAddFoodActivity"
             android:label="@string/title_activity_food"
-            android:parentActivityName=".activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">></activity>
+            android:parentActivityName=".activities.OverviewActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"></activity>
     </application>
 
 </manifest>

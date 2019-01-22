@@ -3,6 +3,7 @@ package org.secuso.privacyfriendlyfoodtracker.activities;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
@@ -47,10 +48,20 @@ public class BaseAddFoodActivity extends AppCompatActivity {
         long dateLong = intent.getLongExtra("DATE", System.currentTimeMillis());
         date = new Date();
         date.setTime(dateLong);
+        setupActionBar();
+
     }
 
     protected int getNavigationDrawerID() {
         return R.id.nav_statistic;
+    }
+
+    private void setupActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // Show the Up button in the action bar.
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
 }

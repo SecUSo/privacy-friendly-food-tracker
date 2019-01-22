@@ -14,9 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.LinearLayoutManager;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseFacade;
+import org.secuso.privacyfriendlyfoodtracker.activities.adapter.SearchResultAdapter;
 import org.secuso.privacyfriendlyfoodtracker.activities.helper.DateHelper;
 import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
@@ -39,6 +42,9 @@ public class SearchFoodFragment extends Fragment {
     View parentHolder;
     TextView textView;
     DatabaseFacade databaseFacade;
+    private RecyclerView foodList;
+    private LinearLayoutManager llm;
+
 
     public SearchFoodFragment() {
         // Required empty public constructor
@@ -57,6 +63,13 @@ public class SearchFoodFragment extends Fragment {
         } catch (Exception e){
             Log.e("Error", e.getMessage());
         }
+
+        foodList = (RecyclerView) parentHolder.findViewById(R.id.search_results);
+        llm = new LinearLayoutManager(referenceActivity.getApplicationContext());
+        foodList.setLayoutManager(llm);
+
+        SearchResultAdapter adapter = new SearchResultAdapter(databaseFacade.findMostCommonProducts());
+        foodList.setAdapter(adapter);
 
         return parentHolder;
     }
