@@ -91,6 +91,9 @@
     <string name="setup_step_creating_encrypted_databas">Encrypting Database</string>
     <string name="generate_key_header">Preparation</string>
 
+    <string name="search">Search</string>
+    <string name="add">Add</string>
+
     <string name="action_statistic">Statistic</string>
     <string-array name="statisticPicker">
         <item>Week</item>
