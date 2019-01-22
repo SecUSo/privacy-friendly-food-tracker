@@ -159,7 +159,7 @@ public class OverviewActivity extends AppCompatActivity {
                     TextView idView =(TextView) c.getChildAt(1);
                     String id = idView.getText().toString();
                     DatabaseFacade facade = getDbFacade();
-                    facade.deleteEntryById(Integer.getInteger(id));
+                    facade.deleteEntryById(Integer.parseInt(id));
                     cardsToRemove.add(v);
                 }
             }

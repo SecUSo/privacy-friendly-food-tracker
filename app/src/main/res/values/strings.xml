@@ -33,7 +33,8 @@
 
     <!--###ABOUT###-->
     <string name="about">About</string>
-    <string name="version_number">Version 1.0</string>
+    <string name="version_number">%s</string>
+    <string name="version">Version</string>
     <string name="about_author">Authors: </string>
     <string name="about_author_names" translatable="false">André Lutz, Simon Reinkemeier</string>
     <string name="about_author_contributors">and contributors.</string>
