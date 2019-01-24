@@ -5,13 +5,18 @@ import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.customviews.CheckableCardView;
 import org.secuso.privacyfriendlyfoodtracker.R;
 
+import android.app.AlertDialog;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.content.res.TypedArray;
@@ -57,7 +62,7 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         refreshFoodList();
         refreshTotalCalorieCounter();
@@ -65,7 +70,7 @@ public class OverviewActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_cancel_deletion:
                 unselectAllCards();
                 break;
@@ -100,10 +105,11 @@ public class OverviewActivity extends AppCompatActivity {
 
     /**
      * sets the visibility of the Deletion menu
+     *
      * @param isVisible The visibility. false for invisible, true for visible.
-     * @param menu The deletion menu
+     * @param menu      The deletion menu
      */
-    private void setMenuVisibility(boolean isVisible, Menu menu){
+    private void setMenuVisibility(boolean isVisible, Menu menu) {
         MenuItem del = menu.findItem(R.id.action_cancel_deletion);
         MenuItem conf = menu.findItem(R.id.action_confirm_deletion);
         del.setVisible(isVisible);
@@ -125,7 +131,7 @@ public class OverviewActivity extends AppCompatActivity {
      */
     private void unselectAllCards() {
         LinearLayout foodList = this.findViewById(R.id.DailyList);
-        for (int i = 0; i<foodList.getChildCount(); i++){
+        for (int i = 0; i < foodList.getChildCount(); i++) {
             View v = foodList.getChildAt(i);
             if (v instanceof CheckableCardView) {
                 CheckableCardView c = (CheckableCardView) v;
@@ -141,9 +147,21 @@ public class OverviewActivity extends AppCompatActivity {
      * toggles deletion menu visibility.
      */
     private void toggleDeletionMenuVisibility() {
-        // Causes onCreateOptionsMenu to be called and the menu to be inflated
-        invalidateOptionsMenu();
+        View fab = findViewById(R.id.addFoodItem);
+        View cancelDeleteFab = this.findViewById(R.id.cancelDeleteFoodItem);
+        View deleteFab = this.findViewById(R.id.deleteFoodItem);
+        if(deleteFab.getVisibility()==View.VISIBLE) {
+            fab.setVisibility(View.VISIBLE);
+            //cancelDeleteFab.setVisibility(View.GONE);
+            deleteFab.setVisibility(View.GONE);
+        }
+        else{
+            fab.setVisibility(View.GONE);
+            //cancelDeleteFab.setVisibility(View.VISIBLE);
+            deleteFab.setVisibility(View.VISIBLE);
+        }
     }
+
 
     /**
      * deletes all currently selected cards and associatedEntries
@@ -151,12 +169,12 @@ public class OverviewActivity extends AppCompatActivity {
     private void deleteSelectedCards() {
         ViewGroup foodList = getEntryList();
         List<View> cardsToRemove = new LinkedList<>();
-        for (int i = 0; i<foodList.getChildCount(); i++){
+        for (int i = 0; i < foodList.getChildCount(); i++) {
             View v = foodList.getChildAt(i);
             if (v instanceof CheckableCardView) {
                 CheckableCardView c = (CheckableCardView) v;
                 if (c.isChecked()) {
-                    TextView idView =(TextView) c.getChildAt(1);
+                    TextView idView = (TextView) c.getChildAt(1);
                     String id = idView.getText().toString();
                     DatabaseFacade facade = getDbFacade();
                     facade.deleteEntryById(Integer.parseInt(id));
@@ -171,18 +189,20 @@ public class OverviewActivity extends AppCompatActivity {
 
     /**
      * Gets the list where all entries are stores
+     *
      * @return A ViewGroup containing all CheckedCardViews
      */
-    private ViewGroup getEntryList(){
+    private ViewGroup getEntryList() {
         LinearLayout foodlist = this.findViewById(R.id.DailyList);
         return foodlist;
     }
 
     /**
      * creates a database facade that can be used to call database functions
+     *
      * @return a DatabaseFacade object
      */
-    private DatabaseFacade getDbFacade(){
+    private DatabaseFacade getDbFacade() {
         DatabaseFacade facade;
         try {
             facade = new DatabaseFacade(this);
@@ -200,12 +220,12 @@ public class OverviewActivity extends AppCompatActivity {
     private void refreshTotalCalorieCounter() {
         int totalCalories = 0;
         TextView heading = this.findViewById(R.id.overviewHeading);
-        String cal =  getString(R.string.total_calories);
+        String cal = getString(R.string.total_calories);
         Date d = getDateForActivity();
         String formattedDate = getFormattedDate(d);
         DatabaseFacade facade = getDbFacade();
         DatabaseEntry[] entries = facade.getEntriesForDay(d);
-        for(DatabaseEntry e : entries) {
+        for (DatabaseEntry e : entries) {
             totalCalories += (e.energy * e.amount) / 100;
         }
         heading.setText(formattedDate + ": " + totalCalories + " " + cal);
@@ -213,9 +233,10 @@ public class OverviewActivity extends AppCompatActivity {
 
     /**
      * java.util.Date object for the activity
+     *
      * @return The Date object created from the date long variable.
      */
-    private Date getDateForActivity(){
+    private Date getDateForActivity() {
         Date d = new Date();
         d.setTime(date);
         return d;
@@ -223,15 +244,16 @@ public class OverviewActivity extends AppCompatActivity {
 
     /**
      * formats a given Date in dd.MM.yyyy format
+     *
      * @param d the Date object to format
      * @return a String containing the formatted date
      */
     private String getFormattedDate(Date d) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String formattedDate = "";
-        try{
+        try {
             formattedDate = dateFormat.format(d);
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return formattedDate;
@@ -252,21 +274,45 @@ public class OverviewActivity extends AppCompatActivity {
             }
 
         });
+
+        FloatingActionButton cancelDeleteFab = this.findViewById(R.id.cancelDeleteFoodItem);
+        cancelDeleteFab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                unselectAllCards();
+
+                //toggleDeletionMenuVisibility();
+            }
+        });
+
+        FloatingActionButton deleteFab = this.findViewById(R.id.deleteFoodItem);
+        deleteFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteSelectedCards();
+                selectedCards = 0;
+                toggleDeletionMenuVisibility();
+                refreshTotalCalorieCounter();
+            }
+
+        });
+
     }
 
     /**
      * The consumed energy per entry
+     *
      * @param e a DatabaseEntry
      * @return the calculated consumed calories
      */
     private int getConsumedCaloriesForEntry(DatabaseEntry e) {
         // energy is kCal/100 so divide by 100 at the end
-        int consumedEnergy = (e.amount*e.energy)/100;
+        int consumedEnergy = (e.amount * e.energy) / 100;
         return consumedEnergy;
     }
 
     /**
      * Creates a CheckedCardView from the entry
+     *
      * @param e
      * @return
      */
@@ -335,14 +381,14 @@ public class OverviewActivity extends AppCompatActivity {
         return c;
     }
 
-    private void setListenersForCardView(CardView c, DatabaseEntry e){
+    private void setListenersForCardView(CardView c, DatabaseEntry e) {
         // need to make final to use in Listener methods
         final DatabaseEntry entry = e;
-        c.setOnLongClickListener(new View.OnLongClickListener(){
+        c.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 int newSelectedCards = countSelectedCards();
-                if (newSelectedCards == 0){
+                if (newSelectedCards == 0) {
                     toggleDeletionMenuVisibility();
                 } else if (selectedCards == 0 && newSelectedCards > 0) {
                     toggleDeletionMenuVisibility();
@@ -363,18 +409,43 @@ public class OverviewActivity extends AppCompatActivity {
                         toggleDeletionMenuVisibility();
                     }
                 } else {
-                    Intent intent = new Intent(OverviewActivity.this, FoodActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra("ID", entry.id);
-                    intent.putExtra("NAME", entry.name);
-                    intent.putExtra("AMOUNT", entry.amount);
-                    intent.putExtra("CALORIES", entry.energy);
-                    startActivity(intent);
+                    LayoutInflater factory = LayoutInflater.from(OverviewActivity.this);
+                    final View deleteDialogView = factory.inflate(R.layout.dialog_edit_entry, null);
+                    final AlertDialog deleteDialog = new AlertDialog.Builder(OverviewActivity.this).create();
+                    deleteDialog.setView(deleteDialogView);
+                    deleteDialogView.findViewById(R.id.yes).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            EditText amountField = deleteDialogView.findViewById(R.id.input_amount);
+                            boolean result = editDatabaseEntry(amountField.getText().toString(), entry.id);
+                            refreshFoodList();
+                            deleteDialog.dismiss();
+                        }
+                    });
+                    deleteDialogView.findViewById(R.id.no).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            deleteDialog.dismiss();
+                        }
+                    });
+
+                    EditText amountField = deleteDialogView.findViewById(R.id.input_amount);
+                    amountField.setText("");
+                    amountField.requestFocus();
+                    Log.d("OverviewActivity", String.valueOf(entry.id));
+                    deleteDialog.show();
                 }
 
-            }
 
+            }
         });
+    }
+
+    private boolean editDatabaseEntry(String amountString, String idString) {
+        DatabaseFacade facade = getDbFacade();
+        int amount = Integer.parseInt(amountString);
+        int id = Integer.parseInt(idString);
+        return facade.editEntryById(id, amount);
     }
 
     private void refreshFoodList() {
@@ -383,7 +454,7 @@ public class OverviewActivity extends AppCompatActivity {
         DatabaseEntry[] entries = facade.getEntriesForDay(d);
         ViewGroup foodList = getEntryList();
         foodList.removeAllViews();
-        for(DatabaseEntry e : entries) {
+        for (DatabaseEntry e : entries) {
             CardView c = createCardViewForEntry(e);
             foodList.addView(c);
         }
@@ -398,10 +469,10 @@ public class OverviewActivity extends AppCompatActivity {
 
     }
 
-    private int countSelectedCards(){
+    private int countSelectedCards() {
         int count = 0;
         ViewGroup foodList = getEntryList();
-        for (int i = 0; i<foodList.getChildCount(); i++){
+        for (int i = 0; i < foodList.getChildCount(); i++) {
             View v = foodList.getChildAt(i);
             if (v instanceof CheckableCardView) {
                 CheckableCardView c = (CheckableCardView) v;
@@ -412,7 +483,8 @@ public class OverviewActivity extends AppCompatActivity {
         }
         return count;
     }
-    private void setCardViewOptions(CheckableCardView c){
+
+    private void setCardViewOptions(CheckableCardView c) {
         c.setCardBackgroundColor(
                 ContextCompat.getColorStateList(
                         this,
@@ -427,9 +499,9 @@ public class OverviewActivity extends AppCompatActivity {
         c.setClickable(true);
 
         // Ripple effect and checkable colours
-        int[] attrs = new int[] { android.R.attr.selectableItemBackground };
+        int[] attrs = new int[]{android.R.attr.selectableItemBackground};
         TypedArray ta = obtainStyledAttributes(attrs);
-        Drawable drawableFromTheme = ta.getDrawable(0 );
+        Drawable drawableFromTheme = ta.getDrawable(0);
         c.setForeground(drawableFromTheme);
     }
 }
