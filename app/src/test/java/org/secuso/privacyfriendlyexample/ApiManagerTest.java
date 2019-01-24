@@ -28,7 +28,6 @@ public class ApiManagerTest {
     ProductResponse productResponse = new ProductResponse();
     List<org.secuso.privacyfriendlyfoodtracker.database.Product> products = new ArrayList<>();
 
-
     @Before
     public void createManager() {
         this.mProductApiService =  ApiManager.getInstance().getProductApiService("de");
