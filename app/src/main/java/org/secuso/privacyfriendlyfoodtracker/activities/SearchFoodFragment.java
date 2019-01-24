@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -95,6 +97,42 @@ public class SearchFoodFragment extends Fragment {
 
         SearchResultAdapter adapter = new SearchResultAdapter(databaseFacade.findMostCommonProducts());
         foodList.setAdapter(adapter);
+
+        foodList.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
+                return true;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent e) {
+                CardView childView = (CardView) recyclerView.findChildViewUnder(e.getX(), e.getY());
+                View x = recyclerView.findChildViewUnder(e.getX(), e.getY());
+                TextView idView = childView.findViewById(R.id.resultId);
+                int id = Integer.parseInt(idView.getText().toString());
+
+                TextView nameView = childView.findViewById(R.id.resultName);
+                String name = nameView.getText().toString();
+
+                TextView calView = childView.findViewById(R.id.resultCalories);
+                String cal = calView.getText().toString();
+                cal = cal.split(" ")[0];
+                int calories = Integer.parseInt(cal);
+
+                ((BaseAddFoodActivity) referenceActivity).id = id;
+                ((BaseAddFoodActivity) referenceActivity).name = name;
+                ((BaseAddFoodActivity) referenceActivity).calories = calories;
+                ViewPager pager = referenceActivity.findViewById(R.id.pager_food);
+                // 1 is the 'AddFoodFragment'
+                pager.setCurrentItem(1);
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean b) {
+
+            }
+        });
 
 
         final EditText search = parentHolder.findViewById(R.id.search_term);

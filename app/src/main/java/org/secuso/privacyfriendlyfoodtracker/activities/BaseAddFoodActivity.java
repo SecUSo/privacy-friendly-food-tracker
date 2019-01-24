@@ -25,6 +25,7 @@ public class BaseAddFoodActivity extends AppCompatActivity {
     Date date;
     String name;
     int calories;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
