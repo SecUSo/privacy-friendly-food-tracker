@@ -26,6 +26,7 @@ public class BaseAddFoodActivity extends AppCompatActivity {
     String name;
     int calories;
     int id;
+    boolean productSet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,20 @@ public class BaseAddFoodActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout_food);
         tabLayout.setupWithViewPager(viewPager);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabReselected(TabLayout.Tab t){
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab t){
+            }
+            @Override
+            public void onTabSelected(TabLayout.Tab t){
+                productSet = false;
+            }
+
+        });
 
         Intent intent = getIntent();
 

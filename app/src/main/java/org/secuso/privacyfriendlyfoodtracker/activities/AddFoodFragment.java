@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.view.ViewTreeObserver;
+import android.graphics.Rect;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseFacade;
@@ -39,7 +41,7 @@ import java.util.List;
  */
 public class AddFoodFragment extends Fragment {
     SharedStatisticViewModel sharedStatisticViewModel;
-    Activity referenceActivity;
+    BaseAddFoodActivity referenceActivity;
     View parentHolder;
     TextView textView;
     DatabaseFacade databaseFacade;
@@ -62,7 +64,8 @@ public class AddFoodFragment extends Fragment {
             Log.e("Error", e.getMessage());
         }
 
-        FloatingActionButton fab = parentHolder.findViewById(R.id.addEntry);
+
+        FloatingActionButton fab = referenceActivity.findViewById(R.id.addEntry);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,6 +94,36 @@ public class AddFoodFragment extends Fragment {
 
 
         return parentHolder;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisible) {
+        super.setUserVisibleHint(isVisible);
+        if(isVisible && referenceActivity.productSet) {
+            EditText nameField = parentHolder.findViewById(R.id.input_food);
+            EditText caloriesField = parentHolder.findViewById(R.id.input_calories);
+            nameField.setText(referenceActivity.name);
+            nameField.setFocusable(false);
+            nameField.setClickable(false);
+            nameField.setTextColor(getResources().getColor(R.color.middlegrey));
+            caloriesField.setText(Integer.toString(referenceActivity.calories));
+            caloriesField.setFocusable(false);
+            caloriesField.setClickable(false);
+            caloriesField.setTextColor(getResources().getColor(R.color.middlegrey));
+        } else if (isVisible && !referenceActivity.productSet) {
+            EditText nameField = parentHolder.findViewById(R.id.input_food);
+            EditText caloriesField = parentHolder.findViewById(R.id.input_calories);
+            nameField.setText("");
+            nameField.setFocusable(true);
+            nameField.setFocusableInTouchMode(true);
+            nameField.setClickable(true);
+            nameField.setTextColor(getResources().getColor(R.color.black));
+            caloriesField.setText("");
+            caloriesField.setFocusable(true);
+            caloriesField.setFocusableInTouchMode(true);
+            caloriesField.setClickable(true);
+            caloriesField.setTextColor(getResources().getColor(R.color.black));
+        }
     }
 
     private boolean makeDatabaseEntry(String name, String amountString, String caloriesString) {

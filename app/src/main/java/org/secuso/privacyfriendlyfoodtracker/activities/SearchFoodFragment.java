@@ -107,10 +107,17 @@ public class SearchFoodFragment extends Fragment {
             @Override
             public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent e) {
                 CardView childView = (CardView) recyclerView.findChildViewUnder(e.getX(), e.getY());
+                if(null == childView){
+                    return;
+                }
                 View x = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                TextView idView = childView.findViewById(R.id.resultId);
-                int id = Integer.parseInt(idView.getText().toString());
-
+                int id = 0;
+                try {
+                    TextView idView = childView.findViewById(R.id.resultId);
+                    id = Integer.parseInt(idView.getText().toString());
+                } catch (NullPointerException exc){
+                    exc.printStackTrace();
+                }
                 TextView nameView = childView.findViewById(R.id.resultName);
                 String name = nameView.getText().toString();
 
@@ -122,7 +129,9 @@ public class SearchFoodFragment extends Fragment {
                 ((BaseAddFoodActivity) referenceActivity).id = id;
                 ((BaseAddFoodActivity) referenceActivity).name = name;
                 ((BaseAddFoodActivity) referenceActivity).calories = calories;
+                ((BaseAddFoodActivity) referenceActivity).productSet = true;
                 ViewPager pager = referenceActivity.findViewById(R.id.pager_food);
+                System.out.println("Setting page");
                 // 1 is the 'AddFoodFragment'
                 pager.setCurrentItem(1);
 
@@ -189,6 +198,7 @@ public class SearchFoodFragment extends Fragment {
 
                         @Override
                         public void onFailure(Call<ProductResponse> call, Throwable t) {
+                            t.printStackTrace();
                         }
                     });
 
