@@ -12,7 +12,7 @@
         android:background="@color/colorPrimary"
         android:gravity="center"
         android:scaleType="fitCenter"
-        app:srcCompat="@mipmap/ic__delete" />
+        app:srcCompat="@mipmap/ic__edit" android:padding="2dp"/>
 
     <TextView
         android:layout_width="wrap_content"
