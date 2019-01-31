@@ -27,6 +27,7 @@
 
         android:id="@+id/search_results"
         android:layout_width="match_parent"
+        android:scrollbars="vertical"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/inputSearchTerm"/>
 </android.support.constraint.ConstraintLayout>

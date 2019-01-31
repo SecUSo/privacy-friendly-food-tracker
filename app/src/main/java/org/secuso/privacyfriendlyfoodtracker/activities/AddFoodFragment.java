@@ -65,7 +65,7 @@ public class AddFoodFragment extends Fragment {
         }
 
 
-        FloatingActionButton fab = referenceActivity.findViewById(R.id.addEntry);
+        FloatingActionButton fab = parentHolder.findViewById(R.id.addEntry);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
