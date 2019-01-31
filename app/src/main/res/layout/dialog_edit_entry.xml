@@ -40,9 +40,11 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="5dp"
             android:layout_marginBottom="20dp"
+            android:background="@color/red"
             android:gravity="center_vertical|center_horizontal"
             android:padding="10dp"
             android:text="@string/decline"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -54,9 +56,11 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="5dp"
             android:layout_marginBottom="20dp"
+            android:background="@color/green"
             android:gravity="center_vertical|center_horizontal"
             android:padding="10dp"
             android:text="@string/save"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold" />
 

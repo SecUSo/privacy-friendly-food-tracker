@@ -102,7 +102,8 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     protected int getNavigationDrawerID() {
-        return R.id.nav_settings;
+        //return R.id.nav_settings;
+        return 0;
     }
 
     /**

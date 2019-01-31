@@ -417,9 +417,12 @@ public class OverviewActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             EditText amountField = deleteDialogView.findViewById(R.id.input_amount);
+                            String test = amountField.getText().toString();
+                            if(test.length() != 0 ){
                             boolean result = editDatabaseEntry(amountField.getText().toString(), entry.id);
                             refreshFoodList();
                             deleteDialog.dismiss();
+                            }
                         }
                     });
                     deleteDialogView.findViewById(R.id.no).setOnClickListener(new View.OnClickListener() {
