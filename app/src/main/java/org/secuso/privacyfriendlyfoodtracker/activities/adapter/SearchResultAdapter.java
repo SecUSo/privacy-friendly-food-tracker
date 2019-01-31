@@ -10,6 +10,7 @@ import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.database.Product;
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.SearchViewHolder> {
@@ -21,6 +22,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     public static class SearchViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public CardView mCardView;
+
         public SearchViewHolder(CardView v) {
             super(v);
             mCardView = v;
@@ -35,7 +37,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     // Create new views (invoked by the layout manager)
     @Override
     public SearchResultAdapter.SearchViewHolder onCreateViewHolder(ViewGroup parent,
-                                                     int viewType) {
+                                                                   int viewType) {
         // create a new view
         CardView v = (CardView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.search_result, parent, false);
@@ -57,5 +59,20 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+
+    public List<Product> getProducts() {
+        return mDataset;
+    }
+
+    public void addItems(List<Product> products) {
+        mDataset.addAll(products);
+        notifyItemInserted(mDataset.size());
+    }
+
+    public void clearItems(){
+        mDataset = new ArrayList<>();
+        notifyItemInserted(mDataset.size());
     }
 }
