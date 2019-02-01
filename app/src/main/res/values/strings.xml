@@ -72,8 +72,8 @@
     <string name="edit_entry">Edit entry</string>
     <string name="title_activity_overview">Overview</string>
     <string name="hint_food_name">Name</string>
-    <string name="hint_food_amount">Amount</string>
-    <string name="hint_food_calories">kCal/100</string>
+    <string name="hint_food_amount">Amount in g</string>
+    <string name="hint_food_calories">kCal/100g</string>
     <string name="error_food_missing">"Please give your food a name"</string>
     <string name="error_amount_missing">"Please put in the amount of food you ate"</string>
     <string name="error_calories_missing">"Please put in how many calories your food has per 100"</string>
@@ -94,7 +94,7 @@
     <string name="search">Search</string>
     <string name="add">Add</string>
 
-    <string name="action_statistic">Statistic</string>
+    <string name="action_statistic">Statistics</string>
     <string-array name="statisticPicker">
         <item>Week</item>
         <item>Month</item>
