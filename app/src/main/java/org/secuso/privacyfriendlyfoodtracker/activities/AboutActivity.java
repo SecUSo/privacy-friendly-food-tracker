@@ -29,7 +29,9 @@ import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.helper.BaseActivity;
 
 /**
- * Created by yonjuni on 15.06.16.
+ * Displays an "about" page
+ * @author Simon Reinkemeier, yonjuni
+ *
  */
 public class AboutActivity extends AppCompatActivity {
 
@@ -55,9 +57,5 @@ public class AboutActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.textFieldVersionName)).setText(getString(R.string.version_number, BuildConfig.VERSION_NAME));
     }
 
-    //@Override
-    //protected int getNavigationDrawerID() {
-    //    return R.id.nav_about;
-    //}
 }
 

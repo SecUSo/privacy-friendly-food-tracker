@@ -30,10 +30,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * @author Karola Marky, Christopher Beckmann
+ * Shows a "Help" page
+ * @author Karola Marky, Christopher Beckmann, Simon Reinkemeier
  * @version 20171016
- * Class structure taken from tutorial at http://www.journaldev.com/9942/android-expandablelistview-example-tutorial
- * last access 27th October 2016
  */
 public class HelpActivity extends BaseActivity {
 

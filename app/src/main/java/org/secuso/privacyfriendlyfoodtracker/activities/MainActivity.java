@@ -79,13 +79,7 @@ public class MainActivity extends BaseActivity {
 
     public void onClick(View v) {
         if (v != null) switch (v.getId()) {
-            /*case R.id.main_button:
-                // do something
-                return;
-            case R.id.main_button_1:
-                // do something
-                return;*/
-            // ... etc
+
         }
     }
 }

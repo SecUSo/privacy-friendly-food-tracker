@@ -71,10 +71,6 @@
             android:label="@string/title_activity_overview"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.FoodActivity"
-            android:label="@string/title_activity_food"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".activities.BaseStatisticActivity"
             android:label="@string/action_statistic"
             android:parentActivityName=".activities.MainActivity"

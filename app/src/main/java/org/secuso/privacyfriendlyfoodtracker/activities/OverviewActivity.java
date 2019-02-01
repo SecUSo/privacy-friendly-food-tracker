@@ -34,6 +34,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Date;
 
+/**
+ * The overview for a day
+ * @author Simon Reinkemeier
+ */
 public class OverviewActivity extends AppCompatActivity {
 
     // The date for the activity. This is tied to each OverviewActivity as
