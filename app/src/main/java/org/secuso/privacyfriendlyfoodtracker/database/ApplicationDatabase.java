@@ -19,6 +19,9 @@ import org.secuso.privacyfriendlyfoodtracker.helpers.KeyGenHelper;
 import static com.commonsware.cwac.saferoom.SQLCipherUtils.encrypt;
 import static com.commonsware.cwac.saferoom.SQLCipherUtils.getDatabaseState;
 
+/**
+ * Database singleton.
+ */
 @Database(entities = {ConsumedEntries.class, Product.class},
         version = 1, exportSchema = false)
 @TypeConverters({DateConverter.class})
@@ -41,7 +44,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
         if (sInstance == null) {
             synchronized (ApplicationDatabase.class) {
                 if (sInstance == null) {
-                    SafeHelperFactory factory= new SafeHelperFactory(KeyGenHelper.getSecretKeyAsChar(context));
+                    SafeHelperFactory factory = new SafeHelperFactory(KeyGenHelper.getSecretKeyAsChar(context));
 
                     sInstance = Room.databaseBuilder(context.getApplicationContext(),
                             ApplicationDatabase.class, DATABASE_NAME).openHelperFactory(factory).allowMainThreadQueries().addCallback(new Callback() {
@@ -51,15 +54,10 @@ public abstract class ApplicationDatabase extends RoomDatabase {
                             try {
                                 ApplicationDatabase database = ApplicationDatabase.getInstance(context);
                                 // notify that the database was created and it's ready to be used
-                               /* if( getDatabaseState(context,DATABASE_NAME) == SQLCipherUtils.State.UNENCRYPTED){
-                                    encrypt(context, DATABASE_NAME, KeyGenHelper.getSecretKeyAsChar(context));
-                                }*/
                                 database.setDatabaseCreated();
-                            }catch (Exception e){
-                                // TODO: pass to caller?
+                            } catch (Exception e) {
                                 Log.e("ApplicationDatabase", e.getMessage());
                             }
-
                         }
                     }).build();
 
@@ -69,37 +67,15 @@ public abstract class ApplicationDatabase extends RoomDatabase {
         return sInstance;
     }
 
-    /**
-     * Method to insert test data
-     *
-     * @param database        the database singleton
-     * @param consumedEntries the object to insert
-     * @param product         the object to insert
-     */
-    private static void insertData(final ApplicationDatabase database, final ConsumedEntries consumedEntries, final Product product) {
-        database.runInTransaction(new Runnable() {
-            @Override
-            public void run() {
-                database.getConsumedEntriesDao().insert(consumedEntries);
-                database.getProductDao().insert(product);
-            }
-        });
-
-    }
-
-    private void updateDatabaseCreated(final Context context) {
-        if (context.getDatabasePath(DATABASE_NAME).exists()) {
-            setDatabaseCreated();
-        }
-    }
-
     private void setDatabaseCreated() {
         mIsDatabaseCreated.postValue(true);
     }
 
+    /**
+     * Indicates if the database is created.
+     * @return if database is created
+     */
     public LiveData<Boolean> getDatabaseCreated() {
         return mIsDatabaseCreated;
     }
-
-
 }

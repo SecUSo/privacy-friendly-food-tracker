@@ -31,6 +31,7 @@ import javax.security.auth.x500.X500Principal;
 
 /**
  * Helper class to generate, retrieve and storing encrypted passphrase into shared memory.
+ * Using the tutorial at https://medium.com/@ericfu/securely-storing-secrets-in-an-android-application-501f030ae5a3
  */
 public class KeyGenHelper {
     private static final String AndroidKeyStore = "AndroidKeyStore";
@@ -87,7 +88,6 @@ public class KeyGenHelper {
         }
     }
 
-
     /**
      * Generates a random passphrase, encrypt and stores it into SharedPreferences if it not exist.
      * Requires rsa key (call generateKey first).
@@ -104,17 +104,12 @@ public class KeyGenHelper {
         edit.apply();
     }
 
-    public static Key getSecretKey(Context context) throws Exception {
-        SharedPreferences pref = context.getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
-        String enryptedKeyB64 = pref.getString(ENCRYPTED_KEY, null);
-
-        // need to check null, omitted here
-        byte[] encryptedKey = Base64.decode(enryptedKeyB64, Base64.DEFAULT);
-        byte[] key = rsaDecrypt(encryptedKey);
-
-        return new SecretKeySpec(key, "AES");
-    }
-
+    /**
+     * Returns the encrypted passphrase from shared preferences.
+     * @param context the context
+     * @return encrypted passphrase as char
+     * @throws Exception
+     */
     public static char[] getSecretKeyAsChar(Context context) throws Exception {
         SharedPreferences pref = context.getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         String enryptedKeyB64 = pref.getString(ENCRYPTED_KEY, null);
@@ -125,6 +120,12 @@ public class KeyGenHelper {
 
         return charFromBytes(key);
     }
+
+    /**
+     * Convert byte array to char array.
+     * @param byteData the source byte array
+     * @return source data as char array
+     */
     public static char[] charFromBytes(byte byteData[]) {
         char charData[] = new char[byteData.length];
         for(int i = 0; i < charData.length; i++) {
