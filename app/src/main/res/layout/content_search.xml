@@ -30,4 +30,15 @@
         android:scrollbars="vertical"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/inputSearchTerm"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/search_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/baseline_search_white_48"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
 </android.support.constraint.ConstraintLayout>

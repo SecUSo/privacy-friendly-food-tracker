@@ -118,17 +118,16 @@ public class MonthStatisticFragment extends Fragment {
     }
 
     void UpdateGraph() {
-        List<ConsumedEntrieAndProductDao.DateCalories> consumedEntriesList = new ArrayList<>();
-        List<ConsumedEntrieAndProductDao.DateCalories> calories = new ArrayList<>();
+
         try {
 
             final Date startDate = getMonthByValue(-1);
             final Date endDate = getMonthByValue(0);
-            consumedEntriesList = databaseFacade.getCaloriesPerDayinPeriod(startDate,endDate);
-            calories = databaseFacade.getPeriodCalories(startDate,endDate);
+            List<ConsumedEntrieAndProductDao.DateCalories> consumedEntriesList = databaseFacade.getCaloriesPerDayinPeriod(startDate,endDate);
+            List<ConsumedEntrieAndProductDao.DateCalories> calories = databaseFacade.getPeriodCalories(startDate,endDate);
             DataPoint[] dataPointInterfaces = new DataPoint[consumedEntriesList.size()];
             for (int i = 0; i < consumedEntriesList.size(); i++) {
-                dataPointInterfaces[i] = (new DataPoint(consumedEntriesList.get(i).unique1.getTime(), consumedEntriesList.get(i).unique2));
+                dataPointInterfaces[i] = (new DataPoint(consumedEntriesList.get(i).unique1.getTime(), consumedEntriesList.get(i).unique2/100));
             }
             if (calories.size() != 0) {
 
@@ -139,7 +138,7 @@ public class MonthStatisticFragment extends Fragment {
                 float periodCalories = calories.get(0).unique2;
                 float periodDays = daysBetween( endDateCalendar,startDateCalendar);
                 float averageCalories = periodCalories/periodDays;
-                BigDecimal averageCaloriesBigDecimal = round(averageCalories,2) ;
+                BigDecimal averageCaloriesBigDecimal = round(averageCalories,0) ;
                 textView.setText(averageCaloriesBigDecimal.toString());
             }
             GraphView graph = (GraphView) parentHolder.findViewById(R.id.graph);
@@ -150,10 +149,8 @@ public class MonthStatisticFragment extends Fragment {
             graph.getViewport().setMinX(startDate.getTime());
             graph.getViewport().setMaxX(endDate.getTime());
             graph.getViewport().setXAxisBoundsManual(true);
-            //  graph.getGridLabelRenderer().setNumHorizontalLabels(7); // only 4 because of the space
             graph.getGridLabelRenderer().setTextSize(40);
             graph.getViewport().setScrollable(true);
-            // graph.getGridLabelRenderer().setVerticalAxisTitle(getApplicationContext().getString(R.string.total_calories));
             graph.getGridLabelRenderer().setHorizontalLabelsAngle(135);
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
@@ -186,7 +183,6 @@ public class MonthStatisticFragment extends Fragment {
 
             while (dayOne.get(Calendar.YEAR) > dayTwo.get(Calendar.YEAR)) {
                 dayOne.add(Calendar.YEAR, -1);
-                // getActualMaximum() important for leap years
                 extraDays += dayOne.getActualMaximum(Calendar.DAY_OF_YEAR);
             }
 
