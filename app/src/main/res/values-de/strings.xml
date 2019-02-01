@@ -97,5 +97,7 @@
     <string name="caloriePerWeek">Durchschnittliche Kalorien</string>
     <string name="caloriePerMonth">Durchschnittliche Kalorien</string>
     <string name="period">Zeitraum</string>
+    <string name="decline">Abbrechen</string>
+    <string name="save">Speichern</string>
 
 </resources>

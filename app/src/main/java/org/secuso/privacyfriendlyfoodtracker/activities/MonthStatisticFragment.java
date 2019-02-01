@@ -27,10 +27,14 @@ import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
 import org.secuso.privacyfriendlyfoodtracker.viewmodels.SharedStatisticViewModel;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static java.time.temporal.ChronoUnit.DAYS;
+import static org.secuso.privacyfriendlyfoodtracker.activities.helper.MathHelper.round;
 
 
 /**
@@ -118,8 +122,8 @@ public class MonthStatisticFragment extends Fragment {
         List<ConsumedEntrieAndProductDao.DateCalories> calories = new ArrayList<>();
         try {
 
-            Date startDate = getMonthByValue(-1);
-            Date endDate = getMonthByValue(0);
+            final Date startDate = getMonthByValue(-1);
+            final Date endDate = getMonthByValue(0);
             consumedEntriesList = databaseFacade.getCaloriesPerDayinPeriod(startDate,endDate);
             calories = databaseFacade.getPeriodCalories(startDate,endDate);
             DataPoint[] dataPointInterfaces = new DataPoint[consumedEntriesList.size()];
@@ -127,7 +131,16 @@ public class MonthStatisticFragment extends Fragment {
                 dataPointInterfaces[i] = (new DataPoint(consumedEntriesList.get(i).unique1.getTime(), consumedEntriesList.get(i).unique2));
             }
             if (calories.size() != 0) {
-                textView.setText(Integer.toString(calories.get(0).unique2 / sharedStatisticViewModel.getCalendar().get(Calendar.DAY_OF_MONTH) ));
+
+                Calendar startDateCalendar = Calendar.getInstance();
+                startDateCalendar.setTime(startDate);
+                Calendar endDateCalendar = Calendar.getInstance();
+                endDateCalendar.setTime(endDate);
+                float periodCalories = calories.get(0).unique2;
+                float periodDays = daysBetween( endDateCalendar,startDateCalendar);
+                float averageCalories = periodCalories/periodDays;
+                BigDecimal averageCaloriesBigDecimal = round(averageCalories,2) ;
+                textView.setText(averageCaloriesBigDecimal.toString());
             }
             GraphView graph = (GraphView) parentHolder.findViewById(R.id.graph);
             LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPointInterfaces);
@@ -144,6 +157,40 @@ public class MonthStatisticFragment extends Fragment {
             graph.getGridLabelRenderer().setHorizontalLabelsAngle(135);
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
+        }
+    }
+
+    /**
+     * Source: https://stackoverflow.com/questions/20165564/calculating-days-between-two-dates-with-java
+     * By Pim Beers
+     * @param day1
+     * @param day2
+     * @return
+     */
+    private static int daysBetween(Calendar day1, Calendar day2){
+        Calendar dayOne = (Calendar) day1.clone(),
+                dayTwo = (Calendar) day2.clone();
+
+        if (dayOne.get(Calendar.YEAR) == dayTwo.get(Calendar.YEAR)) {
+            return Math.abs(dayOne.get(Calendar.DAY_OF_YEAR) - dayTwo.get(Calendar.DAY_OF_YEAR));
+        } else {
+            if (dayTwo.get(Calendar.YEAR) > dayOne.get(Calendar.YEAR)) {
+                //swap them
+                Calendar temp = dayOne;
+                dayOne = dayTwo;
+                dayTwo = temp;
+            }
+            int extraDays = 0;
+
+            int dayOneOriginalYearDays = dayOne.get(Calendar.DAY_OF_YEAR);
+
+            while (dayOne.get(Calendar.YEAR) > dayTwo.get(Calendar.YEAR)) {
+                dayOne.add(Calendar.YEAR, -1);
+                // getActualMaximum() important for leap years
+                extraDays += dayOne.getActualMaximum(Calendar.DAY_OF_YEAR);
+            }
+
+            return extraDays - dayTwo.get(Calendar.DAY_OF_YEAR) + dayOneOriginalYearDays ;
         }
     }
 

@@ -40,12 +40,12 @@ public class DatabaseFacadeTest {
 
     @Test
     public void insertEntryTest(){
-        assertTrue("Insert should return true", databaseFacade.insertEntry(2, new Date(),"name",1  ));
+        assertTrue("Insert should return true", databaseFacade.insertEntry(2, new Date(),"name",1 ,1 ));
     }
 
     @Test
     public void deleteEntryByIdTest(){
-        databaseFacade.insertEntry(2, new Date(),"name",1  );
+        databaseFacade.insertEntry(2, new Date(),"name",1 ,1  );
         assertTrue("Delete should return true", databaseFacade.deleteEntryById(0 ));
 
 

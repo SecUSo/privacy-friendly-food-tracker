@@ -28,12 +28,15 @@ import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
 import org.secuso.privacyfriendlyfoodtracker.viewmodels.SharedStatisticViewModel;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static org.secuso.privacyfriendlyfoodtracker.activities.helper.MathHelper.round;
 
 
 /**
@@ -129,8 +132,11 @@ public class WeekStatisticFragment extends Fragment {
             for (int i = 0; i < consumedEntriesList.size(); i++) {
                 dataPointInterfaces[i] = (new DataPoint(consumedEntriesList.get(i).unique1.getTime(), consumedEntriesList.get(i).unique2));
             }
+            float averageCalories = calories.get(0).unique2 / 8;
+            BigDecimal averageCaloriesBigDecimal = round(averageCalories,2) ;
+
             if (calories.size() != 0) {
-                textView.setText(Integer.toString(calories.get(0).unique2 / 7));
+                textView.setText(averageCaloriesBigDecimal.toString());
             }
             GraphView graph = (GraphView) parentHolder.findViewById(R.id.graph);
             LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPointInterfaces);
@@ -140,7 +146,7 @@ public class WeekStatisticFragment extends Fragment {
             graph.getViewport().setMinX(startDate.getTime());
             graph.getViewport().setMaxX(endDate.getTime());
             graph.getViewport().setXAxisBoundsManual(true);
-            graph.getGridLabelRenderer().setNumHorizontalLabels(7); // only 4 because of the space
+            graph.getGridLabelRenderer().setNumHorizontalLabels(8); // only 4 because of the space
             graph.getGridLabelRenderer().setTextSize(40);
             graph.getViewport().setScrollable(true);
             // graph.getGridLabelRenderer().setVerticalAxisTitle(getApplicationContext().getString(R.string.total_calories));
