@@ -1,12 +1,10 @@
 package org.secuso.privacyfriendlyfoodtracker.activities;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
@@ -14,27 +12,20 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.widget.Toast;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.SearchResultAdapter;
-import org.secuso.privacyfriendlyfoodtracker.activities.helper.DateHelper;
-import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
-import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
 import org.secuso.privacyfriendlyfoodtracker.database.Product;
 import org.secuso.privacyfriendlyfoodtracker.network.ApiManager;
 import org.secuso.privacyfriendlyfoodtracker.network.ProductApiService;
@@ -43,12 +34,9 @@ import org.secuso.privacyfriendlyfoodtracker.network.models.ProductResponse;
 import org.secuso.privacyfriendlyfoodtracker.network.utils.ProductConversionHelper;
 import org.secuso.privacyfriendlyfoodtracker.viewmodels.SharedStatisticViewModel;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,7 +52,6 @@ public class SearchFoodFragment extends Fragment {
     SharedStatisticViewModel sharedStatisticViewModel;
     Activity referenceActivity;
     View parentHolder;
-    TextView textView;
     DatabaseFacade databaseFacade;
     private RecyclerView foodList;
     private LinearLayoutManager llm;
@@ -82,8 +69,8 @@ public class SearchFoodFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
+        // Inflate the layout for this fragment
         referenceActivity = getActivity();
         parentHolder = inflater.inflate(R.layout.content_search, container, false);
         sharedStatisticViewModel = ViewModelProviders.of(getActivity()).get(SharedStatisticViewModel.class);
@@ -111,7 +98,6 @@ public class SearchFoodFragment extends Fragment {
                 super.onScrollStateChanged(recyclerView, newState);
 
                 if (!recyclerView.canScrollVertically(1)) {
-                    // Toast.makeText(referenceActivity, "endOfScroll", Toast.LENGTH_LONG).show();
 
                     ProductApiService mProductApiService = ApiManager.getInstance().getProductApiService();
                     Call<ProductResponse> call = mProductApiService.listProductsFromPage(search.getText().toString(), String.valueOf(pageNumber++));
@@ -161,7 +147,6 @@ public class SearchFoodFragment extends Fragment {
                         long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
                         if(clickDuration < MAX_CLICK_DURATION) {
                             // click event has occurred
-                            // Toast.makeText(referenceActivity, "shortClick", Toast.LENGTH_LONG).show();
                             CardView childView = (CardView) recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
                             if(null == childView){
                                 return false;
@@ -277,6 +262,54 @@ public class SearchFoodFragment extends Fragment {
                 return false;
             }
         });
+
+        FloatingActionButton searchFab = (FloatingActionButton) parentHolder.findViewById(R.id.search_fab);
+        searchFab.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                pageNumber = 0;
+                ProductApiService mProductApiService = ApiManager.getInstance().getProductApiService();
+                Call<ProductResponse> call = mProductApiService.listProducts(search.getText().toString());
+                call.enqueue(new Callback<ProductResponse>() {
+                    @Override
+                    public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                        if (response.isSuccessful()) {
+                            productResponse = response.body();
+                            products = new LinkedList<Product>();
+                            for (int i = 0; i < productResponse.getProducts().size(); i++) {
+                                NetworkProduct product = productResponse.getProducts().get(i);
+                                Product convertedProd = ProductConversionHelper.conversionProduct(product);
+                                if (convertedProd != null) {
+                                    products.add(convertedProd);
+                                }
+                            }
+                            SearchResultAdapter newAdapter = new SearchResultAdapter(products);
+                            foodList.setAdapter(newAdapter);
+                            foodList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+
+                                @Override
+                                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                                    super.onScrollStateChanged(recyclerView, newState);
+                                }
+                            });
+                        } else {
+                            //show error
+                            System.out.println("Not success");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ProductResponse> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+
+                return true;
+            }
+
+        });
+
         return parentHolder;
     }
 }

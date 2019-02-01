@@ -24,13 +24,10 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.activities.helper.DateHelper;
-import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
 import org.secuso.privacyfriendlyfoodtracker.viewmodels.SharedStatisticViewModel;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -57,8 +54,8 @@ public class WeekStatisticFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
+        // Inflate the layout for this fragment
         referenceActivity = getActivity();
         parentHolder = inflater.inflate(R.layout.fragment_month_statistic, container, false);
         sharedStatisticViewModel = ViewModelProviders.of(getActivity()).get(SharedStatisticViewModel.class);
@@ -79,7 +76,6 @@ public class WeekStatisticFragment extends Fragment {
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
                                           int dayOfMonth) {
                         sharedStatisticViewModel.setDate(dayOfMonth, monthOfYear , year);
-                    //    editText.setText(DateHelper.dateToString(sharedStatisticViewModel.getDate()));
                         UpdateGraph();
                     }
                 };
@@ -97,7 +93,6 @@ public class WeekStatisticFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 changeWeekByValue(-1);
-                // UpdateGraph();
             }
         });
         final Button right_arrow = parentHolder.findViewById(R.id.right_arrow);
@@ -105,7 +100,6 @@ public class WeekStatisticFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 changeWeekByValue(+1);
-                //UpdateGraph();
             }
         });
         UpdateGraph();
@@ -130,10 +124,13 @@ public class WeekStatisticFragment extends Fragment {
             calories = databaseFacade.getPeriodCalories(startDate,endDate);
             DataPoint[] dataPointInterfaces = new DataPoint[consumedEntriesList.size()];
             for (int i = 0; i < consumedEntriesList.size(); i++) {
-                dataPointInterfaces[i] = (new DataPoint(consumedEntriesList.get(i).unique1.getTime(), consumedEntriesList.get(i).unique2));
+                dataPointInterfaces[i] = (new DataPoint(consumedEntriesList.get(i).unique1.getTime(), consumedEntriesList.get(i).unique2/100));
             }
-            float averageCalories = calories.get(0).unique2 / 8;
-            BigDecimal averageCaloriesBigDecimal = round(averageCalories,2) ;
+            int weekdays = 8;
+
+            float averageCalories = calories.get(0).unique2 / weekdays;
+
+            BigDecimal averageCaloriesBigDecimal = round(averageCalories,0) ;
 
             if (calories.size() != 0) {
                 textView.setText(averageCaloriesBigDecimal.toString());
@@ -146,10 +143,10 @@ public class WeekStatisticFragment extends Fragment {
             graph.getViewport().setMinX(startDate.getTime());
             graph.getViewport().setMaxX(endDate.getTime());
             graph.getViewport().setXAxisBoundsManual(true);
+
             graph.getGridLabelRenderer().setNumHorizontalLabels(8); // only 4 because of the space
             graph.getGridLabelRenderer().setTextSize(40);
             graph.getViewport().setScrollable(true);
-            // graph.getGridLabelRenderer().setVerticalAxisTitle(getApplicationContext().getString(R.string.total_calories));
             graph.getGridLabelRenderer().setHorizontalLabelsAngle(135);
         } catch (Exception e) {
             Log.e("Error", e.getMessage());

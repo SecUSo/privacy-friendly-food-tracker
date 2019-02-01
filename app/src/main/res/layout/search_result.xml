@@ -11,9 +11,10 @@
         android:padding="10dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/resultName"
+            android:paddingRight="2dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/resultCalories"
             android:paddingLeft="10dp"
@@ -21,12 +22,14 @@
             android:text="test"
             />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:paddingRight="2dp"
             android:layout_height="wrap_content"
             android:id="@+id/resultCalories"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@id/resultName"
             android:text="test"
+            app:layout_constraintHorizontal_chainStyle="spread"
             />
         <TextView
             android:layout_width="wrap_content"
