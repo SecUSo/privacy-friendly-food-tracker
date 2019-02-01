@@ -267,7 +267,7 @@ public class OverviewActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(OverviewActivity.this, FoodActivity.class);
+                Intent intent = new Intent(OverviewActivity.this, BaseAddFoodActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("DATE", date);
                 startActivity(intent);

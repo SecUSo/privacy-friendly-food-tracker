@@ -13,4 +13,7 @@ public interface ProductApiService {
 
     @GET("/cgi/search.pl?product_size=1&search_simple=0&action=process&json=1")
     Call<ProductResponse> listProducts(@Query("search_terms") String productName);
+
+    @GET("/cgi/search.pl?product_size=1&search_simple=0&action=process&json=1")
+    Call<ProductResponse> listProductsFromPage(@Query("search_terms") String productName, @Query("page") String page );
 }

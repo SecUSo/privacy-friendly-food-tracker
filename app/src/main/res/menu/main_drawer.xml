@@ -19,10 +19,10 @@
 
     <group android:id="@+id/nav_group_add"
         android:checkableBehavior="all">
-        <item
+       <!-- <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_menu_settings"
-            android:title="@string/action_settings" />
+            android:title="@string/action_settings" /> -->
         <item
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_menu_help"

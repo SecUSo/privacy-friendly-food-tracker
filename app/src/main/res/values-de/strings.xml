@@ -86,6 +86,8 @@
     <string name="setup_step_generating_passphrase">Erstelle Passphrase</string>
     <string name="setup_step_creating_encrypted_databas">Verschlüssle Datenbank</string>
     <string name="generate_key_header">Vorbereitung</string>
+    <string name="search">Suchen</string>
+    <string name="add">Hinzufügen</string>
 
     <string name="action_statistic">Statistik</string>
     <string-array name="statisticPicker">
@@ -99,5 +101,7 @@
     <string name="period">Zeitraum</string>
     <string name="decline">Abbrechen</string>
     <string name="save">Speichern</string>
+
+    <string name="search_for">Nach einem Produkt suchen</string>
 
 </resources>
