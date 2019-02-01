@@ -17,6 +17,7 @@ import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseFacade;
 
 import java.util.Date;
 
+
 public class FoodActivity extends AppCompatActivity {
 
     private Date date;

@@ -13,28 +13,50 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of SearchResultAdapter that uses a Fragment to manage each page. This class also handles saving and restoring of fragment's state.
+ *
+ * @author Simon Reinkemeier
+ */
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.SearchViewHolder> {
     private List<Product> mDataset;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
+
+
+    /**
+     * Provide a reference to the views for each data item
+     * Complex data items may need more than one view per item, and
+     * you provide access to all the views for a data item in a view holder
+     */
     public static class SearchViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public CardView mCardView;
 
+        /**
+         * Holds cards that are added to the seach results
+         *
+         * @param v a CardView to be added to the search results
+         */
         public SearchViewHolder(CardView v) {
             super(v);
             mCardView = v;
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+    /**
+     * Provide a suitable constructor (depends on the kind of dataset)
+     * @param myDataset the dataset that is used for the item creation
+     */
     public SearchResultAdapter(List<Product> myDataset) {
         mDataset = myDataset;
     }
 
-    // Create new views (invoked by the layout manager)
+    /**
+     * Create new views (invoked by the layout manager)
+     * @param parent the ViewGroup that holds this result
+     * @param viewType the viewType
+     * @return
+     */
     @Override
     public SearchResultAdapter.SearchViewHolder onCreateViewHolder(ViewGroup parent,
                                                                    int viewType) {
@@ -45,7 +67,11 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         return vh;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+    /**
+     * Replace the contents of a view (invoked by the layout manager)
+     * @param holder the holder of the elements of a search result
+     * @param position the position of the element
+     */
     @Override
     public void onBindViewHolder(SearchViewHolder holder, int position) {
         // - get element from your dataset at this position
@@ -55,24 +81,22 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         ((TextView) holder.mCardView.findViewById(R.id.resultId)).setText(Integer.toString(mDataset.get(position).id));
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    /**
+     * Return the size of your dataset (invoked by the layout manager)
+     * @return the size of the dataset
+     */
     @Override
     public int getItemCount() {
         return mDataset.size();
     }
 
 
-    public List<Product> getProducts() {
-        return mDataset;
-    }
-
+    /**
+     * Add additional items to the dataset
+     * @param products the Products to be inserted
+     */
     public void addItems(List<Product> products) {
         mDataset.addAll(products);
-        notifyItemInserted(mDataset.size());
-    }
-
-    public void clearItems(){
-        mDataset = new ArrayList<>();
         notifyItemInserted(mDataset.size());
     }
 }

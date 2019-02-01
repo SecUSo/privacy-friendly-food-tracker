@@ -168,6 +168,11 @@ public class DatabaseFacade {
         return    consumedEntrieAndProductDao.getCaloriesPerDayinPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
     }
 
+    /**
+     * Returns a list of products containing the input string
+     * @param name the search term
+     * @return a List with products containing the search term
+     */
     public List<Product> getProductByName(String name){
         return productDao.findProductsByName("%" + name + "%");
     }

@@ -23,12 +23,21 @@ import java.util.Date;
  */
 public class BaseAddFoodActivity extends AppCompatActivity {
 
+    // Date for the entry
     Date date;
+    // Name of the product
     String name;
+    // Calories per 100g
     int calories;
+    // ID of the product
     int id;
+    // true if a productID has been set by the SearchFoodFragment
     boolean productSet = false;
 
+    /**
+     * Called when the Activity is created
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,10 +79,9 @@ public class BaseAddFoodActivity extends AppCompatActivity {
 
     }
 
-    protected int getNavigationDrawerID() {
-        return R.id.nav_statistic;
-    }
-
+    /**
+     * Displays the "Back" or "Up" button in the Action bar
+     */
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
