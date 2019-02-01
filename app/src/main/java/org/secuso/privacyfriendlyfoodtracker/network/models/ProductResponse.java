@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Java Model for the JSON Open Food Facts response. Representation a product.
+ */
 public class ProductResponse {
 
     public List<NetworkProduct> getProducts() {

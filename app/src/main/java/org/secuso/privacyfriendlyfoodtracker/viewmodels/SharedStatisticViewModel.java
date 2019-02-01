@@ -9,20 +9,20 @@ import org.secuso.privacyfriendlyfoodtracker.activities.helper.DateHelper;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * For sharing data between WeekStatisticFragment and MonthStatisticFragment.
+ */
 public class SharedStatisticViewModel extends ViewModel {
     private final MutableLiveData<Calendar> liveCalendar = new MutableLiveData<Calendar>();
-
-    public void liveCalendar(Calendar item) {
-        liveCalendar.setValue(item);
-    }
 
     public LiveData<Calendar> getLiveCalendar() {
         return liveCalendar;
     }
 
-
-
-    SharedStatisticViewModel(){
+    /**
+     * Constructor. Sets the calender value to the current day.
+     */
+    SharedStatisticViewModel() {
         final Calendar currentTime = Calendar.getInstance();
         calendar = currentTime;
         liveCalendar.setValue(calendar);
@@ -35,12 +35,11 @@ public class SharedStatisticViewModel extends ViewModel {
         return calendar.getTime();
     }
 
-    public void setCalendar(Calendar item) {
-        calendar = item;
-        liveCalendar.setValue(calendar);
+    public Calendar getCalendar() {
+        return calendar;
     }
 
-    public void setDate(int day, int month, int year){
+    public void setDate(int day, int month, int year) {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, year);
         cal.set(Calendar.MONTH, month);
@@ -49,14 +48,10 @@ public class SharedStatisticViewModel extends ViewModel {
         liveCalendar.setValue(calendar);
     }
 
-    public void setCalendarWithDateObj(Date date){
+    public void setCalendarWithDateObj(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         calendar = cal;
         liveCalendar.setValue(calendar);
-    }
-
-    public Calendar getCalendar() {
-        return calendar;
     }
 }
