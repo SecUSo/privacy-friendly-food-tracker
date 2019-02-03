@@ -56,7 +56,9 @@ public class SearchFoodFragment extends Fragment {
     private RecyclerView foodList;
     private LinearLayoutManager llm;
 
-
+    /**
+     * Required empty public constructor
+     */
     public SearchFoodFragment() {
         // Required empty public constructor
     }
@@ -66,6 +68,13 @@ public class SearchFoodFragment extends Fragment {
 
     private static int pageNumber = 0;
 
+    /**
+     * Called when the activity is created
+     * @param inflater the layout inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the outermost layout
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
