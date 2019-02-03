@@ -1,3 +1,19 @@
+/*
+This file is part of Privacy friendly food tracker.
+
+Privacy friendly food tracker is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Privacy friendly food tracker is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyfoodtracker.activities;
 
 import android.app.Activity;
@@ -56,7 +72,9 @@ public class SearchFoodFragment extends Fragment {
     private RecyclerView foodList;
     private LinearLayoutManager llm;
 
-
+    /**
+     * Required empty public constructor
+     */
     public SearchFoodFragment() {
         // Required empty public constructor
     }
@@ -66,6 +84,13 @@ public class SearchFoodFragment extends Fragment {
 
     private static int pageNumber = 0;
 
+    /**
+     * Called when the activity is created
+     * @param inflater the layout inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the outermost layout
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

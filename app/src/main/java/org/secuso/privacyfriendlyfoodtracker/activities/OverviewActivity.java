@@ -1,3 +1,19 @@
+/*
+This file is part of Privacy friendly food tracker.
+
+Privacy friendly food tracker is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Privacy friendly food tracker is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyfoodtracker.activities;
 
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseEntry;
@@ -34,6 +50,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Date;
 
+/**
+ * The overview for a day
+ * @author Simon Reinkemeier
+ */
 public class OverviewActivity extends AppCompatActivity {
 
     // The date for the activity. This is tied to each OverviewActivity as
@@ -44,6 +64,10 @@ public class OverviewActivity extends AppCompatActivity {
     // I.e. if more than 0 cards are selected, the user should be able to delete them
     private int selectedCards;
 
+    /**
+     * sets up the activity
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +85,10 @@ public class OverviewActivity extends AppCompatActivity {
         setupActionBar();
     }
 
+    /**
+     * refresh the food list and calorie counter in case the database
+     * was altered by another activity
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -68,6 +96,11 @@ public class OverviewActivity extends AppCompatActivity {
         refreshTotalCalorieCounter();
     }
 
+    /**
+     * Called if either 'delete' or 'cancel' was clicked
+     * @param item The item that was clicked
+     * @return true
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -87,6 +120,11 @@ public class OverviewActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * set the menu to say the correct things
+     * @param menu the menu
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -119,6 +157,11 @@ public class OverviewActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Needed to set the menu to the correct items
+     * @param menu the menu
+     * @return true
+     */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
@@ -381,6 +424,11 @@ public class OverviewActivity extends AppCompatActivity {
         return c;
     }
 
+    /**
+     * Set up listeners for whenever an entry is touched
+     * @param c the cardview
+     * @param e the entry belonging to the card
+     */
     private void setListenersForCardView(CardView c, DatabaseEntry e) {
         // need to make final to use in Listener methods
         final DatabaseEntry entry = e;
@@ -444,6 +492,12 @@ public class OverviewActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Edit a database entry
+     * @param amountString the new amount
+     * @param idString the id of the entry
+     * @return true if the entry was successful
+     */
     private boolean editDatabaseEntry(String amountString, String idString) {
         DatabaseFacade facade = getDbFacade();
         int amount = Integer.parseInt(amountString);
@@ -451,6 +505,9 @@ public class OverviewActivity extends AppCompatActivity {
         return facade.editEntryById(id, amount);
     }
 
+    /**
+     * refresh the list of entries
+     */
     private void refreshFoodList() {
         Date d = getDateForActivity();
         DatabaseFacade facade = getDbFacade();
@@ -463,6 +520,9 @@ public class OverviewActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * set up the 'back' button
+     */
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -472,6 +532,10 @@ public class OverviewActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Count how many cards are currently selected. Important for determining what menus to show.
+     * @return the number of cards selected
+     */
     private int countSelectedCards() {
         int count = 0;
         ViewGroup foodList = getEntryList();
@@ -487,6 +551,10 @@ public class OverviewActivity extends AppCompatActivity {
         return count;
     }
 
+    /**
+     * Set up cardview
+     * @param c a cardview
+     */
     private void setCardViewOptions(CheckableCardView c) {
         c.setCardBackgroundColor(
                 ContextCompat.getColorStateList(

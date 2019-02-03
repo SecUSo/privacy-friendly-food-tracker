@@ -1,11 +1,23 @@
+/*
+This file is part of Privacy friendly food tracker.
+
+Privacy friendly food tracker is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Privacy friendly food tracker is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyfoodtracker.activities;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -14,24 +26,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.view.ViewTreeObserver;
-import android.graphics.Rect;
-
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseFacade;
-import org.secuso.privacyfriendlyfoodtracker.activities.helper.DateHelper;
-import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
-import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
 import org.secuso.privacyfriendlyfoodtracker.viewmodels.SharedStatisticViewModel;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -46,10 +45,20 @@ public class AddFoodFragment extends Fragment {
     TextView textView;
     DatabaseFacade databaseFacade;
 
+    /**
+     * The required empty public constructor
+     */
     public AddFoodFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * Called when the view is created
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view that is shown in the fragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,6 +105,11 @@ public class AddFoodFragment extends Fragment {
         return parentHolder;
     }
 
+    /**
+     * Called when the fragment is made visible to set correct presets for
+     * amount and food input
+     * @param isVisible indicates the visibility of the fragment
+     */
     @Override
     public void setUserVisibleHint(boolean isVisible) {
         super.setUserVisibleHint(isVisible);
@@ -126,6 +140,13 @@ public class AddFoodFragment extends Fragment {
         }
     }
 
+    /**
+     * Create a new db entry
+     * @param name Name of the food
+     * @param amountString amount in g
+     * @param caloriesString calories per 100g
+     * @return true if successful
+     */
     private boolean makeDatabaseEntry(String name, String amountString, String caloriesString) {
         try {
             int amount = Integer.parseInt(amountString);
@@ -140,6 +161,14 @@ public class AddFoodFragment extends Fragment {
         return true;
     }
 
+    /**
+     * Validates the inputs that a user has given
+     * @param name name of the product
+     * @param amount amount in g
+     * @param calories calories per 100g
+     * @param view the view
+     * @return returns true is all entries are valid
+     */
     private boolean validateResponses(String name, String amount, String calories, View view) {
         if("".equals(name)){
             showErrorMessage(referenceActivity.findViewById(R.id.inputFoodName), R.string.error_food_missing);

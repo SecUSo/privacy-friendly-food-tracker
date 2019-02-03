@@ -1,19 +1,19 @@
 /*
- This file is part of Privacy Friendly App Example.
+This file is part of Privacy friendly food tracker.
 
- Privacy Friendly App Example is free software:
- you can redistribute it and/or modify it under the terms of the
- GNU General Public License as published by the Free Software Foundation,
- either version 3 of the License, or any later version.
+Privacy friendly food tracker is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
- Privacy Friendly App Example is distributed in the hope
- that it will be useful, but WITHOUT ANY WARRANTY; without even
- the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- See the GNU General Public License for more details.
+Privacy friendly food tracker is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with Privacy Friendly App Example. If not, see <http://www.gnu.org/licenses/>.
- */
+You should have received a copy of the GNU General Public License
+along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/licenses/>.
+*/
 
 package org.secuso.privacyfriendlyfoodtracker.activities;
 
@@ -29,7 +29,9 @@ import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.helper.BaseActivity;
 
 /**
- * Created by yonjuni on 15.06.16.
+ * Displays an "about" page
+ * @author Simon Reinkemeier, yonjuni
+ *
  */
 public class AboutActivity extends AppCompatActivity {
 
@@ -55,9 +57,5 @@ public class AboutActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.textFieldVersionName)).setText(getString(R.string.version_number, BuildConfig.VERSION_NAME));
     }
 
-    //@Override
-    //protected int getNavigationDrawerID() {
-    //    return R.id.nav_about;
-    //}
 }
 
