@@ -30,6 +30,11 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Database access functions.
+ *
+ * @author Simon Reinkemeier, Andre Lutz
+ */
 public class DatabaseFacade {
     ProductDao productDao;
     ConsumedEntriesDao consumedEntriesDao;
