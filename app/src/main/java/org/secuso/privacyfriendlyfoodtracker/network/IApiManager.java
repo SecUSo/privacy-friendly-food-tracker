@@ -16,6 +16,11 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 */
 package org.secuso.privacyfriendlyfoodtracker.network;
 
+/**
+ * Interface for creating the api service.
+ *
+ * @author Andre Lutz
+ */
 public interface IApiManager {
 
     ProductApiService getProductApiService();

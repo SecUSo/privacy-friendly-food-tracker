@@ -28,6 +28,11 @@ import java.sql.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
+/**
+ * Information about consuming.
+ *
+ * @author Andre Lutz
+ */
 @Entity(foreignKeys = @ForeignKey(entity = Product.class,
         parentColumns = "id",
         childColumns = "productId",

@@ -25,6 +25,11 @@ import android.arch.persistence.room.Update;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * Includes methods that offer abstract access to the app database to manage products.
+ *
+ * @author Andre Lutz
+ */
 @Dao
 public interface ProductDao {
     @Insert

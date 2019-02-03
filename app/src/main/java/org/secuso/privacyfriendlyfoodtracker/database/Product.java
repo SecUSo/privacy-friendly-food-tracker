@@ -21,6 +21,11 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+/**
+ * A Product.
+ *
+ * @author Andre Lutz
+ */
 @Entity
 public class Product {
     @PrimaryKey(autoGenerate = true)

@@ -20,6 +20,11 @@ import android.arch.persistence.room.TypeConverter;
 
 import java.sql.Date;
 
+/**
+ * Converts a date to long and the reverse conversion. It's required to store a date object in the room database.
+ *
+ * @author Andre Lutz
+ */
 public class DateConverter {
 
     @TypeConverter

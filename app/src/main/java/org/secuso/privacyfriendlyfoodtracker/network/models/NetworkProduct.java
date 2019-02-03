@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Java Model for the JSON Open Food Facts response. Representation of a single product.
+ */
 public class NetworkProduct {
 
     private static final long serialVersionUID = 1L;

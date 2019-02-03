@@ -25,6 +25,11 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+/**
+ * Defines the Open Food Facts API requests.
+ *
+ * @author Andre Lutz
+ */
 public interface ProductApiService {
 
     @GET("/cgi/search.pl?product_size=1&search_simple=0&action=process&json=1")

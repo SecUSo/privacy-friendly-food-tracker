@@ -22,6 +22,11 @@ import java.util.Locale;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Creates the open food facts api service to send out network requests to the web-api.
+ *
+ * @author Andre Lutz
+ */
 public class ApiManager implements IApiManager {
 
     private static ApiManager instance;
@@ -36,9 +41,14 @@ public class ApiManager implements IApiManager {
         return instance;
     }
 
-    private ApiManager(){
+    private ApiManager() {
     }
 
+    /**
+     * Returns the product api service. Uses the current default language code (de=Germany search, otherwise=Global search) to define the base url.
+     *
+     * @return product api service
+     */
     @Override
     public ProductApiService getProductApiService() {
         if (productApiService == null) {
@@ -48,6 +58,12 @@ public class ApiManager implements IApiManager {
         return productApiService;
     }
 
+    /**
+     * Returns the product api service.
+     *
+     * @param languageCode the locale on which the products will be searched (de=Germany search, otherwise=Global search) to define the base url
+     * @return product api service
+     */
     @Override
     public ProductApiService getProductApiService(String languageCode) {
         if (productApiService == null) {
@@ -59,9 +75,9 @@ public class ApiManager implements IApiManager {
 
     private ProductApiService createProductApiService() {
         String languageCode = Locale.getDefault().getLanguage();
-        if(languageCode == "de"){
+        if (languageCode == "de") {
             languageCode = "de";
-        }else{
+        } else {
             languageCode = "world";
         }
         productApiService = createProductApiService(languageCode);
@@ -72,7 +88,7 @@ public class ApiManager implements IApiManager {
 
     private ProductApiService createProductApiService(String languageCode) {
         productApiService = new Retrofit.Builder()
-                .baseUrl("https://"+languageCode+".openfoodfacts.org/")
+                .baseUrl("https://" + languageCode + ".openfoodfacts.org/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(ProductApiService.class);
 

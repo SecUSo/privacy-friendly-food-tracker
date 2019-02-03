@@ -24,6 +24,11 @@ import com.jjoe64.graphview.series.DataPoint;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * Includes methods that offer abstract access to the app database to manage products and consumed entries.
+ *
+ * @author Andre Lutz
+ */
 @Dao
 public interface ConsumedEntrieAndProductDao {
     @Query("SELECT consumedEntries.date AS unique1,   (sum(product.energy*consumedEntries.amount)) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet GROUP BY consumedEntries.date ")
