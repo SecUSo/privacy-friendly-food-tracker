@@ -14,17 +14,21 @@
         android:scaleType="fitCenter"
         app:srcCompat="@mipmap/ic__edit" android:padding="2dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hint_food_amount" />
-
-    <EditText
-        android:id="@+id/input_amount"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputFoodName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:maxLines="1" />
+        app:errorEnabled="true">
+
+        <EditText
+            android:id="@+id/input_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_food_amount"
+            android:inputType="number"
+            android:maxLines="1"/>
+
+    </android.support.design.widget.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,6 +47,7 @@
             android:background="@color/red"
             android:gravity="center_vertical|center_horizontal"
             android:padding="10dp"
+            android:layout_weight="1"
             android:text="@string/decline"
             android:textColor="@color/white"
             android:textSize="14sp"
@@ -59,6 +64,7 @@
             android:background="@color/green"
             android:gravity="center_vertical|center_horizontal"
             android:padding="10dp"
+            android:layout_weight="1"
             android:text="@string/save"
             android:textColor="@color/white"
             android:textSize="14sp"
