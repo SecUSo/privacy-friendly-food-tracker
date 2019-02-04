@@ -38,7 +38,7 @@ public class SharedStatisticViewModel extends ViewModel {
     /**
      * Constructor. Sets the calender value to the current day.
      */
-    SharedStatisticViewModel() {
+    public SharedStatisticViewModel() {
         final Calendar currentTime = Calendar.getInstance();
         calendar = currentTime;
         liveCalendar.setValue(calendar);
