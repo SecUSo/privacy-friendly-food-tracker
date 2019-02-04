@@ -33,7 +33,7 @@ import org.secuso.privacyfriendlyfoodtracker.activities.helper.BaseActivity;
 import java.util.Date;
 
 /**
- * @author Christopher Beckmann, Karola Marky
+ * @author Christopher Beckmann, Karola Marky, Andre Lutz
  * @version 20171016
  */
 public class MainActivity extends BaseActivity {
@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                Intent intent = new Intent(MainActivity.this, OverviewActivity.class); // TODO correct navigation
+                Intent intent = new Intent(MainActivity.this, OverviewActivity.class); 
                 // Build string from chosen date to parse into Date object
                 // (month+1) because months count from 0 in java but SimpleDateFormat parses it as 1-12
                 String chosenDate = dayOfMonth + "/" + (month+1) + "/" + year;
