@@ -22,9 +22,13 @@ import org.secuso.privacyfriendlyfoodtracker.customviews.CheckableCardView;
 import org.secuso.privacyfriendlyfoodtracker.R;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -112,7 +116,8 @@ public class OverviewActivity extends AppCompatActivity {
                 break;
             default:
                 finish();
-                break;
+                return true;
+
         }
         selectedCards = 0;
         toggleDeletionMenuVisibility();
@@ -458,33 +463,40 @@ public class OverviewActivity extends AppCompatActivity {
                     }
                 } else {
                     LayoutInflater factory = LayoutInflater.from(OverviewActivity.this);
-                    final View deleteDialogView = factory.inflate(R.layout.dialog_edit_entry, null);
-                    final AlertDialog deleteDialog = new AlertDialog.Builder(OverviewActivity.this).create();
-                    deleteDialog.setView(deleteDialogView);
-                    deleteDialogView.findViewById(R.id.yes).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            EditText amountField = deleteDialogView.findViewById(R.id.input_amount);
-                            String test = amountField.getText().toString();
-                            if(test.length() != 0 ){
-                            boolean result = editDatabaseEntry(amountField.getText().toString(), entry.id);
-                            refreshFoodList();
-                            deleteDialog.dismiss();
+                    final AlertDialog.Builder deleteDialog = new AlertDialog.Builder(OverviewActivity.this);
+
+                    deleteDialog.setTitle(getResources().getString(R.string.edit_entry));
+                    //deleteDialog.setMessage("Message");
+                    final EditText input = new EditText(OverviewActivity.this);
+                        input.setText(String.valueOf(entry.amount));
+                    InputFilter[] fa= new InputFilter[1];
+                    fa[0] = new InputFilter.LengthFilter(5);
+                    input.setFilters(fa);
+                    input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    deleteDialog.setView(input);
+
+                    deleteDialog.setPositiveButton(getResources().getString(R.string.save), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            String amountField = input.getText().toString();
+                            if(amountField.length() != 0 ){
+                                boolean result = editDatabaseEntry(amountField, entry.id);
+                                refreshFoodList();
+                                refreshTotalCalorieCounter();
                             }
                         }
                     });
-                    deleteDialogView.findViewById(R.id.no).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            deleteDialog.dismiss();
+                    deleteDialog.setNegativeButton(getResources().getString(R.string.decline), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            //deleteDialog.dismiss();
                         }
                     });
+                    deleteDialog.show();
 
-                    EditText amountField = deleteDialogView.findViewById(R.id.input_amount);
+                  /*  EditText amountField = deleteDialogView.findViewById(R.id.input_amount);
                     amountField.setText("");
                     amountField.requestFocus();
                     Log.d("OverviewActivity", String.valueOf(entry.id));
-                    deleteDialog.show();
+                    deleteDialog.show();*/
                 }
 
 
