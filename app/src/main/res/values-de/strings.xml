@@ -72,7 +72,7 @@
     <string name="title_activity_overview">Übersicht</string>
     <string name="hint_food_name">Name</string>
     <string name="hint_food_amount">Menge</string>
-    <string name="hint_food_calories">kCal/100</string>
+    <string name="hint_food_calories">kCal/100g</string>
     <string name="error_food_missing">Bitte gib deinem Eintrag einen Namen</string>
     <string name="error_amount_missing">Bitte gib ein, wieviel du gegessen hast</string>
     <string name="error_calories_missing">Bitte gib an, wieviele kCal dein Essen pro 100 hat</string>
