@@ -22,10 +22,15 @@ import org.secuso.privacyfriendlyfoodtracker.customviews.CheckableCardView;
 import org.secuso.privacyfriendlyfoodtracker.R;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.support.v7.widget.Toolbar;
@@ -45,6 +50,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
@@ -112,7 +118,8 @@ public class OverviewActivity extends AppCompatActivity {
                 break;
             default:
                 finish();
-                break;
+                return true;
+
         }
         selectedCards = 0;
         toggleDeletionMenuVisibility();
@@ -261,7 +268,7 @@ public class OverviewActivity extends AppCompatActivity {
      * Recounts calories for all Entries of the day.
      */
     private void refreshTotalCalorieCounter() {
-        int totalCalories = 0;
+        BigInteger totalCalories = new BigInteger("0");
         TextView heading = this.findViewById(R.id.overviewHeading);
         String cal = getString(R.string.total_calories);
         Date d = getDateForActivity();
@@ -269,9 +276,10 @@ public class OverviewActivity extends AppCompatActivity {
         DatabaseFacade facade = getDbFacade();
         DatabaseEntry[] entries = facade.getEntriesForDay(d);
         for (DatabaseEntry e : entries) {
-            totalCalories += (e.energy * e.amount) / 100;
+            totalCalories = totalCalories.add( BigInteger.valueOf(e.energy * e.amount/ 100) );
+           // totalCalories += (e.energy * e.amount) / 100;
         }
-        heading.setText(formattedDate + ": " + totalCalories + " " + cal);
+        heading.setText(formattedDate + ": " + String.valueOf(totalCalories) + " " + cal);
     }
 
     /**
@@ -347,9 +355,9 @@ public class OverviewActivity extends AppCompatActivity {
      * @param e a DatabaseEntry
      * @return the calculated consumed calories
      */
-    private int getConsumedCaloriesForEntry(DatabaseEntry e) {
+    private long getConsumedCaloriesForEntry(DatabaseEntry e) {
         // energy is kCal/100 so divide by 100 at the end
-        int consumedEnergy = (e.amount * e.energy) / 100;
+        long consumedEnergy = (e.amount * e.energy) / 100;
         return consumedEnergy;
     }
 
@@ -370,9 +378,13 @@ public class OverviewActivity extends AppCompatActivity {
 
         // set up Textviews for cards
         TextView name = new TextView(this);
+        name.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(R.dimen.slide_actions));
         TextView amount = new TextView(this);
         TextView energy = new TextView(this);
         TextView calories = new TextView(this);
+        calories.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(R.dimen.slide_actions));
         TextView id = new TextView(this);
 
         // Each CardView needs an ID to reference in the ConstraintText
@@ -384,8 +396,8 @@ public class OverviewActivity extends AppCompatActivity {
 
         name.setText(e.name);
         amount.setText(Integer.toString(e.amount) + "g");
-        energy.setText(Integer.toString(e.energy) + " kCal/100");
-        calories.setText(Integer.toString(getConsumedCaloriesForEntry(e)) + " kCal");
+        energy.setText("   " +Integer.toString(e.energy) + " kCal/100");
+        calories.setText(Long.toString(getConsumedCaloriesForEntry(e)) + " kCal");
         // id is just an invisible attribute on each card
         id.setVisibility(View.INVISIBLE);
 
@@ -458,33 +470,40 @@ public class OverviewActivity extends AppCompatActivity {
                     }
                 } else {
                     LayoutInflater factory = LayoutInflater.from(OverviewActivity.this);
-                    final View deleteDialogView = factory.inflate(R.layout.dialog_edit_entry, null);
-                    final AlertDialog deleteDialog = new AlertDialog.Builder(OverviewActivity.this).create();
-                    deleteDialog.setView(deleteDialogView);
-                    deleteDialogView.findViewById(R.id.yes).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            EditText amountField = deleteDialogView.findViewById(R.id.input_amount);
-                            String test = amountField.getText().toString();
-                            if(test.length() != 0 ){
-                            boolean result = editDatabaseEntry(amountField.getText().toString(), entry.id);
-                            refreshFoodList();
-                            deleteDialog.dismiss();
+                    final AlertDialog.Builder deleteDialog = new AlertDialog.Builder(OverviewActivity.this);
+
+                    deleteDialog.setTitle(getResources().getString(R.string.edit_entry));
+                    //deleteDialog.setMessage("Message");
+                    final EditText input = new EditText(OverviewActivity.this);
+                        input.setText(String.valueOf(entry.amount));
+                    InputFilter[] fa= new InputFilter[1];
+                    fa[0] = new InputFilter.LengthFilter(5);
+                    input.setFilters(fa);
+                    input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    deleteDialog.setView(input);
+
+                    deleteDialog.setPositiveButton(getResources().getString(R.string.save), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            String amountField = input.getText().toString();
+                            if(amountField.length() != 0 ){
+                                boolean result = editDatabaseEntry(amountField, entry.id);
+                                refreshFoodList();
+                                refreshTotalCalorieCounter();
                             }
                         }
                     });
-                    deleteDialogView.findViewById(R.id.no).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            deleteDialog.dismiss();
+                    deleteDialog.setNegativeButton(getResources().getString(R.string.decline), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            //deleteDialog.dismiss();
                         }
                     });
+                    deleteDialog.show();
 
-                    EditText amountField = deleteDialogView.findViewById(R.id.input_amount);
+                  /*  EditText amountField = deleteDialogView.findViewById(R.id.input_amount);
                     amountField.setText("");
                     amountField.requestFocus();
                     Log.d("OverviewActivity", String.valueOf(entry.id));
-                    deleteDialog.show();
+                    deleteDialog.show();*/
                 }
 
 

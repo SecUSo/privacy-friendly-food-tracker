@@ -160,7 +160,7 @@ public class WeekStatisticFragment extends Fragment {
             graph.getViewport().setMaxX(endDate.getTime());
             graph.getViewport().setXAxisBoundsManual(true);
 
-            graph.getGridLabelRenderer().setNumHorizontalLabels(8); // only 4 because of the space
+            graph.getGridLabelRenderer().setNumHorizontalLabels(7); // only 7 because of the space
             graph.getGridLabelRenderer().setTextSize(40);
             graph.getViewport().setScrollable(true);
             graph.getGridLabelRenderer().setHorizontalLabelsAngle(135);

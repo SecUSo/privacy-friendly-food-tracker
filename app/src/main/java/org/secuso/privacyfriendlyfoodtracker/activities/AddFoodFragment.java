@@ -22,6 +22,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +46,8 @@ public class AddFoodFragment extends Fragment {
     View parentHolder;
     TextView textView;
     DatabaseFacade databaseFacade;
-
+    EditText amountField;
+    EditText caloriesField;
     /**
      * The required empty public constructor
      */
@@ -72,8 +75,15 @@ public class AddFoodFragment extends Fragment {
         } catch (Exception e){
             Log.e("Error", e.getMessage());
         }
+        InputFilter[] fa= new InputFilter[1];
+        fa[0] = new InputFilter.LengthFilter(4);
 
-
+        amountField = parentHolder.findViewById(R.id.input_amount);
+        caloriesField = parentHolder.findViewById(R.id.input_calories);
+        amountField.setFilters(fa);
+        amountField.setInputType(InputType.TYPE_CLASS_NUMBER);
+        caloriesField.setFilters(fa);
+        caloriesField.setInputType(InputType.TYPE_CLASS_NUMBER);
         FloatingActionButton fab = parentHolder.findViewById(R.id.addEntry);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,10 +91,8 @@ public class AddFoodFragment extends Fragment {
                 EditText nameField = parentHolder.findViewById(R.id.input_food);
                 String name = nameField.getText().toString();
 
-                EditText amountField = parentHolder.findViewById(R.id.input_amount);
                 String amount = amountField.getText().toString();
 
-                EditText caloriesField = parentHolder.findViewById(R.id.input_calories);
                 String calories = caloriesField.getText().toString();
 
                 // validation

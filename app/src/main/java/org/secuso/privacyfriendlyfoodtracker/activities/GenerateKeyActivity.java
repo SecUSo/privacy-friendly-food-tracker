@@ -45,6 +45,7 @@ public class GenerateKeyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_generate_key);
         mCheckBox1 = findViewById(R.id.firstCB);
         mCheckBox2 = findViewById(R.id.secondCB);
