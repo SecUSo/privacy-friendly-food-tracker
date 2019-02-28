@@ -23,6 +23,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -47,6 +48,8 @@ public class BaseAddFoodActivity extends AppCompatActivity {
     int calories;
     // ID of the product
     int id;
+
+    long dateLong;
     // true if a productID has been set by the SearchFoodFragment
     boolean productSet = false;
 
@@ -86,13 +89,31 @@ public class BaseAddFoodActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
 
-        long dateLong = intent.getLongExtra("DATE", System.currentTimeMillis());
+        dateLong = intent.getLongExtra("DATE", System.currentTimeMillis());
         date = new Date();
         date.setTime(dateLong);
         setupActionBar();
 
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // todo: goto back activity from here
+
+                Intent intent = new Intent(BaseAddFoodActivity.this, OverviewActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("DATE", dateLong);
+                startActivity(intent);
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /**
