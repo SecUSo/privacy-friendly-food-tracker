@@ -30,6 +30,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.support.v7.widget.Toolbar;
@@ -49,6 +50,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
@@ -266,7 +268,7 @@ public class OverviewActivity extends AppCompatActivity {
      * Recounts calories for all Entries of the day.
      */
     private void refreshTotalCalorieCounter() {
-        int totalCalories = 0;
+        BigInteger totalCalories = new BigInteger("0");
         TextView heading = this.findViewById(R.id.overviewHeading);
         String cal = getString(R.string.total_calories);
         Date d = getDateForActivity();
@@ -274,9 +276,10 @@ public class OverviewActivity extends AppCompatActivity {
         DatabaseFacade facade = getDbFacade();
         DatabaseEntry[] entries = facade.getEntriesForDay(d);
         for (DatabaseEntry e : entries) {
-            totalCalories += (e.energy * e.amount) / 100;
+            totalCalories = totalCalories.add( BigInteger.valueOf(e.energy * e.amount/ 100) );
+           // totalCalories += (e.energy * e.amount) / 100;
         }
-        heading.setText(formattedDate + ": " + totalCalories + " " + cal);
+        heading.setText(formattedDate + ": " + String.valueOf(totalCalories) + " " + cal);
     }
 
     /**
@@ -352,9 +355,9 @@ public class OverviewActivity extends AppCompatActivity {
      * @param e a DatabaseEntry
      * @return the calculated consumed calories
      */
-    private int getConsumedCaloriesForEntry(DatabaseEntry e) {
+    private long getConsumedCaloriesForEntry(DatabaseEntry e) {
         // energy is kCal/100 so divide by 100 at the end
-        int consumedEnergy = (e.amount * e.energy) / 100;
+        long consumedEnergy = (e.amount * e.energy) / 100;
         return consumedEnergy;
     }
 
@@ -375,9 +378,13 @@ public class OverviewActivity extends AppCompatActivity {
 
         // set up Textviews for cards
         TextView name = new TextView(this);
+        name.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(R.dimen.slide_actions));
         TextView amount = new TextView(this);
         TextView energy = new TextView(this);
         TextView calories = new TextView(this);
+        calories.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(R.dimen.slide_actions));
         TextView id = new TextView(this);
 
         // Each CardView needs an ID to reference in the ConstraintText
@@ -389,8 +396,8 @@ public class OverviewActivity extends AppCompatActivity {
 
         name.setText(e.name);
         amount.setText(Integer.toString(e.amount) + "g");
-        energy.setText(Integer.toString(e.energy) + " kCal/100");
-        calories.setText(Integer.toString(getConsumedCaloriesForEntry(e)) + " kCal");
+        energy.setText("   " +Integer.toString(e.energy) + " kCal/100");
+        calories.setText(Long.toString(getConsumedCaloriesForEntry(e)) + " kCal");
         // id is just an invisible attribute on each card
         id.setVisibility(View.INVISIBLE);
 

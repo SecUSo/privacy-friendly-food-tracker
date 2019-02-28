@@ -35,7 +35,9 @@ public class DateHelper {
     public static Date changeWeek(Date date, int value) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.add(Calendar.DAY_OF_YEAR, value * 7);
+        //calendar.add(Calendar.DAY_OF_YEAR, value * 7);
+        calendar.add(Calendar.WEEK_OF_YEAR, value);
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
         return calendar.getTime();
     }
 
