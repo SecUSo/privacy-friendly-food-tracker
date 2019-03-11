@@ -23,13 +23,10 @@ import org.secuso.privacyfriendlyfoodtracker.R;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
-import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -376,6 +373,7 @@ public class OverviewActivity extends AppCompatActivity {
         ConstraintLayout cl = new ConstraintLayout(this);
         ConstraintSet set = new ConstraintSet();
 
+
         // set up Textviews for cards
         TextView name = new TextView(this);
         name.setTextSize(TypedValue.COMPLEX_UNIT_PX,
@@ -396,12 +394,11 @@ public class OverviewActivity extends AppCompatActivity {
 
         name.setText(e.name);
         amount.setText(Integer.toString(e.amount) + "g");
-        energy.setText("   " +Integer.toString(e.energy) + " kCal/100");
+        energy.setText("   " +Integer.toString(e.energy) + " kCal/100g");
         calories.setText(Long.toString(getConsumedCaloriesForEntry(e)) + " kCal");
         // id is just an invisible attribute on each card
         id.setVisibility(View.INVISIBLE);
 
-        set.constrainWidth(name.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainWidth(amount.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainHeight(amount.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainWidth(energy.getId(), ConstraintSet.WRAP_CONTENT);
@@ -418,11 +415,17 @@ public class OverviewActivity extends AppCompatActivity {
 
         set.connect(name.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 20);
         set.connect(name.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 20);
+        set.connect(name.getId(), ConstraintSet.RIGHT, calories.getId(), ConstraintSet.LEFT, 40);
+        set.constrainDefaultHeight(name.getId(), ConstraintSet.MATCH_CONSTRAINT_WRAP);
+
 
         set.connect(calories.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 20);
         set.connect(calories.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 20);
+        set.constrainDefaultHeight(calories.getId(), ConstraintSet.MATCH_CONSTRAINT_WRAP);
+        set.constrainDefaultWidth(calories.getId(), ConstraintSet.MATCH_CONSTRAINT_WRAP);
 
-        set.connect(amount.getId(), ConstraintSet.TOP, calories.getId(), ConstraintSet.BOTTOM, 20);
+
+        set.connect(amount.getId(), ConstraintSet.TOP, name.getId(), ConstraintSet.BOTTOM, 20);
         set.connect(amount.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 20);
         set.connect(amount.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 20);
 
