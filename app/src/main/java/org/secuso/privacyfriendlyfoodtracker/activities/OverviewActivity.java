@@ -20,17 +20,13 @@ import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseEntry;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.customviews.CheckableCardView;
 import org.secuso.privacyfriendlyfoodtracker.R;
-import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntries;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
-import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -403,8 +399,6 @@ public class OverviewActivity extends AppCompatActivity {
         // id is just an invisible attribute on each card
         id.setVisibility(View.INVISIBLE);
 
-        //set.constrainWidth(name.getId(), ConstraintSet.WRAP_CONTENT);
-        //set.constrainHeight(name.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainWidth(amount.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainHeight(amount.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainWidth(energy.getId(), ConstraintSet.WRAP_CONTENT);
