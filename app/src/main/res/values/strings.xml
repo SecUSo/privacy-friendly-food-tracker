@@ -25,11 +25,11 @@
         To delete one or more entries, press on the item you want to delete for a long time and confirm the deletion.
     </string>
     <string name="help_privacy">What makes the app privacy-friendly?</string>
-    <string name="help_privacy_answer">Privacy Friendly Food Tracker does not require any permissions it does not need. It furthermore does not include any tracking mechanisms or advertisement.
-    All information you store with this app are encrypted and only visible to you.</string>
+    <string name="help_privacy_answer">Privacy Friendly Food Tracker does not require any permissions. It furthermore does not include any tracking mechanisms or advertisements.
+    All information you store with this app are encrypted and only visible to you. The search does however make requests to an online (www.openfoodfacts.org) database.
+    This could potentially still expose some data about your eating habits to the database. If you do not want this, you can simply not use the online search(no data is sent until you press the \"search\" button).</string>
     <string name="help_permission">Which permissions does the app require</string>
-    <string name="help_permission_answer">The storage permission is required to store the encrypted database on your device.
-    The internet permission is needed to find information about products from an online database.</string>
+    <string name="help_permission_answer">This application requires no permissions.</string>
 
     <!--###ABOUT###-->
     <string name="about">About</string>
@@ -53,9 +53,11 @@
 
     <!-- ### TUTORIAL DIALOG ### -->
     <string name="slide1_heading">Welcome!</string>
-    <string name="slide1_text">This App helps you track your daily calorie intake
-        without sharing your eating habits with 3rd parties.
-        To guarantee this, we only request the minimum amount of permissions.</string>
+    <string name="slide1_text">This App helps you track your daily calorie intake without sharing your eating habits with 3rd parties.
+    To guarantee this, we do not request any permissions from you.
+    The search does however make requests to an online (www.openfoodfacts.org) database.
+    This could potentially still expose some data about your eating habits to the database.
+    If you do not want this, you can simply not use the online search(no data is sent until you press the \"search\" button).</string>
 
     <string name="slide2_heading">Key Elements</string>
     <string name="slide2_text">To add an entry, touch a day in the calendar.

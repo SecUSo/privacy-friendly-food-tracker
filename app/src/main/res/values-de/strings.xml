@@ -24,11 +24,13 @@
     Einen Eintrag kannst du bearbeiten, indem du in der Übersichtsseite auf den Eintrag drückst.
     Einen Eintrag löschen kannst du dadurch, dass du lang auf ihn drückst und dann bestätigst.</string>
     <string name="help_privacy">Was macht die App privatsphäre-freundlich?</string>
-    <string name="help_privacy_answer">Die App braucht keine Berechtigungen, die nicht unbedingt für den Betrieb der App benötigt werden. Außerdem enthält die App keine Tracker oder Werbung.
-    Alle Informationen, die du in dieser App einträgst, werden verschlüsselt auf deinem Handy gespeichert. </string>
+    <string name="help_privacy_answer">Die App braucht keine Berechtigungen. Außerdem enthält die App keine Tracker oder Werbung.
+    Alle Informationen, die du in dieser App einträgst, werden verschlüsselt auf deinem Handy gespeichert.
+
+    Die Suche stellt Anfragen an eine Online-Datenbank (www.openfoodfacts.org). Dies könnte potentiell dazu benutzt werden, um Daten über dich zu sammeln.
+    Wenn dich das stört, funktioniert die App auch gut ohne die Suchfunktion. Es werden keine Daten gesendet, bis der "Suche" Knopf gedrückt wird.</string>
     <string name="help_permission">Welche Berechtigungen braucht die App?</string>
-    <string name="help_permission_answer">Privacy Friendly Ernährungstracker benötigt den Zugriff auf deinen Speicher, um die verschlüsselte Datenbank auf deinem Handy zu speichern.
-    Außerdem muss die App aufs Internet zugreifen können, um Informationen aus der Datenbank von Open Food Facts zu holen.</string>
+    <string name="help_permission_answer">Privacy Friendly Ernährungstracker benötigt keine Berechtigungen.</string>
 
     <!--###ABOUT###-->
     <string name="about">Über</string>
@@ -55,7 +57,7 @@
     <string name="slide1_heading">Willkommen!</string>
     <string name="slide1_text">Diese App soll dir die Möglichkeit geben, deine konsumierten Kalorien zu verfolgen,
         ohne deine Essgewohnheiten mit dritten Parteien teilen zu müssen.
-        Wir verlangen nur die minimale Anzahl an Berechtigungen, die für diese App unbedingt nötig ist..</string>
+        Wir verlangen keine Berechtigungen von dir, brauchen also keinen Zugriff auf deine Daten.</string>
     <string name="slide2_heading">Schlüsselelemente</string>
     <string name="slide2_text">Du kannst einen Eintrag hinzufügen, indem du auf der Übersichtsseite auf das "+"-Symbol klickst.
     Deine Kalorien werden für jeden Tag gespeichert, einen bestimmten Tag kannst du in der Kalender-Übersicht aussuchen.</string>
@@ -70,7 +72,7 @@
     <string name="title_activity_overview">Übersicht</string>
     <string name="hint_food_name">Name</string>
     <string name="hint_food_amount">Menge</string>
-    <string name="hint_food_calories">kCal/100</string>
+    <string name="hint_food_calories">kCal/100g</string>
     <string name="error_food_missing">Bitte gib deinem Eintrag einen Namen</string>
     <string name="error_amount_missing">Bitte gib ein, wieviel du gegessen hast</string>
     <string name="error_calories_missing">Bitte gib an, wieviele kCal dein Essen pro 100 hat</string>
