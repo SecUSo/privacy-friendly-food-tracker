@@ -42,6 +42,16 @@ This app uses Gradle for dependency management. To get started, simply clone thi
   - */database/*: This is where the database structure and the database functions are stored. The database uses Room to create an encrypted database with a key that is generated via the KeyGenerationActivity in /activities. The database uses a Data Access Object pattern to retrieve entries.
   - */network/*: This is the package that is used to call the Openfoodfact API. It is only used in the search function.
   - */customviews/*: This is for all views that are custom created for this application.
+  
+### Unwanted Changes
+
+The Privacy Friendly Apps are a group of Android apps that are optimized regarding the user's privacy. Therefore, Pull Requests that contain the following functionality will be rejected:
+
+- Analytics or advertisement frameworks
+- User tracking (e.g. sending of data to a third party)
+- Any that use of libraries that do not comply the license of the corresponding Privacy Friendly App (GPLv3 or Apache2).
+- Unnecessary use of Android permissions. If new functionality is added that requires the usage of an Android permission you should clearly explain the Pull Request why this permission is required.
+
 
 
 ## License
