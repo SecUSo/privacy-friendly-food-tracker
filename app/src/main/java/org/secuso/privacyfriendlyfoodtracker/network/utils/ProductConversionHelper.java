@@ -10,7 +10,7 @@ import org.secuso.privacyfriendlyfoodtracker.database.Product;
 public class ProductConversionHelper {
     public static Product conversionProduct(org.secuso.privacyfriendlyfoodtracker.network.models.NetworkProduct product) {
         String energyS = product.getNutrimentEnergy();
-        if (energyS == "") {
+        if (energyS.equals("")) {
             return null;
         }
         int energy_100g;

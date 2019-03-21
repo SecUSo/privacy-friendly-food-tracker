@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Dao
 public interface ConsumedEntrieAndProductDao {
-    @Query("SELECT consumedEntries.date AS unique1,   (sum(product.energy*consumedEntries.amount)) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet GROUP BY consumedEntries.date ")
+    @Query("SELECT consumedEntries.date AS unique1, (sum(product.energy*consumedEntries.amount)) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet GROUP BY consumedEntries.date ")
     List<DateCalories> getCaloriesPerDayinPeriod(final Date dayst, final Date dayet);
 
     @Query("SELECT consumedEntries.date AS unique1, sum(product.energy*consumedEntries.amount/100) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet")

@@ -20,7 +20,6 @@ package org.secuso.privacyfriendlyfoodtracker.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import org.secuso.privacyfriendlyfoodtracker.database.PFASQLiteHelper;
 
 /**
  * @author Karola Marky
@@ -28,7 +27,6 @@ import org.secuso.privacyfriendlyfoodtracker.database.PFASQLiteHelper;
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/
  */
 public class FirstLaunchManager {
-    private PFASQLiteHelper dbHandler;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
 
@@ -42,7 +40,6 @@ public class FirstLaunchManager {
 
     public FirstLaunchManager(Context context) {
         pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
-        dbHandler = new PFASQLiteHelper(context);
         editor = pref.edit();
     }
 

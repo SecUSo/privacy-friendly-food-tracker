@@ -170,8 +170,7 @@ public class KeyGenHelper {
     }
 
     private static byte[] rsaDecrypt(byte[] encrypted) throws Exception {
-        KeyStore keyStore;
-        keyStore = KeyStore.getInstance(AndroidKeyStore);
+        KeyStore keyStore = KeyStore.getInstance(AndroidKeyStore);
         keyStore.load(null);
         KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(KEY_ALIAS, null);
         Cipher output = Cipher.getInstance(RSA_MODE);

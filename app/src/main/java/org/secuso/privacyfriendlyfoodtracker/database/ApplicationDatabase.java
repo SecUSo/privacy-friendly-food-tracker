@@ -48,11 +48,8 @@ public abstract class ApplicationDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "consumed_entries_database";
 
     public abstract ConsumedEntriesDao getConsumedEntriesDao();
-
     public abstract ProductDao getProductDao();
-
     public abstract ConsumedEntrieAndProductDao getConsumedEntrieAndProductDao();
-
 
     private static ApplicationDatabase sInstance;
 
@@ -64,8 +61,10 @@ public abstract class ApplicationDatabase extends RoomDatabase {
                 if (sInstance == null) {
                     SafeHelperFactory factory = new SafeHelperFactory(KeyGenHelper.getSecretKeyAsChar(context));
 
-                    sInstance = Room.databaseBuilder(context.getApplicationContext(),
-                            ApplicationDatabase.class, DATABASE_NAME).openHelperFactory(factory).allowMainThreadQueries().addCallback(new Callback() {
+                    sInstance = Room.databaseBuilder(context.getApplicationContext(),ApplicationDatabase.class, DATABASE_NAME)
+                            .openHelperFactory(factory)
+                            .allowMainThreadQueries()
+                            .addCallback(new Callback() {
                         @Override
                         public void onCreate(@NonNull SupportSQLiteDatabase db) {
                             super.onCreate(db);
