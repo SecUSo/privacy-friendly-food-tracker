@@ -6,7 +6,7 @@ To do this, you can enter all your consumed food and drink as well as its weight
  
 The app also allows an analysis of calorie consumption over a larger timeframe such as weeks or months.
 
-This app belongs to the group “Privacy Friendly Apps” developed by the research group SECUSO at Karlsruhe Institute of Technology. You can find more information at [the SECUSO website](secuso.org/pfa).
+This app belongs to the group “Privacy Friendly Apps” developed by the research group SECUSO at Karlsruhe Institute of Technology. You can find more information at [the SECUSO website](https://secuso.org/pfa).
 
 You can find this app on the Google Play store and F-Droid.
 
@@ -56,8 +56,8 @@ The Privacy Friendly Apps are a group of Android apps that are optimized regardi
 
 ## License
 
-Privacy Friendly App Example is licensed under the GPLv3.
-Copyright (C) 2016-2018  Karola Marky
+Privacy Friendly Food Tracker is licensed under the GPLv3.
+Copyright (C) 2018-2019 André Lutz and Simon Reinkemeier
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -72,12 +72,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-The icons used in the nagivation drawer are licensed under the [CC BY 2.5](http://creativecommons.org/licenses/by/2.5/). In addition to them the app uses icons from [Google Design Material Icons](https://design.google.com/icons/index.html) licensed under Apache License Version 2.0. All other images (the logo of Privacy Friendly Apps, the SECUSO logo and the app logo) copyright [Karlsruhe Institute of Technology](www.kit.edu) (2018-2019).
+The icons used in the nagivation drawer are licensed under the [CC BY 2.5](http://creativecommons.org/licenses/by/2.5/). In addition to them the app uses icons from [Google Design Material Icons](https://design.google.com/icons/index.html) licensed under Apache License Version 2.0. All other images (the logo of Privacy Friendly Apps, the SECUSO logo and the app logo) copyright [Karlsruhe Institute of Technology](https://www.kit.edu) (2018-2019).
 
 ## Contributors
 
 App-Icon: <br />
-Markus Hau<br />
+Tatjana Albrandt<br />
 
 Github-Users: <br />
 Yonjuni (Karola Marky)<br />
