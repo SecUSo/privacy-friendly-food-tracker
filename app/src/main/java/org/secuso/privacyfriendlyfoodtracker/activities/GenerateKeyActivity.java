@@ -70,6 +70,7 @@ public class GenerateKeyActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         mFirstLaunchManager.setFirstTimeLaunch(false);
         startActivity(intent);
+        finish();
     }
 
     @Override
