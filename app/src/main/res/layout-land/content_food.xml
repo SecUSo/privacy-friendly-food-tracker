@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_food_calories"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:maxLines="1"/>
 
     </android.support.design.widget.TextInputLayout>

@@ -45,7 +45,7 @@ public class BaseAddFoodActivity extends AppCompatActivity {
     // Name of the product
     String name;
     // Calories per 100g
-    int calories;
+    float calories;
     // ID of the product
     int id;
 

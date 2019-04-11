@@ -21,11 +21,11 @@ package org.secuso.privacyfriendlyfoodtracker.activities.adapter;
  * @author Simon Reinkemeier
  */
 public class DatabaseEntry {
-    public int energy;
+    public float energy;
     public int amount;
     public String name;
     public String id;
-    public DatabaseEntry(String id, String name, int amount, int energy){
+    public DatabaseEntry(String id, String name, int amount, float energy){
         this.id = id;
         this.amount = amount;
         this.energy = energy;

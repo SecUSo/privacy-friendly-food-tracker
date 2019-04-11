@@ -13,15 +13,13 @@ public class ProductConversionHelper {
         if (energyS.equals("")) {
             return null;
         }
-        int energy_100g;
+        float energy_100g;
         try {
-            energy_100g = Integer.parseInt(product.getNutrimentEnergy());
+            energy_100g = Integer.parseInt(product.getNutrimentEnergy()) / 4.184f;
         } catch (NumberFormatException e){
-            float energy = Float.parseFloat(product.getNutrimentEnergy());
-            energy_100g = (int) energy;
+            energy_100g = Float.parseFloat(product.getNutrimentEnergy()) / 4.184f;
         }
         // if the id is equals to 0 then the room database creates a new id (primary key)
-        Product product1 = new Product(0, product.getProductName(), energy_100g,  product.getCode());
-        return product1;
+        return new Product(0, product.getProductName(), energy_100g,  product.getCode());
     }
 }

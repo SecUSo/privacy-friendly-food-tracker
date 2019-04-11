@@ -31,10 +31,10 @@ public class Product {
     @PrimaryKey(autoGenerate = true)
     public final int id;
     public final String name;
-    public final int energy;
+    public final float energy;
     public final String barcode;
 
-    public Product(final int id, String name, int energy, String barcode) {
+    public Product(final int id, String name, float energy, String barcode) {
         this.id = id;
         this.name = name;
         this.energy = energy;

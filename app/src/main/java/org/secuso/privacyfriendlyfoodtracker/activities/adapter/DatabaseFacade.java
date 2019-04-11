@@ -53,7 +53,7 @@ public class DatabaseFacade {
      * @param productId the consumed product id
      * @return true if no error occurs
      */
-    public boolean insertEntry(int amount, java.util.Date date, String name, int energy, int productId){
+    public boolean insertEntry(int amount, java.util.Date date, String name, float energy, int productId){
         int existingProductId = 0;
         //If the productId is 0 we need to create a new product in the database
         if (0 == productId) {
@@ -117,7 +117,7 @@ public class DatabaseFacade {
      * @param barcode the barcode
      * @return successfully or not
      */
-    public boolean insertProduct( String name, int energy,  String barcode){
+    public boolean insertProduct( String name, float energy,  String barcode){
         try{
             List<Product> res = productDao.findExistingProducts(name, energy, barcode);
             if(res.size() != 0){
@@ -160,7 +160,7 @@ public class DatabaseFacade {
             for (int i = 0; i < res.size(); i++) {
                 ConsumedEntries consumedEntry = res.get(i);
                 Product product = productDao.findProductById(consumedEntry.productId);
-                databaseEntries.add(new DatabaseEntry( String.valueOf(consumedEntry.id),consumedEntry.name, consumedEntry.amount, product.energy));
+                databaseEntries.add(new DatabaseEntry(String.valueOf(consumedEntry.id),consumedEntry.name, consumedEntry.amount, product.energy));
             }
 
         } catch (Exception e) {

@@ -28,6 +28,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Implementation of SearchResultAdapter that uses a Fragment to manage each page. This class also handles saving and restoring of fragment's state.
@@ -93,8 +94,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         ((TextView) holder.mCardView.findViewById(R.id.resultName)).setText(mDataset.get(position).name);
-        ((TextView) holder.mCardView.findViewById(R.id.resultCalories)).setText(Integer.toString(mDataset.get(position).energy) + " kCal");
-        ((TextView) holder.mCardView.findViewById(R.id.resultId)).setText(Integer.toString(mDataset.get(position).id));
+        ((TextView) holder.mCardView.findViewById(R.id.resultCalories)).setText(String.format(Locale.ENGLISH,"%.2f kCal", mDataset.get(position).energy));
+        ((TextView) holder.mCardView.findViewById(R.id.resultId)).setText(String.format(Locale.ENGLISH, "%d", mDataset.get(position).id));
     }
 
     /**

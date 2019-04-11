@@ -52,7 +52,7 @@ public interface ProductDao {
 
 
     @Query("SELECT * FROM product WHERE name=:name AND energy=:energy AND barcode=:barcode")
-    List<Product> findExistingProducts(String name, int energy, String barcode);
+    List<Product> findExistingProducts(String name, float energy, String barcode);
 
     @Query("SELECT * FROM product WHERE name LIKE :name")
     List<Product> findProductsByName(String name);

@@ -190,7 +190,7 @@ public class SearchFoodFragment extends Fragment {
                             TextView calView = childView.findViewById(R.id.resultCalories);
                             String cal = calView.getText().toString();
                             cal = cal.split(" ")[0];
-                            int calories = Integer.parseInt(cal);
+                            float calories = Float.parseFloat(cal);
 
                             ((BaseAddFoodActivity) referenceActivity).id = id;
                             ((BaseAddFoodActivity) referenceActivity).name = name;

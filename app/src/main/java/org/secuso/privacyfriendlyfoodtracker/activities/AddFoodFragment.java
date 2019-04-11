@@ -34,6 +34,8 @@ import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.activities.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.viewmodels.SharedStatisticViewModel;
 
+import java.util.Locale;
+
 
 /**
  * A simple {@link Fragment} subclass. Contains a possibility to add a new entry.
@@ -75,15 +77,14 @@ public class AddFoodFragment extends Fragment {
         } catch (Exception e){
             Log.e("Error", e.getMessage());
         }
-        InputFilter[] fa= new InputFilter[1];
-        fa[0] = new InputFilter.LengthFilter(4);
+        InputFilter[] amountFilter = { new InputFilter.LengthFilter(6) };
+        InputFilter[] caloriesFilter = { new InputFilter.LengthFilter(10) };
 
         amountField = parentHolder.findViewById(R.id.input_amount);
         caloriesField = parentHolder.findViewById(R.id.input_calories);
-        amountField.setFilters(fa);
+        amountField.setFilters(amountFilter);
         amountField.setInputType(InputType.TYPE_CLASS_NUMBER);
-        caloriesField.setFilters(fa);
-        caloriesField.setInputType(InputType.TYPE_CLASS_NUMBER);
+        caloriesField.setFilters(caloriesFilter);
         FloatingActionButton fab = parentHolder.findViewById(R.id.addEntry);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +129,7 @@ public class AddFoodFragment extends Fragment {
             nameField.setFocusable(false);
             nameField.setClickable(false);
             nameField.setTextColor(getResources().getColor(R.color.middlegrey));
-            caloriesField.setText(Integer.toString(referenceActivity.calories));
+            caloriesField.setText(String.format(Locale.ENGLISH, "%.2f", referenceActivity.calories));
             caloriesField.setFocusable(false);
             caloriesField.setClickable(false);
             caloriesField.setTextColor(getResources().getColor(R.color.middlegrey));
@@ -158,7 +159,7 @@ public class AddFoodFragment extends Fragment {
     private boolean makeDatabaseEntry(String name, String amountString, String caloriesString) {
         try {
             int amount = Integer.parseInt(amountString);
-            int calories = Integer.parseInt(caloriesString);
+            float calories = Float.parseFloat(caloriesString);
             // We haven't explicitly chosen a product so the productId is 0 for unknown
             databaseFacade.insertEntry(amount, ((BaseAddFoodActivity) referenceActivity).date, name, calories, 0);
         } catch (Exception e) {
@@ -197,7 +198,7 @@ public class AddFoodFragment extends Fragment {
         }
 
         try {
-            Integer.parseInt(calories);
+            Float.parseFloat(calories);
         } catch (NumberFormatException e) {
             showErrorMessage(referenceActivity.findViewById(R.id.inputCalories), R.string.error_calories_nan);
             return false;
