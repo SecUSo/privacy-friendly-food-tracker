@@ -37,13 +37,13 @@
         android:layout_margin="@dimen/fab_margin">
 
         <android.support.design.widget.FloatingActionButton
-        android:id="@+id/cancelDeleteFoodItem"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:srcCompat="@mipmap/ic__cancel"
-        android:layout_marginRight="@dimen/fab_margin" />
+            android:id="@+id/cancelDeleteFoodItem"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            app:srcCompat="@mipmap/ic__cancel"
+            android:layout_marginRight="@dimen/fab_margin" />
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/deleteFoodItem"
             android:visibility="gone"
