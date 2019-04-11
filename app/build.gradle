@@ -8,8 +8,8 @@ android {
         applicationId "org.secuso.privacyfriendlyfoodtracker"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 8
-        versionName "2.3"
+        versionCode 1
+        versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
