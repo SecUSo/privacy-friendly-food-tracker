@@ -39,7 +39,8 @@ public class DatabaseFacade {
     ProductDao productDao;
     ConsumedEntriesDao consumedEntriesDao;
     ConsumedEntrieAndProductDao consumedEntrieAndProductDao;
-    public DatabaseFacade(Context context) throws Exception{
+
+    public DatabaseFacade(Context context) throws Exception {
         this.productDao = ApplicationDatabase.getInstance(context).getProductDao();
         this.consumedEntriesDao = ApplicationDatabase.getInstance(context).getConsumedEntriesDao();
         this.consumedEntrieAndProductDao = ApplicationDatabase.getInstance(context).getConsumedEntrieAndProductDao();

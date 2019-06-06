@@ -534,12 +534,15 @@ public class OverviewActivity extends AppCompatActivity {
     private void refreshFoodList() {
         Date d = getDateForActivity();
         DatabaseFacade facade = getDbFacade();
-        DatabaseEntry[] entries = facade.getEntriesForDay(d);
-        ViewGroup foodList = getEntryList();
-        foodList.removeAllViews();
-        for (DatabaseEntry e : entries) {
-            CardView c = createCardViewForEntry(e);
-            foodList.addView(c);
+        // Fix Issue #53
+        if(facade != null) {
+            DatabaseEntry[] entries = facade.getEntriesForDay(d);
+            ViewGroup foodList = getEntryList();
+            foodList.removeAllViews();
+            for (DatabaseEntry e : entries) {
+                CardView c = createCardViewForEntry(e);
+                foodList.addView(c);
+            }
         }
     }
 
