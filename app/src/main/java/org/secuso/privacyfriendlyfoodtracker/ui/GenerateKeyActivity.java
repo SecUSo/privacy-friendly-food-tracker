@@ -30,6 +30,8 @@ import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
 import org.secuso.privacyfriendlyfoodtracker.helpers.FirstLaunchManager;
 import org.secuso.privacyfriendlyfoodtracker.helpers.KeyGenHelper;
 
+import java.util.concurrent.Executors;
+
 /**
  * Generate key activity. Manages the key creation and shows the current state.
  *
@@ -85,40 +87,41 @@ public class GenerateKeyActivity extends AppCompatActivity {
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        Thread task = new Thread() {
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
-                if (!KeyGenHelper.isKeyGenerated()) {
-                    try {
-                        KeyGenHelper.generateKey(getApplicationContext());
-                        mCheckBox1.setChecked(true);
-                        KeyGenHelper.generatePassphrase(getApplicationContext());
-                        mCheckBox2.setChecked(true);
-                        ApplicationDatabase.getInstance(getApplicationContext());
-                        mCheckBox3.setChecked(true);
-                        mProgressBar.setVisibility(View.INVISIBLE);
-                    } catch (Exception e) {
-                        Log.e("GenerateKeyActivity", e.getMessage());
-                    }
-                } else {
-                    mCheckBox1.setChecked(true);
-                    mCheckBox2.setChecked(true);
-                    mCheckBox3.setChecked(true);
-                    mProgressBar.setVisibility(View.INVISIBLE);
+                try {
+                    KeyGenHelper.generateKey(getApplicationContext());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCheckBox1.setChecked(true);
+                        }
+                    });
+
+
+                    KeyGenHelper.generatePassphrase(getApplicationContext());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCheckBox2.setChecked(true);
+                        }
+                    });
+
+                    ApplicationDatabase.getInstance(getApplicationContext());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCheckBox3.setChecked(true);
+                            mProgressBar.setVisibility(View.INVISIBLE);
+                            showFAB();
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e("GenerateKeyActivity", e.getMessage());
                 }
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        // update gui
-                        showFAB();
-                    }
-                });
             }
-        };
-
-        task.start();
-
+        });
     }
 
     boolean fabShouldBeShown;
