@@ -12,34 +12,30 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <TextView
+        android:id="@+id/overviewHeading"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/overviewHeading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:textSize="30dp"
-            android:text="TextView"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp"
-            android:paddingBottom="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/toolbarOverview"
-            app:layout_constraintLeft_toRightOf="parent"/>
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent">
-            <android.widget.LinearLayout
-                android:id="@+id/DailyList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="14dp"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/overviewHeading">
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            </android.widget.LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/overviewHeading">
+
+        <android.widget.LinearLayout
+            android:id="@+id/DailyList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="14dp"
+            android:orientation="vertical" />
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>
