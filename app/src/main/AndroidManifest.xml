@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".ui.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,57 +28,56 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.TutorialActivity"
+            android:name=".ui.TutorialActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlyfoodtracker.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.AboutActivity"
+            android:name=".ui.AboutActivity"
             android:label="@string/about"
-            android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait">
+            android:parentActivityName=".ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlyfoodtracker.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.HelpActivity"
+            android:name=".ui.HelpActivity"
             android:label="@string/help"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlyfoodtracker.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyfoodtracker.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlyfoodtracker.ui.MainActivity" />
         </activity>
-        <activity android:name=".activities.GenerateKeyActivity" />
+        <activity android:name=".ui.GenerateKeyActivity" />
         <activity
-            android:name=".activities.OverviewActivity"
+            android:name=".ui.OverviewActivity"
             android:label="@string/title_activity_overview"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.BaseStatisticActivity"
+            android:name=".ui.BaseStatisticActivity"
             android:label="@string/action_statistic"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".activities.BaseAddFoodActivity"
+            android:name=".ui.BaseAddFoodActivity"
             android:label="@string/title_activity_food"
-            android:parentActivityName=".activities.OverviewActivity"
+            android:parentActivityName=".ui.OverviewActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"></activity>
     </application>

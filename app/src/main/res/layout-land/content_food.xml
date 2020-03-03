@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.BaseAddFoodActivity"
+    tools:context=".ui.BaseAddFoodActivity"
     android:fitsSystemWindows="true">
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -20,7 +20,9 @@
         android:id="@+id/inputFoodName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp">
 
         <EditText
             android:id="@+id/input_food"
@@ -28,7 +30,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_food_name"
             android:inputType="text"
-            android:maxLines="1"/>
+            android:maxLines="1" />
 
     </android.support.design.widget.TextInputLayout>
 

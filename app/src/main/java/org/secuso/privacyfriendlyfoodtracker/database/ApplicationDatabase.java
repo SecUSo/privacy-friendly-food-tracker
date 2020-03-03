@@ -29,19 +29,15 @@ import android.util.Log;
 
 import com.commonsware.cwac.saferoom.SafeHelperFactory;
 
-import org.secuso.privacyfriendlyfoodtracker.Converter.DateConverter;
 import org.secuso.privacyfriendlyfoodtracker.helpers.KeyGenHelper;
-
-import static com.commonsware.cwac.saferoom.SQLCipherUtils.encrypt;
-import static com.commonsware.cwac.saferoom.SQLCipherUtils.getDatabaseState;
+import org.secuso.privacyfriendlyfoodtracker.database.converter.DateConverter;
 
 /**
  * Database singleton.
  *
  * @author Andre Lutz
  */
-@Database(entities = {ConsumedEntries.class, Product.class},
-        version = 1, exportSchema = false)
+@Database(entities = {ConsumedEntries.class, Product.class}, version = 1, exportSchema = true)
 @TypeConverters({DateConverter.class})
 public abstract class ApplicationDatabase extends RoomDatabase {
 
@@ -49,7 +45,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
 
     public abstract ConsumedEntriesDao getConsumedEntriesDao();
     public abstract ProductDao getProductDao();
-    public abstract ConsumedEntrieAndProductDao getConsumedEntrieAndProductDao();
+    public abstract ConsumedEntrieAndProductDao getConsumedEntriesAndProductDao();
 
     private static ApplicationDatabase sInstance;
 
@@ -63,20 +59,19 @@ public abstract class ApplicationDatabase extends RoomDatabase {
 
                     sInstance = Room.databaseBuilder(context.getApplicationContext(),ApplicationDatabase.class, DATABASE_NAME)
                             .openHelperFactory(factory)
-                            .allowMainThreadQueries()
                             .addCallback(new Callback() {
-                        @Override
-                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                            super.onCreate(db);
-                            try {
-                                ApplicationDatabase database = ApplicationDatabase.getInstance(context);
-                                // notify that the database was created and it's ready to be used
-                                database.setDatabaseCreated();
-                            } catch (Exception e) {
-                                Log.e("ApplicationDatabase", e.getMessage());
-                            }
-                        }
-                    }).build();
+                                @Override
+                                public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                                    super.onCreate(db);
+                                    try {
+                                        ApplicationDatabase database = ApplicationDatabase.getInstance(context);
+                                        // notify that the database was created and it's ready to be used
+                                        database.setDatabaseCreated();
+                                    } catch (Exception e) {
+                                        Log.e("ApplicationDatabase", e.getMessage());
+                                    }
+                                }
+                            }).build();
 
                 }
             }

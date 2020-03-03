@@ -69,8 +69,6 @@ public class KeyGenHelper {
             keyStore = KeyStore.getInstance(AndroidKeyStore);
             keyStore.load(null);
             return keyStore.containsAlias(KEY_ALIAS);
-        } catch (KeyStoreException e) {
-            Log.e("LoggingKeyGenHelper: ", "Can not check if key exists. Default return false.");
         } catch (Exception e) {
             Log.e("LoggingKeyGenHelper: ", "Can not check if key exists. Default return false.");
         }
@@ -165,8 +163,7 @@ public class KeyGenHelper {
         cipherOutputStream.write(secret);
         cipherOutputStream.close();
 
-        byte[] vals = outputStream.toByteArray();
-        return vals;
+        return outputStream.toByteArray();
     }
 
     private static byte[] rsaDecrypt(byte[] encrypted) throws Exception {

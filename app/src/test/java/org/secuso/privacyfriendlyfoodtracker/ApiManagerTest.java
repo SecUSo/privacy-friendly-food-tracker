@@ -1,11 +1,7 @@
 package org.secuso.privacyfriendlyfoodtracker;
 
-import android.widget.Toast;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.secuso.privacyfriendlyfoodtracker.activities.MainActivity;
 import org.secuso.privacyfriendlyfoodtracker.network.ApiManager;
 import org.secuso.privacyfriendlyfoodtracker.network.ProductApiService;
 import org.secuso.privacyfriendlyfoodtracker.network.models.NetworkProduct;

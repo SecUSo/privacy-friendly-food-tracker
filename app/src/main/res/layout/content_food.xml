@@ -4,69 +4,74 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.BaseAddFoodActivity"
+    tools:context=".ui.BaseAddFoodActivity"
     android:fitsSystemWindows="true">
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_food"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/inputFoodName"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true">
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_food">
 
-        <EditText
-            android:id="@+id/input_food"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/inputFoodName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_food_name"
-            android:inputType="text"
-            android:maxLines="1"/>
+            app:errorEnabled="true"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="16dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/input_food"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_food_name"
+                android:inputType="text"
+                android:maxLines="1" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/inputFoodAmount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/inputFoodName"
-        app:errorEnabled="true">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/input_amount"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/inputFoodAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_food_amount"
-            android:inputType="number"
-            android:maxLines="1"/>
+            app:errorEnabled="true"
+            app:layout_constraintTop_toBottomOf="@+id/inputFoodName">
 
-    </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/inputCalories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/inputFoodAmount"
-        app:errorEnabled="true">
+            <EditText
+                android:id="@+id/input_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_food_amount"
+                android:inputType="number"
+                android:maxLines="1" />
 
-        <EditText
-            android:id="@+id/input_calories"
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/inputCalories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_food_calories"
-            android:inputType="numberDecimal"
-            android:maxLines="1"/>
+            app:errorEnabled="true"
+            app:layout_constraintTop_toBottomOf="@+id/inputFoodAmount">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/input_calories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_food_calories"
+                android:inputType="numberDecimal"
+                android:maxLines="1" />
+
+        </android.support.design.widget.TextInputLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addEntry"
         android:layout_width="wrap_content"

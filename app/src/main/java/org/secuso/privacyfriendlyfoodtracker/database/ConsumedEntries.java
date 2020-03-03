@@ -21,7 +21,7 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
-import org.secuso.privacyfriendlyfoodtracker.Converter.DateConverter;
+import org.secuso.privacyfriendlyfoodtracker.database.converter.DateConverter;
 
 
 import java.sql.Date;
