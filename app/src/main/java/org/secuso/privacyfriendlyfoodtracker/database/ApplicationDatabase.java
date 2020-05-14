@@ -59,6 +59,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
 
                     sInstance = Room.databaseBuilder(context.getApplicationContext(),ApplicationDatabase.class, DATABASE_NAME)
                             .openHelperFactory(factory)
+                            .allowMainThreadQueries()
                             .addCallback(new Callback() {
                                 @Override
                                 public void onCreate(@NonNull SupportSQLiteDatabase db) {

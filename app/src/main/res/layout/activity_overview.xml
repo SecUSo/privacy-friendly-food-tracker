@@ -31,9 +31,12 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/add_entry" />
+
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:orientation="horizontal"     android:layout_gravity="bottom|end"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin">
 
         <android.support.design.widget.FloatingActionButton
@@ -52,5 +55,6 @@
             android:layout_gravity="bottom|end"
             app:srcCompat="@mipmap/ic__delete"
             app:backgroundTint="@color/red"/>
+
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

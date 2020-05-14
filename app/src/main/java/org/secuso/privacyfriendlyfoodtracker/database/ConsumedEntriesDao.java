@@ -62,7 +62,6 @@ public interface ConsumedEntriesDao {
     @Query("SELECT * FROM consumedEntries WHERE date=:date")
     List<ConsumedEntries> findConsumedEntriesForDate(final Date date);
 
-
     @Query("DELETE FROM consumedEntries")
     void deleteAll();
 }

@@ -74,10 +74,9 @@ public class ApiManager implements IApiManager {
     }
 
     private ProductApiService createProductApiService() {
-        String languageCode = Locale.getDefault().getLanguage();
-        if (languageCode == "de") {
-            languageCode = "de";
-        } else {
+        String languageCode = Locale.getDefault().getCountry();
+        // TODO: check if it supported -> https://world.openfoodfacts.org/data/taxonomies/countries.json
+        if (languageCode.equals("")) {
             languageCode = "world";
         }
         productApiService = createProductApiService(languageCode);

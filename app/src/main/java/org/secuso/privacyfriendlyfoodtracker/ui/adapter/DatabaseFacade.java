@@ -16,6 +16,7 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 */
 package org.secuso.privacyfriendlyfoodtracker.ui.adapter;
 
+import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.util.Log;
 
@@ -28,6 +29,8 @@ import org.secuso.privacyfriendlyfoodtracker.database.ProductDao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Database access functions.
@@ -51,63 +54,64 @@ public class DatabaseFacade {
      * @param date the consumption date in UNIX format
      * @param name the name
      * @param productId the consumed product id
-     * @return true if no error occurs
      */
-    public boolean insertEntry(int amount, java.util.Date date, String name, float energy, int productId){
-        int existingProductId = 0;
-        //If the productId is 0 we need to create a new product in the database
-        if (0 == productId) {
-            insertProduct(name, energy, "");
-            // retrieve ProductId of newly created Product from database
-            List<Product> existingProducts = productDao.findExistingProducts(name, energy, "");
-            // There is only one existing product so we take the first one from the List
-            Product p = existingProducts.get(0);
-            existingProductId = p.id;
-        } else {
-            existingProductId = productId;
-        }
-        try {
-            consumedEntriesDao.insert(new ConsumedEntries(0, amount, new java.sql.Date(date.getTime()), name, existingProductId));
-            return true;
-        } catch (Exception e){
-            return false;
-        }
+    public void insertEntry(final int amount, final java.util.Date date, final String name, final float energy, final int productId){
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                int existingProductId = 0;
+                //If the productId is 0 we need to create a new product in the database
+                if (0 == productId) {
+                    insertProductPrivate(name, energy, "");
+                    // retrieve ProductId of newly created Product from database
+                    List<Product> existingProducts = productDao.findExistingProducts(name, energy, "");
+                    // There is only one existing product so we take the first one from the List
+                    Product p = existingProducts.get(0);
+                    existingProductId = p.id;
+                } else {
+                    existingProductId = productId;
+                }
+                consumedEntriesDao.insert(new ConsumedEntries(0, amount, new java.sql.Date(date.getTime()), name, existingProductId));
+            }
+        });
     }
 
 
     /**
      * Deletes a database entry by id.
      * @param id the id
-     * @return successfully or not
      */
-    public boolean deleteEntryById(int id ){
-        try {
-            List<ConsumedEntries> res = consumedEntriesDao.findConsumedEntriesById(id);
-            if(res.size() != 1){return false;}
-            consumedEntriesDao.delete(res.get(0));
-            return true;
-        } catch (Exception e){
-            return false;
-        }
+    public void deleteEntryById(final int id){
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                List<ConsumedEntries> res = consumedEntriesDao.findConsumedEntriesById(id);
+                if (res.size() != 1) {
+                    return;
+                }
+                consumedEntriesDao.delete(res.get(0));
+            }
+        });
     }
 
     /**
      * Edit a database entry.
      * @param id the id
      * @param amount the new amount
-     * @return successfully or not
      */
-    public boolean editEntryById(int id, int amount){
-        try {
-            List<ConsumedEntries> res = consumedEntriesDao.findConsumedEntriesById(id);
-            if(res.size() != 1){return false;}
-            ConsumedEntries consumedEntry = res.get(0);
-            consumedEntry.amount = amount;
-            consumedEntriesDao.update(res.get(0));
-            return true;
-        } catch (Exception e){
-            return false;
-        }
+    public void editEntryById(final int id, final int amount){
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                List<ConsumedEntries> res = consumedEntriesDao.findConsumedEntriesById(id);
+                if (res.size() != 1) {
+                    return;
+                }
+                ConsumedEntries consumedEntry = res.get(0);
+                consumedEntry.amount = amount;
+                consumedEntriesDao.update(res.get(0));
+            }
+        });
     }
 
     /**
@@ -115,19 +119,22 @@ public class DatabaseFacade {
      * @param name the name
      * @param energy the energy
      * @param barcode the barcode
-     * @return successfully or not
      */
-    public boolean insertProduct( String name, float energy,  String barcode){
-        try{
-            List<Product> res = productDao.findExistingProducts(name, energy, barcode);
-            if(res.size() != 0){
-                return false;
+    public void insertProduct(final String name, final float energy, final String barcode){
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                insertProductPrivate(name, energy, barcode);
             }
-            productDao.insert(new Product(0,name, energy, barcode));
-            return true;
-        }catch (Exception e){
-            return false;
+        });
+    }
+
+    private void insertProductPrivate(String name, float energy, String barcode) {
+        List<Product> res = productDao.findExistingProducts(name, energy, barcode);
+        if (res.size() != 0) {
+            return;
         }
+        productDao.insert(new Product(0, name, energy, barcode));
     }
 
     /**
@@ -141,7 +148,6 @@ public class DatabaseFacade {
             for (int i = 0; i < res.size(); i++) {
                 products.add(productDao.findProductById(res.get(i)));
             }
-
         } catch (Exception e) {
             Log.e("DatabaseFacade", "Error o");
         }
@@ -153,12 +159,11 @@ public class DatabaseFacade {
      * @param date the date
      * @return DatabaseEntry
      */
-    public DatabaseEntry[] getEntriesForDay(java.util.Date date) {
+    public List<DatabaseEntry> getEntriesForDay(java.util.Date date) {
         List<DatabaseEntry> databaseEntries = new ArrayList<>();
         try {
             List<ConsumedEntries> res = consumedEntriesDao.findConsumedEntriesForDate(new java.sql.Date(date.getTime()));
-            for (int i = 0; i < res.size(); i++) {
-                ConsumedEntries consumedEntry = res.get(i);
+            for(ConsumedEntries consumedEntry : res) {
                 Product product = productDao.findProductById(consumedEntry.productId);
                 databaseEntries.add(new DatabaseEntry(String.valueOf(consumedEntry.id),consumedEntry.name, consumedEntry.amount, product.energy));
             }
@@ -166,7 +171,7 @@ public class DatabaseFacade {
         } catch (Exception e) {
             Log.e("DatabaseFacade", "Error o");
         }
-        return databaseEntries.toArray(new DatabaseEntry[databaseEntries.size()]);
+        return databaseEntries;
     }
 
     /**
@@ -186,7 +191,7 @@ public class DatabaseFacade {
      * @return the calories sum (list position 0)
      */
     public List<ConsumedEntrieAndProductDao.DateCalories> getCaloriesPerDayinPeriod(java.util.Date startDate, java.util.Date endDate){
-        return    consumedEntrieAndProductDao.getCaloriesPerDayinPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+        return consumedEntrieAndProductDao.getCaloriesPerDayinPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
     }
 
     /**

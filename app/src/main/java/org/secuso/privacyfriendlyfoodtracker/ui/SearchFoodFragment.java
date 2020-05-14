@@ -229,7 +229,9 @@ public class SearchFoodFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // search in the local db first
                 System.out.println(s.toString());
-                SearchResultAdapter newAdapter = new SearchResultAdapter(databaseFacade.getProductByName(s.toString()));
+                SearchResultAdapter newAdapter = new SearchResultAdapter(
+                        databaseFacade.getProductByName(s.toString())
+                );
                 foodList.setAdapter(newAdapter);
             }
 

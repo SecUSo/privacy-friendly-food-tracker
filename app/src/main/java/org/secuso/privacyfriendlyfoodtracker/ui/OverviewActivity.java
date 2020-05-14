@@ -18,11 +18,17 @@ package org.secuso.privacyfriendlyfoodtracker.ui;
 
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseEntry;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
+import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.OverviewViewModel;
+import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.SharedStatisticViewModel;
 import org.secuso.privacyfriendlyfoodtracker.ui.views.CheckableCardView;
 import org.secuso.privacyfriendlyfoodtracker.R;
 
 import android.app.AlertDialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
 import android.text.InputFilter;
@@ -68,6 +74,8 @@ public class OverviewActivity extends AppCompatActivity {
     // I.e. if more than 0 cards are selected, the user should be able to delete them
     private int selectedCards;
 
+    private OverviewViewModel viewModel;
+
     /**
      * sets up the activity
      * @param savedInstanceState the saved instance state
@@ -78,6 +86,17 @@ public class OverviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_overview);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarOverview);
         setSupportActionBar(toolbar);
+
+        viewModel = ViewModelProviders.of(this).get(OverviewViewModel.class);
+        refreshData();
+
+        viewModel.getList().observe(this, new Observer<List<DatabaseEntry>>() {
+            @Override
+            public void onChanged(@Nullable List<DatabaseEntry> databaseEntries) {
+                refreshFoodList(databaseEntries);
+                refreshTotalCalorieCounter(databaseEntries);
+            }
+        });
 
         // Set up global variables
         // Set the date. If no date is passed on, the system date is chosen by default.
@@ -96,8 +115,7 @@ public class OverviewActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        refreshFoodList();
-        refreshTotalCalorieCounter();
+        refreshData();
     }
 
     /**
@@ -121,8 +139,12 @@ public class OverviewActivity extends AppCompatActivity {
         }
         selectedCards = 0;
         toggleDeletionMenuVisibility();
-        refreshTotalCalorieCounter();
+        refreshData();
         return true;
+    }
+
+    private void refreshData() {
+        viewModel.init(getDateForActivity());
     }
 
     /**
@@ -224,8 +246,7 @@ public class OverviewActivity extends AppCompatActivity {
                 if (c.isChecked()) {
                     TextView idView = (TextView) c.getChildAt(1);
                     String id = idView.getText().toString();
-                    DatabaseFacade facade = getDbFacade();
-                    facade.deleteEntryById(Integer.parseInt(id));
+                    viewModel.deleteEntryById(Integer.parseInt(id));
                     cardsToRemove.add(v);
                 }
             }
@@ -246,36 +267,20 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     /**
-     * creates a database facade that can be used to call database functions
-     *
-     * @return a DatabaseFacade object
-     */
-    private DatabaseFacade getDbFacade() {
-        DatabaseFacade facade;
-        try {
-            facade = new DatabaseFacade(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return facade;
-    }
-
-    /**
      * Refreshes the calorie counter at the top of the activity.
      * Recounts calories for all Entries of the day.
      */
-    private void refreshTotalCalorieCounter() {
+    private void refreshTotalCalorieCounter(@Nullable List<DatabaseEntry> entries) {
         BigDecimal totalCalories = new BigDecimal("0");
         TextView heading = this.findViewById(R.id.overviewHeading);
         String cal = getString(R.string.total_calories);
         Date d = getDateForActivity();
         String formattedDate = getFormattedDate(d);
-        DatabaseFacade facade = getDbFacade();
-        DatabaseEntry[] entries = facade.getEntriesForDay(d);
-        for (DatabaseEntry e : entries) {
-            totalCalories = totalCalories.add( BigDecimal.valueOf(e.energy * e.amount/ 100) );
-           // totalCalories += (e.energy * e.amount) / 100;
+        if(entries != null) {
+            for (DatabaseEntry e : entries) {
+                totalCalories = totalCalories.add(BigDecimal.valueOf(e.energy * e.amount / 100));
+                // totalCalories += (e.energy * e.amount) / 100;
+            }
         }
         heading.setText(String.format(Locale.ENGLISH, "   %s: %.2f %s", formattedDate, totalCalories, cal));
     }
@@ -340,7 +345,7 @@ public class OverviewActivity extends AppCompatActivity {
                 deleteSelectedCards();
                 selectedCards = 0;
                 toggleDeletionMenuVisibility();
-                refreshTotalCalorieCounter();
+                refreshData();
             }
 
         });
@@ -489,9 +494,8 @@ public class OverviewActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             String amountField = input.getText().toString();
                             if(amountField.length() != 0 ){
-                                boolean result = editDatabaseEntry(amountField, entry.id);
-                                refreshFoodList();
-                                refreshTotalCalorieCounter();
+                                editDatabaseEntry(amountField, entry.id);
+                                refreshData();
                             }
                         }
                     });
@@ -520,22 +524,17 @@ public class OverviewActivity extends AppCompatActivity {
      * @param idString the id of the entry
      * @return true if the entry was successful
      */
-    private boolean editDatabaseEntry(String amountString, String idString) {
-        DatabaseFacade facade = getDbFacade();
+    private void editDatabaseEntry(String amountString, String idString) {
         int amount = Integer.parseInt(amountString);
         int id = Integer.parseInt(idString);
-        return facade.editEntryById(id, amount);
+        viewModel.editEntryById(id, amount);
     }
 
     /**
      * refresh the list of entries
      */
-    private void refreshFoodList() {
-        Date d = getDateForActivity();
-        DatabaseFacade facade = getDbFacade();
-        // Fix Issue #53
-        if(facade != null) {
-            DatabaseEntry[] entries = facade.getEntriesForDay(d);
+    private void refreshFoodList(List<DatabaseEntry> entries) {
+        if(entries != null) {
             ViewGroup foodList = getEntryList();
             foodList.removeAllViews();
             for (DatabaseEntry e : entries) {
