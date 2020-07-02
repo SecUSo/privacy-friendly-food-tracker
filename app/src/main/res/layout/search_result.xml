@@ -32,6 +32,40 @@
             app:layout_constraintHorizontal_chainStyle="spread"
             />
         <TextView
+            android:layout_width="0dp"
+            android:paddingRight="2dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/resultCarbs"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/resultName"
+            app:layout_constraintTop_toBottomOf="@id/resultCalories"
+            android:text="test"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:paddingRight="2dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/resultProtein"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/resultName"
+            app:layout_constraintTop_toBottomOf="@id/resultCarbs"
+            android:text="test"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:paddingRight="2dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/resultFat"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/resultName"
+            app:layout_constraintTop_toBottomOf="@id/resultProtein"
+
+            android:text="test"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            />
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/resultId"

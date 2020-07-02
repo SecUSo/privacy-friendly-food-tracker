@@ -37,6 +37,37 @@ public interface ConsumedEntrieAndProductDao {
     @Query("SELECT consumedEntries.date AS unique1, sum(product.energy*consumedEntries.amount/100) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet")
     List<DateCalories> getCaloriesPeriod(final Date dayst, final Date dayet);
 
+    @Query("SELECT consumedEntries.date AS unique1, (sum(product.carbs*consumedEntries.amount)) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet GROUP BY consumedEntries.date ")
+    List<DateCalories> getCarbsPerDayinPeriod(final Date dayst, final Date dayet);
+
+    @Query("SELECT consumedEntries.date AS unique1, sum(product.carbs*consumedEntries.amount/100) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet")
+    List<DateCalories> getCarbsPeriod(final Date dayst, final Date dayet);
+
+    @Query("SELECT consumedEntries.date AS unique1, (sum(product.sugar*consumedEntries.amount)) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet GROUP BY consumedEntries.date ")
+    List<DateCalories> getSugarPerDayinPeriod(final Date dayst, final Date dayet);
+
+    @Query("SELECT consumedEntries.date AS unique1, sum(product.sugar*consumedEntries.amount/100) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet")
+    List<DateCalories> getSugarPeriod(final Date dayst, final Date dayet);
+
+    @Query("SELECT consumedEntries.date AS unique1, (sum(product.protein*consumedEntries.amount)) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet GROUP BY consumedEntries.date ")
+    List<DateCalories> getProteinPerDayinPeriod(final Date dayst, final Date dayet);
+
+    @Query("SELECT consumedEntries.date AS unique1, sum(product.protein*consumedEntries.amount/100) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet")
+    List<DateCalories> getProteinPeriod(final Date dayst, final Date dayet);
+
+    @Query("SELECT consumedEntries.date AS unique1, (sum(product.fat*consumedEntries.amount)) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet GROUP BY consumedEntries.date ")
+    List<DateCalories> getFatPerDayinPeriod(final Date dayst, final Date dayet);
+
+    @Query("SELECT consumedEntries.date AS unique1, sum(product.fat*consumedEntries.amount/100) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet")
+    List<DateCalories> getFatPeriod(final Date dayst, final Date dayet);
+
+    @Query("SELECT consumedEntries.date AS unique1, (sum(product.satFat*consumedEntries.amount)) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet GROUP BY consumedEntries.date ")
+    List<DateCalories> getSatFatPerDayinPeriod(final Date dayst, final Date dayet);
+
+    @Query("SELECT consumedEntries.date AS unique1, sum(product.satFat*consumedEntries.amount/100) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet")
+    List<DateCalories> getSatFatPeriod(final Date dayst, final Date dayet);
+
+
     static class DateCalories
     {
         public Date unique1;

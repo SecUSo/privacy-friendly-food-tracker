@@ -55,16 +55,16 @@ public class DatabaseFacade {
      * @param name the name
      * @param productId the consumed product id
      */
-    public void insertEntry(final int amount, final java.util.Date date, final String name, final float energy, final int productId){
+    public void insertEntry(final int amount, final java.util.Date date, final String name, final float energy, final float carbs, final float sugar, final float protein, final float fat, final float satFat, final int productId){
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 int existingProductId = 0;
                 //If the productId is 0 we need to create a new product in the database
                 if (0 == productId) {
-                    insertProductPrivate(name, energy, "");
+                    insertProductPrivate(name, energy, carbs, sugar, protein, fat, satFat, "");
                     // retrieve ProductId of newly created Product from database
-                    List<Product> existingProducts = productDao.findExistingProducts(name, energy, "");
+                    List<Product> existingProducts = productDao.findExistingProducts(name, energy, carbs, sugar, protein, fat, satFat, "");
                     // There is only one existing product so we take the first one from the List
                     Product p = existingProducts.get(0);
                     existingProductId = p.id;
@@ -120,21 +120,21 @@ public class DatabaseFacade {
      * @param energy the energy
      * @param barcode the barcode
      */
-    public void insertProduct(final String name, final float energy, final String barcode){
+    public void insertProduct(final String name, final float energy, final float carbs, final float sugar, final float protein, final float fat, final float satFat, final String barcode){
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
-                insertProductPrivate(name, energy, barcode);
+                insertProductPrivate(name, energy, carbs,sugar, protein, fat, satFat, barcode);
             }
         });
     }
 
-    private void insertProductPrivate(String name, float energy, String barcode) {
-        List<Product> res = productDao.findExistingProducts(name, energy, barcode);
+    private void insertProductPrivate(String name, float energy, float carbs, float sugar, float protein, float fat, float satFat, String barcode) {
+        List<Product> res = productDao.findExistingProducts(name, energy, carbs, sugar, protein, fat, satFat, barcode);
         if (res.size() != 0) {
             return;
         }
-        productDao.insert(new Product(0, name, energy, barcode));
+        productDao.insert(new Product(0, name, energy, carbs, sugar, protein, fat, satFat, barcode));
     }
 
     /**
@@ -165,7 +165,7 @@ public class DatabaseFacade {
             List<ConsumedEntries> res = consumedEntriesDao.findConsumedEntriesForDate(new java.sql.Date(date.getTime()));
             for(ConsumedEntries consumedEntry : res) {
                 Product product = productDao.findProductById(consumedEntry.productId);
-                databaseEntries.add(new DatabaseEntry(String.valueOf(consumedEntry.id),consumedEntry.name, consumedEntry.amount, product.energy));
+                databaseEntries.add(new DatabaseEntry(String.valueOf(consumedEntry.id),consumedEntry.name, consumedEntry.amount, product.energy, product.carbs, product.sugar, product.protein, product.fat, product.satFat));
             }
 
         } catch (Exception e) {
@@ -192,6 +192,106 @@ public class DatabaseFacade {
      */
     public List<ConsumedEntrieAndProductDao.DateCalories> getCaloriesPerDayinPeriod(java.util.Date startDate, java.util.Date endDate){
         return consumedEntrieAndProductDao.getCaloriesPerDayinPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
+
+    /**
+     * Returns the sum of carbs per day for a time period.
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the carbs sum per day and the associated date
+     */
+    public List<ConsumedEntrieAndProductDao.DateCalories> getPeriodCarbs(java.util.Date startDate, java.util.Date endDate){
+        return    consumedEntrieAndProductDao.getCarbsPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
+
+    /**
+     * Returns the sum of carbs between two dates.
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the carbs sum (list position 0)
+     */
+    public List<ConsumedEntrieAndProductDao.DateCalories> getCarbsPerDayinPeriod(java.util.Date startDate, java.util.Date endDate){
+        return consumedEntrieAndProductDao.getCarbsPerDayinPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
+
+    /**
+     * Returns the sum of sugar per day for a time period.
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the sugar sum per day and the associated date
+     */
+    public List<ConsumedEntrieAndProductDao.DateCalories> getPeriodSugar(java.util.Date startDate, java.util.Date endDate){
+        return    consumedEntrieAndProductDao.getSugarPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
+
+    /**
+     * Returns the sum of sugar between two dates.
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the sugar sum (list position 0)
+     */
+    public List<ConsumedEntrieAndProductDao.DateCalories> getSugarPerDayinPeriod(java.util.Date startDate, java.util.Date endDate){
+        return consumedEntrieAndProductDao.getSugarPerDayinPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
+
+    /**
+     * Returns the sum of protein per day for a time period.
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the protein sum per day and the associated date
+     */
+    public List<ConsumedEntrieAndProductDao.DateCalories> getPeriodProtein(java.util.Date startDate, java.util.Date endDate){
+        return    consumedEntrieAndProductDao.getProteinPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
+
+    /**
+     * Returns the sum of protein between two dates.
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the protein sum (list position 0)
+     */
+    public List<ConsumedEntrieAndProductDao.DateCalories> getProteinPerDayinPeriod(java.util.Date startDate, java.util.Date endDate){
+        return consumedEntrieAndProductDao.getProteinPerDayinPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
+
+    /**
+     * Returns the sum of fat per day for a time period.
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the fat sum per day and the associated date
+     */
+    public List<ConsumedEntrieAndProductDao.DateCalories> getPeriodFat(java.util.Date startDate, java.util.Date endDate){
+        return    consumedEntrieAndProductDao.getFatPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
+
+    /**
+     * Returns the sum of fat between two dates.
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the fat sum (list position 0)
+     */
+    public List<ConsumedEntrieAndProductDao.DateCalories> getFatPerDayinPeriod(java.util.Date startDate, java.util.Date endDate){
+        return consumedEntrieAndProductDao.getFatPerDayinPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
+
+    /**
+     * Returns the sum of saturated fat per day for a time period.
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the fat sum per day and the associated date
+     */
+    public List<ConsumedEntrieAndProductDao.DateCalories> getPeriodSatFat(java.util.Date startDate, java.util.Date endDate){
+        return    consumedEntrieAndProductDao.getSatFatPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
+
+    /**
+     * Returns the sum of saturated fat between two dates.
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the fat sum (list position 0)
+     */
+    public List<ConsumedEntrieAndProductDao.DateCalories> getSatFatPerDayinPeriod(java.util.Date startDate, java.util.Date endDate){
+        return consumedEntrieAndProductDao.getSatFatPerDayinPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
     }
 
     /**

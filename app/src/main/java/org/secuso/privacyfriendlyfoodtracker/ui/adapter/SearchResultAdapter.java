@@ -93,6 +93,9 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         // - replace the contents of the view with that element
         ((TextView) holder.mCardView.findViewById(R.id.resultName)).setText(mDataset.get(position).name);
         ((TextView) holder.mCardView.findViewById(R.id.resultCalories)).setText(String.format(Locale.ENGLISH,"%.2f kCal", mDataset.get(position).energy));
+        ((TextView) holder.mCardView.findViewById(R.id.resultCarbs)).setText(String.format(Locale.ENGLISH,"%.2f (%.2f) g Carbs(sugar)", mDataset.get(position).carbs, mDataset.get(position).sugar));
+        ((TextView) holder.mCardView.findViewById(R.id.resultProtein)).setText(String.format(Locale.ENGLISH,"%.2f g Protein", mDataset.get(position).protein));
+        ((TextView) holder.mCardView.findViewById(R.id.resultFat)).setText(String.format(Locale.ENGLISH,"%.2f (%.2f) g Fat(sat. fat)", mDataset.get(position).fat, mDataset.get(position).satFat));
         ((TextView) holder.mCardView.findViewById(R.id.resultId)).setText(String.format(Locale.ENGLISH, "%d", mDataset.get(position).id));
     }
 

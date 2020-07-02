@@ -22,13 +22,23 @@ package org.secuso.privacyfriendlyfoodtracker.ui.adapter;
  */
 public class DatabaseEntry {
     public float energy;
+    public float carbs;
+    public float sugar;
+    public float protein;
+    public float fat;
+    public float satFat;
     public int amount;
     public String name;
     public String id;
-    public DatabaseEntry(String id, String name, int amount, float energy){
+    public DatabaseEntry(String id, String name, int amount, float energy, float carbs, float sugar, float protein, float fat, float satFat){
         this.id = id;
         this.amount = amount;
         this.energy = energy;
+        this.carbs = carbs;
+        this.sugar = sugar;
+        this.protein = protein;
+        this.fat = fat;
+        this.satFat = satFat;
         this.name = name;
     }
 }

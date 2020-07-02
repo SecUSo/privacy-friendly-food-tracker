@@ -29,6 +29,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.Barrier;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
 import android.text.InputFilter;
@@ -267,22 +268,36 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     /**
-     * Refreshes the calorie counter at the top of the activity.
+     * Refreshes the calorie and macroCounter counter at the top of the activity.
      * Recounts calories for all Entries of the day.
      */
     private void refreshTotalCalorieCounter(@Nullable List<DatabaseEntry> entries) {
         BigDecimal totalCalories = new BigDecimal("0");
+        BigDecimal totalCarbs = new BigDecimal("0");
+        BigDecimal totalSugar = new BigDecimal("0");
+        BigDecimal totalProtein = new BigDecimal("0");
+        BigDecimal totalFat = new BigDecimal("0");
+        BigDecimal totalSatFat = new BigDecimal("0");
         TextView heading = this.findViewById(R.id.overviewHeading);
+        TextView macrosOverview = this.findViewById(R.id.overviewMacros);
+
         String cal = getString(R.string.total_calories);
         Date d = getDateForActivity();
         String formattedDate = getFormattedDate(d);
         if(entries != null) {
             for (DatabaseEntry e : entries) {
                 totalCalories = totalCalories.add(BigDecimal.valueOf(e.energy * e.amount / 100));
+                totalCarbs = totalCarbs.add(BigDecimal.valueOf(e.carbs * e.amount / 100));
+                totalSugar = totalSugar.add(BigDecimal.valueOf(e.sugar * e.amount / 100));
+                totalProtein = totalProtein.add(BigDecimal.valueOf(e.protein * e.amount / 100));
+                totalFat = totalFat.add(BigDecimal.valueOf(e.fat * e.amount / 100));
+                totalSatFat = totalSatFat.add(BigDecimal.valueOf(e.satFat * e.amount / 100));
+
                 // totalCalories += (e.energy * e.amount) / 100;
             }
         }
         heading.setText(String.format(Locale.ENGLISH, "   %s: %.2f %s", formattedDate, totalCalories, cal));
+        macrosOverview.setText(String.format(Locale.ENGLISH, "Carbs(sugar): %.2f (%.2f) - Protein: %.2f - Fat (sat.): %.2f (%.2f)", totalCarbs, totalSugar, totalProtein, totalFat, totalSatFat));
     }
 
     /**
@@ -364,6 +379,56 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     /**
+     * The consumed carbs per entry
+     *
+     * @param e a DatabaseEntry
+     * @return the calculated consumed carbs
+     */
+    private float getConsumedCarbsForEntry(DatabaseEntry e) {
+        return (e.amount * e.carbs) / 100;
+    }
+
+    /**
+     * The consumed sugar per entry
+     *
+     * @param e a DatabaseEntry
+     * @return the calculated consumed sugar
+     */
+    private float getConsumedSugarForEntry(DatabaseEntry e) {
+        return (e.amount * e.sugar) / 100;
+    }
+
+    /**
+     * The consumed protein per entry
+     *
+     * @param e a DatabaseEntry
+     * @return the calculated consumed protein
+     */
+    private float getConsumedProteinForEntry(DatabaseEntry e) {
+        return (e.amount * e.protein) / 100;
+    }
+
+    /**
+     * The consumed fat per entry
+     *
+     * @param e a DatabaseEntry
+     * @return the calculated consumed fat
+     */
+    private float getConsumedFatForEntry(DatabaseEntry e) {
+        return (e.amount * e.fat) / 100;
+    }
+
+    /**
+     * The consumed saturated fat per entry
+     *
+     * @param e a DatabaseEntry
+     * @return the calculated consumed fat
+     */
+    private float getConsumedSatFatForEntry(DatabaseEntry e) {
+        return (e.amount * e.satFat) / 100;
+    }
+
+    /**
      * Creates a CheckedCardView from the entry
      *
      * @param e
@@ -390,6 +455,7 @@ public class OverviewActivity extends AppCompatActivity {
                 getResources().getDimension(R.dimen.slide_actions));
         TextView id = new TextView(this);
 
+
         // Each CardView needs an ID to reference in the ConstraintText
         name.setId(View.generateViewId());
         amount.setId(View.generateViewId());
@@ -397,12 +463,37 @@ public class OverviewActivity extends AppCompatActivity {
         calories.setId(View.generateViewId());
         id.setText(e.id);
 
+
         name.setText(e.name);
         amount.setText(Integer.toString(e.amount) + "g");
         energy.setText(String.format(Locale.ENGLISH, "   %.2f kCal/100g", e.energy));
-        calories.setText(String.format(Locale.ENGLISH, "%.2f kCal", getConsumedCaloriesForEntry(e)));
+
+        //only print out macros with mass > 0
+        String calorieAndMacrosText = String.format(Locale.ENGLISH, "%.2f kCal",getConsumedCaloriesForEntry(e));
+        float consumedCarbs = getConsumedCarbsForEntry(e);
+        if(consumedCarbs > 0.01){
+            calorieAndMacrosText += String.format(Locale.ENGLISH, "\n%.2fg Carbs",consumedCarbs);
+        }
+        float consumedSugar = getConsumedSugarForEntry(e);
+        if(consumedSugar > 0.01){
+            calorieAndMacrosText += String.format(Locale.ENGLISH, "\n%.2fg Sugar",consumedSugar);
+        }
+        float consumedProtein = getConsumedProteinForEntry(e);
+        if(consumedProtein > 0.01){
+            calorieAndMacrosText += String.format(Locale.ENGLISH, "\n%.2fg Protein",consumedProtein);
+        }
+        float consumedFat = getConsumedFatForEntry(e);
+        if(consumedFat > 0.01){
+            calorieAndMacrosText += String.format(Locale.ENGLISH, "\n%.2fg Fat",consumedFat);
+        }
+        float consumedSatFat = getConsumedSatFatForEntry(e);
+        if(consumedSatFat > 0.01){
+            calorieAndMacrosText += String.format(Locale.ENGLISH, "\n%.2fg sat. Fat",consumedSatFat);
+        }
+        calories.setText(calorieAndMacrosText);
         // id is just an invisible attribute on each card
         id.setVisibility(View.INVISIBLE);
+
 
         set.constrainWidth(amount.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainHeight(amount.getId(), ConstraintSet.WRAP_CONTENT);
@@ -429,12 +520,14 @@ public class OverviewActivity extends AppCompatActivity {
         set.constrainDefaultHeight(calories.getId(), ConstraintSet.MATCH_CONSTRAINT_WRAP);
         set.constrainDefaultWidth(calories.getId(), ConstraintSet.MATCH_CONSTRAINT_WRAP);
 
+        int barrierId = View.generateViewId();
+        set.createBarrier(barrierId,ConstraintSet.TOP,name.getId(),calories.getId());
 
-        set.connect(amount.getId(), ConstraintSet.TOP, name.getId(), ConstraintSet.BOTTOM, 20);
+        set.connect(amount.getId(), ConstraintSet.TOP, barrierId, ConstraintSet.BOTTOM, 20);
         set.connect(amount.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 20);
         set.connect(amount.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 20);
 
-        set.connect(energy.getId(), ConstraintSet.TOP, name.getId(), ConstraintSet.BOTTOM, 20);
+        set.connect(energy.getId(), ConstraintSet.TOP, barrierId, ConstraintSet.BOTTOM, 20);
         set.connect(energy.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 20);
         set.connect(energy.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 20);
 

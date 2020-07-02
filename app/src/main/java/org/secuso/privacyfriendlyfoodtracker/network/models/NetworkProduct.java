@@ -490,6 +490,57 @@ public class NetworkProduct {
         return "";
     }
 
+
+    /**
+     * @return The carbs per 100g
+     */
+    public String getNutrimentCarbs() {
+        if(nutriments.containsKey("carbohydrates_100g")){
+            return nutriments.get("carbohydrates_100g").toString();
+        }
+        return "";
+    }
+
+    /**
+     * @return The sugar per 100g
+     */
+    public String getNutrimentSugar() {
+        if(nutriments.containsKey("sugars_100g")){
+            return nutriments.get("sugars_100g").toString();
+        }
+        return "";
+    }
+
+    /**
+     * @return The protein per 100g
+     */
+    public String getNutrimentProtein() {
+        if(nutriments.containsKey("proteins_100g")){
+            return nutriments.get("proteins_100g").toString();
+        }
+        return "";
+    }
+
+    /**
+     * @return The fat per 100g
+     */
+    public String getNutrimentFat() {
+        if(nutriments.containsKey("fat_100g")){
+            return nutriments.get("fat_100g").toString();
+        }
+        return "";
+    }
+
+    /**
+     * @return The protein per 100g
+     */
+    public String getNutrimentSatFat() {
+        if(nutriments.containsKey("saturated-fat_100g")){
+            return nutriments.get("saturated-fat_100g").toString();
+        }
+        return "";
+    }
+
     /**
      * @return The Emb_codes
      */

@@ -110,4 +110,16 @@
     <string name="save">Save</string>
 
     <string name="search_for">Search for a product</string>
+    <string name="error_carbs_nan" >Only numbers are allowed for carbs</string>
+    <string name="error_protein_nan" >Only numbers are allowed for protein</string>
+    <string name="error_fat_nan" >Only numbers are allowed for fat</string>
+    <string name="hint_food_macros">g/100g</string>
+    <string name="hint_food_carbs">Carbs in g/100g</string>
+    <string name="hint_food_protein">Protein in g/100g</string>
+    <string name="hint_food_fat">Fat in g/100g</string>
+    <string name="carbsPerWeek">Average carbs (sugar) per day</string>
+    <string name="proteinPerWeek">Average protein per day</string>
+    <string name="fatPerWeek">Average fat (saturated fat) per day</string>
+    <string name="hint_food_sugar">Sugar in g/100g</string>
+    <string name="hint_food_satFat">Saturated Fat in g/100g</string>
 </resources>
