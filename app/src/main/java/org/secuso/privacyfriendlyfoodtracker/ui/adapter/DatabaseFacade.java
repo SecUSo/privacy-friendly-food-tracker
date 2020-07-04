@@ -18,6 +18,7 @@ package org.secuso.privacyfriendlyfoodtracker.ui.adapter;
 
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
+import android.preference.PreferenceActivity;
 import android.util.Log;
 
 import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
@@ -26,8 +27,11 @@ import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntries;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntriesDao;
 import org.secuso.privacyfriendlyfoodtracker.database.Product;
 import org.secuso.privacyfriendlyfoodtracker.database.ProductDao;
+import org.secuso.privacyfriendlyfoodtracker.ui.BaseAddFoodActivity;
+import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.OverviewViewModel;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -54,8 +58,9 @@ public class DatabaseFacade {
      * @param date the consumption date in UNIX format
      * @param name the name
      * @param productId the consumed product id
+     * @param referenceActivity
      */
-    public void insertEntry(final int amount, final java.util.Date date, final String name, final float energy, final int productId){
+    public void insertEntry(final int amount, final Date date, final String name, final float energy, final int productId, final BaseAddFoodActivity referenceActivity){
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -72,6 +77,7 @@ public class DatabaseFacade {
                     existingProductId = productId;
                 }
                 consumedEntriesDao.insert(new ConsumedEntries(0, amount, new java.sql.Date(date.getTime()), name, existingProductId));
+                referenceActivity.finish();
             }
         });
     }
@@ -80,8 +86,12 @@ public class DatabaseFacade {
     /**
      * Deletes a database entry by id.
      * @param id the id
+     * @param date the date for refreshing the viewModel
+     * @param viewModel a reference to the viewModel so it can be refreshed. This fixes a race
+     *                  condition bug which resulted in deleted entrys still showing.
+     *
      */
-    public void deleteEntryById(final int id){
+    public void deleteEntryById(final int id, final Date date, final OverviewViewModel viewModel){
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -90,6 +100,7 @@ public class DatabaseFacade {
                     return;
                 }
                 consumedEntriesDao.delete(res.get(0));
+                viewModel.init(date);
             }
         });
     }
@@ -98,8 +109,12 @@ public class DatabaseFacade {
      * Edit a database entry.
      * @param id the id
      * @param amount the new amount
+     * @param date the date for refreshing the viewModel
+     * @param viewModel a reference to the viewModel so it can be refreshed. This fixes a race
+     *                  condition bug which resulted in changed entrys only showing changed on reload
+     *                  of the overview.
      */
-    public void editEntryById(final int id, final int amount){
+    public void editEntryById(final int id, final int amount, final Date date, final OverviewViewModel viewModel){
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -110,6 +125,7 @@ public class DatabaseFacade {
                 ConsumedEntries consumedEntry = res.get(0);
                 consumedEntry.amount = amount;
                 consumedEntriesDao.update(res.get(0));
+                viewModel.init(date);
             }
         });
     }
