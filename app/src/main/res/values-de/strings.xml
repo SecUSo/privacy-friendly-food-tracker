@@ -99,7 +99,7 @@
     <string name="month">Monat</string>
     <string name="week">Woche</string>
     <string name="caloriePerWeek">Durchschnittliche Kalorien am Tag</string>
-    <string name="caloriePerMonth">Durchschnittliche Kalorien am Tag</string>
+    <string name="caloriePerMonth">Durchschnittliche Kalorien am Monat</string>
     <string name="period">Zeitraum</string>
     <string name="decline">Abbrechen</string>
     <string name="save">Speichern</string>
