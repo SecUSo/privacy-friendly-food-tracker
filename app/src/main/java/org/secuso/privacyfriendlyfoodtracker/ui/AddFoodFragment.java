@@ -103,6 +103,8 @@ public class AddFoodFragment extends Fragment {
                     boolean entrySuccessful = makeDatabaseEntry(name, amount, calories);
                     if (!entrySuccessful){
                         showErrorMessage(view, R.string.error_database);
+                    } else {
+                        referenceActivity.finish();
                     }
                 }
             }
@@ -159,7 +161,7 @@ public class AddFoodFragment extends Fragment {
             int amount = Integer.parseInt(amountString);
             float calories = Float.parseFloat(caloriesString);
             // We haven't explicitly chosen a product so the productId is 0 for unknown
-            databaseFacade.insertEntry(amount, ((BaseAddFoodActivity) this.referenceActivity).date, name, calories, 0, referenceActivity);
+            databaseFacade.insertEntry(amount, ((BaseAddFoodActivity) referenceActivity).date, name, calories, 0);
         } catch (Exception e) {
             // something went wrong so the entry wasn't successful
             e.printStackTrace();

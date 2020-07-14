@@ -246,7 +246,7 @@ public class OverviewActivity extends AppCompatActivity {
                 if (c.isChecked()) {
                     TextView idView = (TextView) c.getChildAt(1);
                     String id = idView.getText().toString();
-                    viewModel.deleteEntryById(Integer.parseInt(id), getDateForActivity());
+                    viewModel.deleteEntryById(Integer.parseInt(id));
                     cardsToRemove.add(v);
                 }
             }
@@ -495,6 +495,7 @@ public class OverviewActivity extends AppCompatActivity {
                             String amountField = input.getText().toString();
                             if(amountField.length() != 0 ){
                                 editDatabaseEntry(amountField, entry.id);
+                                refreshData();
                             }
                         }
                     });
@@ -526,7 +527,7 @@ public class OverviewActivity extends AppCompatActivity {
     private void editDatabaseEntry(String amountString, String idString) {
         int amount = Integer.parseInt(amountString);
         int id = Integer.parseInt(idString);
-        viewModel.editEntryById(id, amount, getDateForActivity());
+        viewModel.editEntryById(id, amount);
     }
 
     /**

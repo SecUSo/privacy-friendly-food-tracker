@@ -48,12 +48,11 @@ public class OverviewViewModel extends AndroidViewModel {
     }
 
 
-    public void deleteEntryById(int id, Date date) {
-        dbHelper.deleteEntryById(id, date, this);
+    public void deleteEntryById(int id) {
+        dbHelper.deleteEntryById(id);
     }
 
-    public void editEntryById(int id, int amount, Date date) {
-        dbHelper.editEntryById(id, amount,date,this);
-
+    public void editEntryById(int id, int amount) {
+        dbHelper.editEntryById(id, amount);
     }
 }
