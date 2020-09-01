@@ -105,5 +105,6 @@
     <string name="save">Speichern</string>
 
     <string name="search_for">Nach einem Produkt suchen</string>
+    <string name="action_state">State</string>
 
 </resources>

@@ -12,6 +12,9 @@
             android:id="@+id/nav_statistic"
             android:icon="@mipmap/ic__chart"
             android:title="@string/action_statistic" />
+        <item
+            android:id="@+id/nav_state"
+            android:title="@string/action_state" />
     </group>
 
     <group android:id="@+id/nav_group_add"

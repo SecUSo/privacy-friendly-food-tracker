@@ -110,4 +110,6 @@
     <string name="save">Save</string>
 
     <string name="search_for">Search for a product</string>
+    <string name="action_state">State</string>
+
 </resources>

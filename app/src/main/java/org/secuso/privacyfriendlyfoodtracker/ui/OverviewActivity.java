@@ -40,6 +40,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -106,6 +107,21 @@ public class OverviewActivity extends AppCompatActivity {
 
         setUpFloatingActionButton();
         setupActionBar();
+
+        final Button left_arrow = this.findViewById(R.id.left_arrow);
+        left_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeDate(-1);
+            }
+        });
+        final Button right_arrow = this.findViewById(R.id.right_arrow);
+        right_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeDate(+1);
+            }
+        });
     }
 
     /**
@@ -273,6 +289,7 @@ public class OverviewActivity extends AppCompatActivity {
     private void refreshTotalCalorieCounter(@Nullable List<DatabaseEntry> entries) {
         BigDecimal totalCalories = new BigDecimal("0");
         TextView heading = this.findViewById(R.id.overviewHeading);
+        TextView headingCal = this.findViewById(R.id.overviewHeadingCal);
         String cal = getString(R.string.total_calories);
         Date d = getDateForActivity();
         String formattedDate = getFormattedDate(d);
@@ -282,7 +299,8 @@ public class OverviewActivity extends AppCompatActivity {
                 // totalCalories += (e.energy * e.amount) / 100;
             }
         }
-        heading.setText(String.format(Locale.ENGLISH, "   %s: %.2f %s", formattedDate, totalCalories, cal));
+        heading.setText(String.format(Locale.ENGLISH, "%s", formattedDate));
+        headingCal.setText(String.format(Locale.ENGLISH, "%.2f %s", totalCalories, cal));
     }
 
     /**
@@ -290,10 +308,19 @@ public class OverviewActivity extends AppCompatActivity {
      *
      * @return The Date object created from the date long variable.
      */
+
+
+
     private Date getDateForActivity() {
         Date d = new Date();
         d.setTime(date);
         return d;
+    }
+
+    private void changeDate(int i) {
+
+        date = date + (86400000 * i);
+        refreshData();
     }
 
     /**
