@@ -37,3 +37,6 @@ Thumbs.db
 app/release/*
 *.apk
 
+
+build.gradle
+gradle/wrapper/gradle-wrapper.properties
