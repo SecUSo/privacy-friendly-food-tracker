@@ -16,26 +16,38 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 */
 package org.secuso.privacyfriendlyfoodtracker.database;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
+import android.arch.lifecycle.LiveData;
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
+
+import java.util.List;
 
 /**
- * A Product.
+ * Includes methods that offer abstract access to the app database to manage products.
  *
  * @author Andre Lutz
  */
-@Entity
-public class UserData {
-    @PrimaryKey(autoGenerate = true)
-    public final int id;
-    public final String name;
-    public final float energy;
-    public final String barcode;
+@Dao
+public interface WeightsDao {
+    @Insert
+    void insert(Weights... weights);
 
-    public UserData(final int id, String name, float energy, String barcode) {
-        this.id = id;
-        this.name = name;
-        this.energy = energy;
-        this.barcode = barcode;
-    }
+    @Update
+    void update(Weights... weights);
+
+    @Delete
+    void delete(Weights... weights);
+
+    @Query("DELETE FROM weights")
+    void deleteAll();
+
+    @Query("SELECT * FROM weights")
+    LiveData<List<Weights>> getAllProducts();
+
+    @Query("SELECT * FROM weights WHERE id=:id")
+    Weights findWeightsById(final int id);
+
 }

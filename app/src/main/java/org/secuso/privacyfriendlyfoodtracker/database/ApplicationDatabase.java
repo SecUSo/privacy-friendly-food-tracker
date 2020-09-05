@@ -23,6 +23,7 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -37,14 +38,23 @@ import org.secuso.privacyfriendlyfoodtracker.database.converter.DateConverter;
  *
  * @author Andre Lutz
  */
-@Database(entities = {ConsumedEntries.class, Product.class}, version = 1, exportSchema = true)
+@Database(entities = {ConsumedEntries.class, Product.class, Goals.class, Weights.class}, version = 2, exportSchema = true)
 @TypeConverters({DateConverter.class})
 public abstract class ApplicationDatabase extends RoomDatabase {
 
     public static final String DATABASE_NAME = "consumed_entries_database";
+    private static final Migration MIGRATION_1_2 = new Migration(1,2) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS `Goals` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dailycalorie` INTEGER NOT NULL, `minweight` INTEGER NOT NULL)");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `Weights` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` INTEGER, `weight` INTEGER NOT NULL)");
+        }
+    };
 
     public abstract ConsumedEntriesDao getConsumedEntriesDao();
     public abstract ProductDao getProductDao();
+    public abstract GoalsDao getGoalsDao();
+    public abstract WeightsDao getWeightsDaoDao();
     public abstract ConsumedEntrieAndProductDao getConsumedEntriesAndProductDao();
 
     private static ApplicationDatabase sInstance;
@@ -52,12 +62,14 @@ public abstract class ApplicationDatabase extends RoomDatabase {
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
 
     public static ApplicationDatabase getInstance(final Context context) throws Exception {
+
         if (sInstance == null) {
             synchronized (ApplicationDatabase.class) {
                 if (sInstance == null) {
                     SafeHelperFactory factory = new SafeHelperFactory(KeyGenHelper.getSecretKeyAsChar(context));
 
                     sInstance = Room.databaseBuilder(context.getApplicationContext(),ApplicationDatabase.class, DATABASE_NAME)
+                            .addMigrations(MIGRATION_1_2)
                             .openHelperFactory(factory)
                             .allowMainThreadQueries()
                             .addCallback(new Callback() {
@@ -72,6 +84,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
                                         Log.e("ApplicationDatabase", e.getMessage());
                                     }
                                 }
+
                             }).build();
 
                 }

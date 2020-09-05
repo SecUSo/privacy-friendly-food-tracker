@@ -39,4 +39,8 @@ app/release/*
 
 
 *.gradle
-gradle*
+gradle.*
+gradle-wrapper.properties
+
+1.json
+2.json
