@@ -105,6 +105,15 @@
     <string name="save">Speichern</string>
 
     <string name="search_for">Nach einem Produkt suchen</string>
+
+    //TODO: translate
     <string name="action_state">State</string>
+    <string name="hint_age">Age</string>
+    <string name="hint_height">height</string>
+    <string name="hint_weight">weight</string>
+    <string name="text_about_calculation">text about calculation</string>
+    <string name="hint_pregnant">if you are pregnant?</string>
+    <string name="hint_sex_m">Mann</string>
+    <string name="hint_sex_f">Frau</string>
 
 </resources>
