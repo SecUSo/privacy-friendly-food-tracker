@@ -50,6 +50,6 @@ public interface GoalsDao {
     @Query("SELECT * FROM goals WHERE id=:id")
     Goals findGoalsById(final int id);
 
-    @Query("SELECT max(id),* FROM goals")
+    @Query("SELECT max(id), *  FROM goals")
     Goals findMaxGoals();
 }

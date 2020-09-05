@@ -112,22 +112,64 @@
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
 
+        <RadioGroup
+            android:id="@+id/Activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/inputWeight"
+            >
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/input_sedentary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/hint_sedentary"
+
+                />
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/input_slightly_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/hint_slightly_active"
+                />
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/input_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/hint_active"
+                />
+        </RadioGroup>
+
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/inputIsPregnant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
-            app:layout_constraintTop_toBottomOf="@+id/inputWeight"
+            app:layout_constraintTop_toBottomOf="@+id/Activity"
             android:text="@string/hint_pregnant">
 
         </android.support.v7.widget.AppCompatCheckBox>
 
-
-
+        <TextView
+            android:id="@+id/text_resultCalories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="tfgh"
+            android:textAlignment="center"
+            tools:ignore="MissingConstraints"
+            android:textSize="35sp"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            app:layout_constraintTop_toBottomOf="@+id/inputIsPregnant"
+            />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addFoodItem"
+        android:id="@+id/countCalories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

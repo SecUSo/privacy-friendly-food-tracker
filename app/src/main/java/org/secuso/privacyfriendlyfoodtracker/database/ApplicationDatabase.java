@@ -46,7 +46,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
     private static final Migration MIGRATION_1_2 = new Migration(1,2) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            database.execSQL("CREATE TABLE IF NOT EXISTS `Goals` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dailycalorie` INTEGER NOT NULL, `minweight` INTEGER NOT NULL)");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `Goals` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dailycalorie` INTEGER NOT NULL, `minweight` INTEGER NOT NULL, `date` INTEGER)");
             database.execSQL("CREATE TABLE IF NOT EXISTS `Weights` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` INTEGER, `weight` INTEGER NOT NULL)");
         }
     };

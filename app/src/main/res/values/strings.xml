@@ -119,5 +119,8 @@
     <string name="hint_pregnant">if you are pregnant? Please note! Eating right is one of the best things you can do to help your baby grow and develop normally!</string>
     <string name="hint_sex_m">Male</string>
     <string name="hint_sex_f">Female</string>
+    <string name="hint_sedentary">Sedentary lifestyle</string>
+    <string name="hint_slightly_active">Slightly active</string>
+    <string name="hint_active">Active lifestyle</string>
 
 </resources>

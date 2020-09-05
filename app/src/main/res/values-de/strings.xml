@@ -115,5 +115,8 @@
     <string name="hint_pregnant">if you are pregnant?</string>
     <string name="hint_sex_m">Mann</string>
     <string name="hint_sex_f">Frau</string>
+    <string name="hint_slightly_active">Slightly active</string>
+    <string name="hint_sedentary">Sedentary lifestyle</string>
+    <string name="hint_active">Active lifestyle</string>
 
 </resources>

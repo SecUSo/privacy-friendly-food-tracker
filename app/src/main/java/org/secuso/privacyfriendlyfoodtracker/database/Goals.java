@@ -18,6 +18,11 @@ package org.secuso.privacyfriendlyfoodtracker.database;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
+import org.secuso.privacyfriendlyfoodtracker.database.converter.DateConverter;
+
+import java.sql.Date;
 
 /**
  * A Product.
@@ -30,10 +35,12 @@ public class Goals {
     public final int id;
     public final int dailycalorie;
     public final int minweight;
+    @TypeConverters({DateConverter.class}) public final Date date;
 
-    public Goals(final int id, int dailycalorie, int minweight) {
+    public Goals(final int id, int dailycalorie, int minweight, Date date) {
         this.id = id;
         this.dailycalorie = dailycalorie;
         this.minweight = minweight;
+        this.date = date;
     }
 }
