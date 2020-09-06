@@ -118,5 +118,13 @@
     <string name="hint_slightly_active">Slightly active</string>
     <string name="hint_sedentary">Sedentary lifestyle</string>
     <string name="hint_active">Active lifestyle</string>
+    <string name="hint_3_6">3 - 6 months</string>
+    <string name="hint_0_3">0 - 3 months</string>
+    <string name="hint_6_9">6 - 9 months</string>
+    <string name="text_goal">Your goal</string>
+    <string name="hint_stay_form">stay in form</string>
+    <string name="hint_lose_weight">lose weight</string>
+    <string name="hint_calories_per_day">calories per day</string>
+    <string name="hint_ideal_weight">ideal weight</string>
 
 </resources>
