@@ -60,8 +60,6 @@
                 />
         </RadioGroup>
 
-
-
         <android.support.v7.widget.LinearLayoutCompat
             android:id="@+id/inputData"
             android:layout_width="match_parent"
@@ -125,12 +123,59 @@
 
         </android.support.v7.widget.LinearLayoutCompat>
 
+        <TextView
+            android:id="@+id/text_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_activity"
+            android:textAlignment="textStart"
+            tools:ignore="MissingConstraints"
+            android:textSize="20sp"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            app:layout_constraintTop_toBottomOf="@+id/inputData"
+            />
+
+        <RadioGroup
+            android:id="@+id/Activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            app:layout_constraintTop_toBottomOf="@+id/text_activity"
+            >
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/input_sedentary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/hint_sedentary"
+
+                />
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/input_slightly_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/hint_slightly_active"
+                />
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/input_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/hint_active"
+                />
+        </RadioGroup>
+
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/inputIsPregnant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
-            app:layout_constraintTop_toBottomOf="@+id/inputData"
+            app:layout_constraintTop_toBottomOf="@+id/Activity"
             android:text="@string/hint_pregnant">
 
         </android.support.v7.widget.AppCompatCheckBox>
@@ -224,7 +269,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addFoodItem"
+        android:id="@+id/countCalories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
