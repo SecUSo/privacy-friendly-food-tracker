@@ -20,29 +20,22 @@ package org.secuso.privacyfriendlyfoodtracker.ui;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatRadioButton;
-import android.support.v7.widget.CardView;
 import android.text.InputFilter;
-import android.text.InputType;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
-import org.secuso.privacyfriendlyfoodtracker.BuildConfig;
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.SearchResultAdapter;
@@ -53,7 +46,7 @@ import org.secuso.privacyfriendlyfoodtracker.ui.helper.BaseActivity;
  *
  * @author Simon Reinkemeier, yonjuni
  */
-public class StateActivity extends AppCompatActivity {
+public class GoalsActivity extends AppCompatActivity {
 
     DatabaseFacade databaseFacade;
     EditText ageField;
@@ -67,13 +60,13 @@ public class StateActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_state);
+        setContentView(R.layout.activity_goals);
 
 
         LayoutInflater layoutInflater = (LayoutInflater) this.getBaseContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View addGoalView = layoutInflater.inflate(R.layout.add_goal, null);
-        goalDialog = new AlertDialog.Builder(StateActivity.this);
+        goalDialog = new AlertDialog.Builder(GoalsActivity.this);
         setGoalDialog(addGoalView);
 
 

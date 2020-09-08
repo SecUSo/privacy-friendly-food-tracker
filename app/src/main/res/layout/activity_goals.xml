@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.StateActivity"
+    tools:context=".ui.GoalsActivity"
     android:id="@+id/toolbarOverview">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
-        app:menu="@string/action_state"
+        app:menu="@string/action_goals"
 >
 
     </android.support.design.widget.AppBarLayout>
@@ -32,8 +32,56 @@
             android:text="@string/text_about_calculation"
             android:textAlignment="center"
             tools:ignore="MissingConstraints"
-            android:textSize="25sp"
-            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:textSize="18sp"
+            />
+        <TextView
+            android:id="@+id/text_goal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_goal"
+            android:textAlignment="textStart"
+            tools:ignore="MissingConstraints"
+            android:textSize="20sp"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            app:layout_constraintTop_toBottomOf="@+id/textGoals"
+            />
+
+        <RadioGroup
+            android:id="@+id/inputGoal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/text_goal"
+            >
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/inputLoseWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/hint_lose_weight"
+
+                />
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/inputStayForm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/hint_stay_form"
+                />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/text_sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_sex"
+            android:textAlignment="textStart"
+            tools:ignore="MissingConstraints"
+            android:textSize="20sp"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            app:layout_constraintTop_toBottomOf="@+id/inputGoal"
             />
 
         <RadioGroup
@@ -42,7 +90,7 @@
             android:layout_height="wrap_content"
             tools:ignore="MissingConstraints"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/textGoals"
+            app:layout_constraintTop_toBottomOf="@+id/text_sex"
             >
 
             <android.support.v7.widget.AppCompatRadioButton
@@ -113,6 +161,18 @@
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
 
+        <TextView
+            android:id="@+id/text_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_activity"
+            android:textAlignment="textStart"
+            tools:ignore="MissingConstraints"
+            android:textSize="20sp"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            app:layout_constraintTop_toBottomOf="@+id/inputWeight"
+            />
+
         <RadioGroup
             android:id="@+id/Activity"
             android:layout_width="match_parent"
@@ -120,7 +180,7 @@
             tools:ignore="MissingConstraints"
             android:orientation="horizontal"
             android:paddingTop="@dimen/activity_vertical_margin"
-            app:layout_constraintTop_toBottomOf="@+id/inputWeight"
+            app:layout_constraintTop_toBottomOf="@+id/text_activity"
             >
 
             <android.support.v7.widget.AppCompatRadioButton
@@ -148,50 +208,13 @@
                 />
         </RadioGroup>
 
-        <TextView
-            android:id="@+id/text_goal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_goal"
-            android:textAlignment="textStart"
-            tools:ignore="MissingConstraints"
-            android:textSize="20sp"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            app:layout_constraintTop_toBottomOf="@+id/Activity"
-            />
-        <RadioGroup
-            android:id="@+id/inputGoal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="MissingConstraints"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/text_goal"
-            >
-
-            <android.support.v7.widget.AppCompatRadioButton
-                android:id="@+id/inputLoseWeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/hint_lose_weight"
-
-                />
-            <android.support.v7.widget.AppCompatRadioButton
-                android:id="@+id/inputStayForm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/hint_stay_form"
-                />
-        </RadioGroup>
-
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/inputIsPregnant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
             android:text="@string/hint_pregnant"
-            app:layout_constraintTop_toBottomOf="@+id/inputGoal"
+            app:layout_constraintTop_toBottomOf="@+id/Activity"
             android:paddingTop="@dimen/activity_vertical_margin"
             >
 
@@ -241,6 +264,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/add_entry" />
+        app:srcCompat="@drawable/count_state" />
 
 </android.support.design.widget.CoordinatorLayout>

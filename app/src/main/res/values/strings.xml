@@ -111,11 +111,11 @@
 
     <string name="search_for">Search for a product</string>
 
-    <string name="action_state">State</string>
+    <string name="action_goals">Goals</string>
     <string name="hint_age">Age</string>
     <string name="hint_weight">weight</string>
     <string name="hint_height">Height</string>
-    <string name="text_about_calculation">text about calculation</string>
+    <string name="text_about_calculation">How many calories should you eat on average?</string>
     <string name="hint_pregnant">if you are pregnant? Please note! Eating right is one of the best things you can do to help your baby grow and develop normally!</string>
     <string name="hint_sex_m">Male</string>
     <string name="hint_sex_f">Female</string>
@@ -130,5 +130,7 @@
     <string name="text_goal">Your goal</string>
     <string name="hint_calories_per_day">advised calories per day</string>
     <string name="hint_ideal_weight">ideal weight</string>
+    <string name="text_sex">Sex</string>
+    <string name="text_activity">Life style</string>
 
 </resources>

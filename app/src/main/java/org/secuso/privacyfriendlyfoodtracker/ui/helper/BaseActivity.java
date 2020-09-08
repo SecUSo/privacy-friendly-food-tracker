@@ -39,7 +39,7 @@ import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.ui.AboutActivity;
 import org.secuso.privacyfriendlyfoodtracker.ui.HelpActivity;
 import org.secuso.privacyfriendlyfoodtracker.ui.MainActivity;
-import org.secuso.privacyfriendlyfoodtracker.ui.StateActivity;
+import org.secuso.privacyfriendlyfoodtracker.ui.GoalsActivity;
 import org.secuso.privacyfriendlyfoodtracker.ui.TutorialActivity;
 
 /**
@@ -182,7 +182,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnNaviga
                 createBackStack(intent);
                 break;
             case R.id.nav_state:
-                intent = new Intent(this, StateActivity.class);
+                intent = new Intent(this, GoalsActivity.class);
                 createBackStack(intent);
                 break;
             case R.id.nav_help:

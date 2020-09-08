@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.StateActivity"
+    tools:context=".ui.GoalsActivity"
     android:id="@+id/toolbarOverview">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
-        app:menu="@string/action_state"
+        app:menu="@string/action_goals"
         >
 
     </android.support.design.widget.AppBarLayout>
