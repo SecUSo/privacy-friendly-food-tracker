@@ -38,7 +38,6 @@ import android.widget.RadioGroup;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
-import org.secuso.privacyfriendlyfoodtracker.ui.adapter.SearchResultAdapter;
 import org.secuso.privacyfriendlyfoodtracker.ui.helper.BaseActivity;
 
 /**
@@ -49,14 +48,11 @@ import org.secuso.privacyfriendlyfoodtracker.ui.helper.BaseActivity;
 public class GoalsActivity extends AppCompatActivity {
 
     DatabaseFacade databaseFacade;
+    EditText resultCaloriesField;
+    AlertDialog.Builder goalDialog;
     EditText ageField;
     EditText weightField;
     EditText heightField;
-    EditText resultCaloriesField;
-    AppCompatRadioButton femaleButton;
-    AppCompatRadioButton slightlyActiveButton;
-    AppCompatRadioButton activeButton;
-    AlertDialog.Builder goalDialog;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,13 +94,17 @@ public class GoalsActivity extends AppCompatActivity {
         ageField.setFilters(ageFilter);
         heightField.setFilters(heightFilter);
         weightField.setFilters(weightFilter);
-        femaleButton = this.findViewById(R.id.inputSexF);
-        slightlyActiveButton = this.findViewById(R.id.input_slightly_active);
-        activeButton = this.findViewById(R.id.input_active);
+        final AppCompatRadioButton femaleButton = this.findViewById(R.id.inputSexF);
+        final AppCompatRadioButton slightlyActiveButton = this.findViewById(R.id.input_slightly_active);
+        final AppCompatRadioButton activeButton = this.findViewById(R.id.input_active);
+        final AppCompatRadioButton loseWeightButton = this.findViewById(R.id.input_loseWeight);
+
 
         resultCaloriesField = addGoalView.findViewById(R.id.input_resultCalories);
 
         final AppCompatCheckBox pregm = this.findViewById(R.id.inputIsPregnant);
+        final AppCompatRadioButton pregnant3Button = this.findViewById(R.id.input_pregnant3);
+        final AppCompatRadioButton pregnant6Button = this.findViewById(R.id.input_pregnant6);
         final RadioGroup months = this.findViewById(R.id.input_monthsPregnant);
 
         FloatingActionButton fab = this.findViewById(R.id.countCalories);
@@ -114,10 +114,15 @@ public class GoalsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                boolean loosWeight = loseWeightButton.isChecked();
                 boolean isFemale = femaleButton.isChecked();
-                boolean ispregnant = pregm.isChecked();
-                if (ispregnant) {
-
+                boolean ispragnant = pregm.isChecked();
+                PregnantTime pregnantTime = PregnantTime.THIRD;
+                if (ispragnant && pregnant6Button.isChecked()) {
+                    pregnantTime = PregnantTime.SECOND;
+                }
+                if (ispragnant && pregnant3Button.isChecked()){
+                    pregnantTime = PregnantTime.FIRST;
                 }
 
                 int ageValue = getIntValue(ageField.getText().toString(), ageField);
@@ -136,7 +141,7 @@ public class GoalsActivity extends AppCompatActivity {
                 if (ageValue == 0 || weightValue == 0 || heightValue == 0) {
                     return;
                 } else {
-                    int optimalCalories = countOptimalCalories(isFemale, ageValue, weightValue, heightValue, activityState, ispregnant);
+                    int optimalCalories = countOptimalCalories(loosWeight, isFemale, ageValue, weightValue, heightValue, activityState, ispragnant, pregnantTime);
                     resultCaloriesField.setText(String.valueOf(optimalCalories));
                     if (addGoalView.getParent() != null)
                         ((ViewGroup) addGoalView.getParent()).removeView(addGoalView);
@@ -176,15 +181,28 @@ public class GoalsActivity extends AppCompatActivity {
         });
     }
 
-    private int countOptimalCalories(boolean isFemale, int ageValue, int weightValue, int heightValue, float activityState, boolean isPregnant) {
+    private int countOptimalCalories(boolean loosWeight, boolean isFemale, int ageValue, int weightValue, int heightValue, float activityState, boolean isPregnant, PregnantTime pregnantTime) {
         float calories = 0f;
         if (isFemale) {
-            calories = (float) ((447.593f + (9.247f * weightValue) + (3.098f * heightValue) - (4.330 * ageValue)) * activityState * 0.80f);
+            calories = (float) ((447.593f + (9.247f * weightValue) + (3.098f * heightValue) - (4.330 * ageValue)) * activityState);
         } else {
-            calories = (float) ((88.362f + (13.397f * weightValue) + (4.799f * heightValue) - (5.677 * ageValue)) * activityState * 0.80f);
+            calories = (float) ((88.362f + (13.397f * weightValue) + (4.799f * heightValue) - (5.677 * ageValue)) * activityState);
+        }
+        if (loosWeight && !isPregnant){
+            calories *= 0.8f;
         }
         if (isPregnant) {
-
+            switch(pregnantTime) {
+                case FIRST:
+                    calories +=100;
+                    break;
+                case SECOND:
+                    calories +=200;
+                    break;
+                case THIRD:
+                    calories +=400;
+                    break;
+            }
         }
         return (int) calories;
     }
@@ -232,6 +250,11 @@ public class GoalsActivity extends AppCompatActivity {
             Snackbar.make(view, errorMessageId, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
+    }
+    enum PregnantTime {
+        FIRST,
+        SECOND,
+        THIRD
     }
 }
 
