@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -38,6 +39,7 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
+import org.secuso.privacyfriendlyfoodtracker.database.Goals;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.ui.helper.DateHelper;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
@@ -63,6 +65,7 @@ public class WeekStatisticFragment extends Fragment {
     View parentHolder;
     TextView textView;
     DatabaseFacade databaseFacade;
+
     public WeekStatisticFragment() {
         // Required empty public constructor
     }
@@ -77,7 +80,7 @@ public class WeekStatisticFragment extends Fragment {
         sharedStatisticViewModel = ViewModelProviders.of(getActivity()).get(SharedStatisticViewModel.class);
         try {
             databaseFacade = new DatabaseFacade(referenceActivity.getApplicationContext());
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.e("Error", e.getMessage());
         }
         textView = parentHolder.findViewById(R.id.periodCalories1);
@@ -91,7 +94,7 @@ public class WeekStatisticFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
                                           int dayOfMonth) {
-                        sharedStatisticViewModel.setDate(dayOfMonth, monthOfYear , year);
+                        sharedStatisticViewModel.setDate(dayOfMonth, monthOfYear, year);
                         UpdateGraph();
                     }
                 };
@@ -136,17 +139,18 @@ public class WeekStatisticFragment extends Fragment {
 
             Date startDate = getWeekByValue(-1);
             Date endDate = getWeekByValue(0);
-            consumedEntriesList = databaseFacade.getCaloriesPerDayinPeriod(startDate,endDate);
-            calories = databaseFacade.getPeriodCalories(startDate,endDate);
+            consumedEntriesList = databaseFacade.getCaloriesPerDayinPeriod(startDate, endDate);
+            calories = databaseFacade.getPeriodCalories(startDate, endDate);
             DataPoint[] dataPointInterfaces = new DataPoint[consumedEntriesList.size()];
+
             for (int i = 0; i < consumedEntriesList.size(); i++) {
-                dataPointInterfaces[i] = (new DataPoint(consumedEntriesList.get(i).unique1.getTime(), consumedEntriesList.get(i).unique2/100));
+                dataPointInterfaces[i] = (new DataPoint(consumedEntriesList.get(i).unique1.getTime(), consumedEntriesList.get(i).unique2 / 100));
             }
             int weekdays = 8;
 
             float averageCalories = calories.get(0).unique2 / weekdays;
 
-            BigDecimal averageCaloriesBigDecimal = round(averageCalories,0) ;
+            BigDecimal averageCaloriesBigDecimal = round(averageCalories, 0);
 
             if (calories.size() != 0) {
                 textView.setText(averageCaloriesBigDecimal.toString());
@@ -154,6 +158,16 @@ public class WeekStatisticFragment extends Fragment {
             GraphView graph = (GraphView) parentHolder.findViewById(R.id.graph);
             LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPointInterfaces);
             graph.addSeries(series);
+
+            Goals goals = databaseFacade.getLastGoals();
+            if (goals != null && goals.dailycalorie >0) {
+                LineGraphSeries<DataPoint> seriesGoal = new LineGraphSeries<>(new DataPoint[]{
+                        new DataPoint(startDate.getTime(), goals.dailycalorie),
+                        new DataPoint(endDate.getTime(), goals.dailycalorie)
+                });
+                seriesGoal.setColor(Color.GREEN);
+                graph.addSeries(seriesGoal);
+            }
             graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(referenceActivity));
             graph.getGridLabelRenderer().setHumanRounding(false, true);
             graph.getViewport().setMinX(startDate.getTime());
@@ -174,7 +188,6 @@ public class WeekStatisticFragment extends Fragment {
         sharedStatisticViewModel.setCalendarWithDateObj(date);
         return date;
     }
-
 
     Date getWeekByValue(int value) {
         Date date = DateHelper.changeWeek(sharedStatisticViewModel.getDate(), value);

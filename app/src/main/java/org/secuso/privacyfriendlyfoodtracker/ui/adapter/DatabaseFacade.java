@@ -219,5 +219,7 @@ public class DatabaseFacade {
         return productDao.findProductsByName("%" + name + "%");
     }
 
-
+    public Goals getLastGoals(){
+        return goalsDao.findMaxGoals();
+    }
 }
