@@ -43,6 +43,7 @@ import org.secuso.privacyfriendlyfoodtracker.database.Goals;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.ui.helper.DateHelper;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
+import org.secuso.privacyfriendlyfoodtracker.ui.helper.GraphViewHelper;
 import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.SharedStatisticViewModel;
 
 import java.math.BigDecimal;
@@ -142,7 +143,6 @@ public class WeekStatisticFragment extends Fragment {
             consumedEntriesList = databaseFacade.getCaloriesPerDayinPeriod(startDate, endDate);
             calories = databaseFacade.getPeriodCalories(startDate, endDate);
             DataPoint[] dataPointInterfaces = new DataPoint[consumedEntriesList.size()];
-
             for (int i = 0; i < consumedEntriesList.size(); i++) {
                 dataPointInterfaces[i] = (new DataPoint(consumedEntriesList.get(i).unique1.getTime(), consumedEntriesList.get(i).unique2 / 100));
             }
@@ -160,14 +160,10 @@ public class WeekStatisticFragment extends Fragment {
             graph.addSeries(series);
 
             Goals goals = databaseFacade.getLastGoals();
-            if (goals != null && goals.dailycalorie >0) {
-                LineGraphSeries<DataPoint> seriesGoal = new LineGraphSeries<>(new DataPoint[]{
-                        new DataPoint(startDate.getTime(), goals.dailycalorie),
-                        new DataPoint(endDate.getTime(), goals.dailycalorie)
-                });
-                seriesGoal.setColor(Color.GREEN);
-                graph.addSeries(seriesGoal);
+            if (goals != null && goals.dailycalorie > 0) {
+                graph.addSeries(new GraphViewHelper().goalsSeries(goals, startDate, endDate));
             }
+
             graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(referenceActivity));
             graph.getGridLabelRenderer().setHumanRounding(false, true);
             graph.getViewport().setMinX(startDate.getTime());
