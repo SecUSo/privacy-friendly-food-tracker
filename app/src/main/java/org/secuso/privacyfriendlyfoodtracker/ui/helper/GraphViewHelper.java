@@ -7,6 +7,10 @@ import org.secuso.privacyfriendlyfoodtracker.database.Goals;
 
 import java.util.Date;
 
+/**
+ * Helps to draw GraphView object.
+ */
+
 public class GraphViewHelper {
 
     public LineGraphSeries<DataPoint> goalsSeries(Goals goals, Date startDate, Date endDate) {

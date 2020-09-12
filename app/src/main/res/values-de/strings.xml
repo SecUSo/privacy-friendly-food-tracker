@@ -130,8 +130,8 @@
     <string name="text_activity">Life style</string>
     <string name="hint_now_goal">Your goals now</string>
     <string name="save_goals">set new goals</string>
-    <string name="error_weight_missing">error_weight_missing</string>
-    <string name="error_height_missing">error_height_missing</string>
-    <string name="error_age_missing">error_age_missing</string>
+    <string name="error_weight_missing">error weight missing</string>
+    <string name="error_height_missing">error height missing</string>
+    <string name="error_age_missing">error age missing</string>
 
 </resources>

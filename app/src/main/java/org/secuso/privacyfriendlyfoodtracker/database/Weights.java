@@ -25,9 +25,9 @@ import org.secuso.privacyfriendlyfoodtracker.database.converter.DateConverter;
 import java.sql.Date;
 
 /**
- * A Product.
+ * A Weights.
  *
- * @author Andre Lutz
+ * @author fialo4ka
  */
 @Entity
 public class Weights {

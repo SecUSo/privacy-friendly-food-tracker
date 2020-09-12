@@ -47,9 +47,9 @@ import org.secuso.privacyfriendlyfoodtracker.ui.helper.InputFilterMinMax;
 import java.util.Locale;
 
 /**
- * Displays an "about" page
+ * Displays an "goals" page
  *
- * @author Simon Reinkemeier, yonjuni
+ * @author fialo4ka
  */
 public class GoalsActivity extends AppCompatActivity {
 

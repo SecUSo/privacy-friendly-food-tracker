@@ -26,9 +26,9 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 /**
- * Includes methods that offer abstract access to the app database to manage products.
+ * Includes methods that offer abstract access to the app database to manage goals.
  *
- * @author Andre Lutz
+ * @author fialo4ka
  */
 @Dao
 public interface GoalsDao {

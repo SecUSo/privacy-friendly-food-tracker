@@ -3,6 +3,10 @@ package org.secuso.privacyfriendlyfoodtracker.ui.helper;
 import android.text.InputFilter;
 import android.text.Spanned;
 
+/**
+ * Helps to validated input data.
+ */
+
 public class InputFilterMinMax implements InputFilter {
 
     private int min, max;

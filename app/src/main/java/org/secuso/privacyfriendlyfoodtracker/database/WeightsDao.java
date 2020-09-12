@@ -23,12 +23,13 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
- * Includes methods that offer abstract access to the app database to manage products.
+ * Includes methods that offer abstract access to the app database to manage Weights.
  *
- * @author Andre Lutz
+ * @author fialo4ka
  */
 @Dao
 public interface WeightsDao {
@@ -45,9 +46,12 @@ public interface WeightsDao {
     void deleteAll();
 
     @Query("SELECT * FROM weights")
-    LiveData<List<Weights>> getAllProducts();
+    LiveData<List<Weights>> getAllWeights();
 
     @Query("SELECT * FROM weights WHERE id=:id")
     Weights findWeightsById(final int id);
+
+    @Query("SELECT * FROM weights WHERE date BETWEEN DATE(:dayst) AND DATE(:dayet)")
+    List<Weights> findWeightsBetweenDates(final Date dayst, final Date dayet);
 
 }
