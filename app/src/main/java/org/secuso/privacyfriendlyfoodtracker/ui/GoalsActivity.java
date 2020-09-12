@@ -33,12 +33,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
+import org.secuso.privacyfriendlyfoodtracker.database.Goals;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.ui.helper.BaseActivity;
+import org.secuso.privacyfriendlyfoodtracker.ui.helper.InputFilterMinMax;
+
+import java.util.Locale;
 
 /**
  * Displays an "about" page
@@ -49,6 +55,7 @@ public class GoalsActivity extends AppCompatActivity {
 
     DatabaseFacade databaseFacade;
     EditText resultCaloriesField;
+    TextView nowGoalText;
     AlertDialog.Builder goalDialog;
     EditText ageField;
     EditText weightField;
@@ -64,7 +71,6 @@ public class GoalsActivity extends AppCompatActivity {
         final View addGoalView = layoutInflater.inflate(R.layout.add_goal, null);
         goalDialog = new AlertDialog.Builder(GoalsActivity.this);
         setGoalDialog(addGoalView);
-
 
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
@@ -84,16 +90,13 @@ public class GoalsActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
         }
-        InputFilter[] ageFilter = {new InputFilter.LengthFilter(2)};
-        InputFilter[] weightFilter = {new InputFilter.LengthFilter(3)};
-        InputFilter[] heightFilter = {new InputFilter.LengthFilter(3)};
 
         ageField = this.findViewById(R.id.input_age);
         heightField = this.findViewById(R.id.input_height);
         weightField = this.findViewById(R.id.input_weight);
-        ageField.setFilters(ageFilter);
-        heightField.setFilters(heightFilter);
-        weightField.setFilters(weightFilter);
+        ageField.setFilters(new InputFilter[]{new InputFilterMinMax(1, 110)});
+        heightField.setFilters(new InputFilter[]{new InputFilterMinMax(1, 230)});
+        weightField.setFilters(new InputFilter[]{new InputFilterMinMax(1, 400)});
         final AppCompatRadioButton femaleButton = this.findViewById(R.id.inputSexF);
         final AppCompatRadioButton slightlyActiveButton = this.findViewById(R.id.input_slightly_active);
         final AppCompatRadioButton activeButton = this.findViewById(R.id.input_active);
@@ -101,6 +104,7 @@ public class GoalsActivity extends AppCompatActivity {
 
 
         resultCaloriesField = addGoalView.findViewById(R.id.input_resultCalories);
+        nowGoalText = this.findViewById(R.id.nowGoal);
 
         final AppCompatCheckBox pregm = this.findViewById(R.id.inputIsPregnant);
         final AppCompatRadioButton pregnant3Button = this.findViewById(R.id.input_pregnant3);
@@ -109,6 +113,10 @@ public class GoalsActivity extends AppCompatActivity {
 
         FloatingActionButton fab = this.findViewById(R.id.countCalories);
 
+        Goals goals = databaseFacade.getLastGoals();
+        if (goals != null && goals.dailycalorie > 0 && goals.minweight > 0) {
+            nowGoalText.setText(String.format(Locale.ENGLISH, "%s: %dkCal, %dkg",getResources().getText(R.string.hint_now_goal), goals.dailycalorie,goals.minweight));
+        }
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,9 +133,9 @@ public class GoalsActivity extends AppCompatActivity {
                     pregnantTime = PregnantTime.FIRST;
                 }
 
-                int ageValue = getIntValue(ageField.getText().toString(), ageField);
-                int weightValue = getIntValue(weightField.getText().toString(), weightField);
-                int heightValue = getIntValue(heightField.getText().toString(), heightField);
+                int ageValue = getIntValue(view, ageField.getText().toString(), ageField, R.string.error_age_missing);
+                int weightValue = getIntValue(view, weightField.getText().toString(), weightField,R.string.error_weight_missing);
+                int heightValue = getIntValue(view, heightField.getText().toString(), heightField,R.string.error_height_missing);
 
                 //add coefficient depend from activity
                 float activityState = 1.2f;
@@ -165,16 +173,18 @@ public class GoalsActivity extends AppCompatActivity {
 
     private void setGoalDialog(final View addGoalView) {
 
-        goalDialog.setPositiveButton(getResources().getString(R.string.save), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                int resultCaloriesInt = getIntValue(resultCaloriesField.getText().toString(), resultCaloriesField);
-                EditText idealWeightField = addGoalView.findViewById(R.id.input_IdealWeight);
-                int idealWeightInt = getIntValue(idealWeightField.getText().toString(), idealWeightField);
-                if (resultCaloriesInt > 0 && idealWeightInt > 0) {
-                    makeDatabaseEntry(resultCaloriesInt, idealWeightInt);
-                }
-            }
-        });
+        goalDialog.setPositiveButton(getResources().getString(R.string.save),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        int resultCaloriesInt = getIntValue(addGoalView,resultCaloriesField.getText().toString(), resultCaloriesField, R.string.error_calories_missing);
+                        EditText idealWeightField = addGoalView.findViewById(R.id.input_IdealWeight);
+                        int idealWeightInt = getIntValue(addGoalView,idealWeightField.getText().toString(), idealWeightField, R.string.error_weight_missing);
+                        if (resultCaloriesInt > 0 && idealWeightInt > 0) {
+                            makeDatabaseEntry(resultCaloriesInt, idealWeightInt);
+                        }
+                    }
+                });
         goalDialog.setNegativeButton(getResources().getString(R.string.decline), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
             }
@@ -189,7 +199,7 @@ public class GoalsActivity extends AppCompatActivity {
             calories = (float) ((88.362f + (13.397f * weightValue) + (4.799f * heightValue) - (5.677 * ageValue)) * activityState);
         }
         if (loosWeight && !isPregnant){
-            calories *= 0.8f;
+            calories *= 0.83f;
         }
         if (isPregnant) {
             switch(pregnantTime) {
@@ -207,12 +217,14 @@ public class GoalsActivity extends AppCompatActivity {
         return (int) calories;
     }
 
-    private int getIntValue(String valueStr, EditText editText) {
+    private int getIntValue(View view, String valueStr, EditText editText, int error) {
         try {
+            editText.setError(null);
             return Integer.parseInt(valueStr);
+
         } catch (Exception e) {
-            // something went wrong so the entry wasn't successful
-            showErrorMessage(editText, R.string.error_food_missing);
+            editText.setError(getText(error));
+            Snackbar.make(view, error, Snackbar.LENGTH_LONG).setAction("Action", null).show();
             return 0;
         }
     }
@@ -235,22 +247,6 @@ public class GoalsActivity extends AppCompatActivity {
         return true;
     }
 
-    private void showErrorMessage(View view, int errorMessageId) {
-        // reset error messages
-        ageField.setError("");
-        heightField.setError("");
-        weightField.setError("");
-
-        // if the view that this is called on is a TextInputlayout, we can show the error on the TextinputLayout
-        if (view instanceof TextInputLayout) {
-            TextInputLayout til = (TextInputLayout) view;
-            til.setError(getString(errorMessageId));
-        } else {
-            //otherwise show a generic error message
-            Snackbar.make(view, errorMessageId, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-        }
-    }
     enum PregnantTime {
         FIRST,
         SECOND,

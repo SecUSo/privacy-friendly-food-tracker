@@ -161,7 +161,9 @@ public class WeekStatisticFragment extends Fragment {
 
             Goals goals = databaseFacade.getLastGoals();
             if (goals != null && goals.dailycalorie > 0) {
-                graph.addSeries(new GraphViewHelper().goalsSeries(goals, startDate, endDate));
+                LineGraphSeries<DataPoint> seriesGoal = new GraphViewHelper().goalsSeries(goals, startDate, endDate);
+                seriesGoal.setColor(getResources().getColor(R.color.colorAccentGreen));
+                graph.addSeries(seriesGoal);
             }
 
             graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(referenceActivity));

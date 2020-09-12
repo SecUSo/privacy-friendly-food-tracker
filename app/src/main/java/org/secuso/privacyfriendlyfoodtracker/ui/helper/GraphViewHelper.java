@@ -1,13 +1,10 @@
 package org.secuso.privacyfriendlyfoodtracker.ui.helper;
 
-import android.graphics.Color;
-
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.secuso.privacyfriendlyfoodtracker.database.Goals;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class GraphViewHelper {
@@ -17,7 +14,7 @@ public class GraphViewHelper {
                 new DataPoint(startDate.getTime(), goals.dailycalorie),
                 new DataPoint(endDate.getTime(), goals.dailycalorie)
         });
-        seriesGoal.setColor(Color.GREEN);
         return seriesGoal;
     }
+
 }
