@@ -16,6 +16,7 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 */
 package org.secuso.privacyfriendlyfoodtracker.ui;
 
+import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntries;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseEntry;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.OverviewViewModel;
@@ -26,6 +27,7 @@ import org.secuso.privacyfriendlyfoodtracker.R;
 import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.persistence.room.Database;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -87,8 +89,14 @@ public class OverviewActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarOverview);
         setSupportActionBar(toolbar);
 
+        // Set up global variables
+        // Set the date. If no date is passed on, the system date is chosen by default.
+        //this NEEDS to happen before viewModel.init(), else viewmodel will load data for 1.1.1970
+        Intent intent = getIntent();
+        date = intent.getLongExtra("DATE", System.currentTimeMillis());
+
         viewModel = ViewModelProviders.of(this).get(OverviewViewModel.class);
-        refreshData();
+        viewModel.init(getDateForActivity());
 
         viewModel.getList().observe(this, new Observer<List<DatabaseEntry>>() {
             @Override
@@ -98,10 +106,7 @@ public class OverviewActivity extends AppCompatActivity {
             }
         });
 
-        // Set up global variables
-        // Set the date. If no date is passed on, the system date is chosen by default.
-        Intent intent = getIntent();
-        date = intent.getLongExtra("DATE", System.currentTimeMillis());
+
         selectedCards = 0;
 
         setUpFloatingActionButton();
@@ -115,7 +120,6 @@ public class OverviewActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        refreshData();
     }
 
     /**
@@ -139,13 +143,9 @@ public class OverviewActivity extends AppCompatActivity {
         }
         selectedCards = 0;
         toggleDeletionMenuVisibility();
-        refreshData();
         return true;
     }
 
-    private void refreshData() {
-        viewModel.init(getDateForActivity());
-    }
 
     /**
      * set the menu to say the correct things
@@ -345,7 +345,6 @@ public class OverviewActivity extends AppCompatActivity {
                 deleteSelectedCards();
                 selectedCards = 0;
                 toggleDeletionMenuVisibility();
-                refreshData();
             }
 
         });
@@ -395,7 +394,7 @@ public class OverviewActivity extends AppCompatActivity {
         amount.setId(View.generateViewId());
         energy.setId(View.generateViewId());
         calories.setId(View.generateViewId());
-        id.setText(e.id);
+        id.setText(Integer.toString(e.id));
 
         name.setText(e.name);
         amount.setText(Integer.toString(e.amount) + "g");
@@ -495,7 +494,6 @@ public class OverviewActivity extends AppCompatActivity {
                             String amountField = input.getText().toString();
                             if(amountField.length() != 0 ){
                                 editDatabaseEntry(amountField, entry.id);
-                                refreshData();
                             }
                         }
                     });
@@ -521,12 +519,11 @@ public class OverviewActivity extends AppCompatActivity {
     /**
      * Edit a database entry
      * @param amountString the new amount
-     * @param idString the id of the entry
+     * @param id the id of the entry
      * @return true if the entry was successful
      */
-    private void editDatabaseEntry(String amountString, String idString) {
+    private void editDatabaseEntry(String amountString, int id) {
         int amount = Integer.parseInt(amountString);
-        int id = Integer.parseInt(idString);
         viewModel.editEntryById(id, amount);
     }
 
