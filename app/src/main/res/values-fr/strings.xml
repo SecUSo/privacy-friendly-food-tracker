@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Food Tracker</string>
-    <string name="app_name_long">Suivi d\'alimentation respectueux de votre vie privée</string>
+    <string name="app_name_long">Privacy Friendly Food Tracker</string>
     <string name="action_help">Aide</string>
     <string name="action_about">À propos</string>
     <string name="action_settings">Paramètres</string>
