@@ -136,8 +136,8 @@ public class MonthStatisticFragment extends Fragment {
 
         try {
 
-            final Date startDate = getMonthByValue(-1);
-            final Date endDate = getMonthByValue(0);
+            final Date startDate = DateHelper.changeDateTimeToMidnight(getMonthByValue(-1));
+            final Date endDate = DateHelper.changeDateTimeToMidnight(getMonthByValue(0));
             List<ConsumedEntrieAndProductDao.DateCalories> consumedEntriesList = databaseFacade.getCaloriesPerDayinPeriod(startDate,endDate);
             List<ConsumedEntrieAndProductDao.DateCalories> calories = databaseFacade.getPeriodCalories(startDate,endDate);
             DataPoint[] dataPointInterfaces = new DataPoint[consumedEntriesList.size()];

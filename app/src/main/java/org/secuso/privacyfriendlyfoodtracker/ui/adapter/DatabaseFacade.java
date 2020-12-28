@@ -170,24 +170,10 @@ public class DatabaseFacade {
         return products;
     }
 
-    /**
-     * Returns a database entry for a specified date.
-     * @param date the date
-     * @return DatabaseEntry
-     */
-    public List<DatabaseEntry> getEntriesForDay(java.util.Date date) {
-        List<DatabaseEntry> databaseEntries = new ArrayList<>();
-        try {
-            List<ConsumedEntries> res = consumedEntriesDao.findConsumedEntriesForDate(new java.sql.Date(date.getTime()));
-            for(ConsumedEntries consumedEntry : res) {
-                Product product = productDao.findProductById(consumedEntry.productId);
-                databaseEntries.add(new DatabaseEntry(String.valueOf(consumedEntry.id),consumedEntry.name, consumedEntry.amount, product.energy));
-            }
 
-        } catch (Exception e) {
-            Log.e("DatabaseFacade", "Error o");
-        }
-        return databaseEntries;
+
+    public LiveData<List<DatabaseEntry>> getConsumedEntriesForDay(java.util.Date date){
+        return consumedEntrieAndProductDao.findConsumedEntriesForDate(new java.sql.Date(date.getTime()));
     }
 
     /**
