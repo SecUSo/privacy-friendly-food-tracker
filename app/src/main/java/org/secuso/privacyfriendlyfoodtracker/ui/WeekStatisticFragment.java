@@ -141,14 +141,10 @@ public class WeekStatisticFragment extends Fragment {
             Date startDate = getWeekByValue(-1);
             startDate = DateHelper.changeDateTimeToMidnight(startDate); //set time to midnight so the period does not depend on the time of day
             Date endDate = getWeekByValue(0);
-<<<<<<< HEAD
-            consumedEntriesList = databaseFacade.getCaloriesPerDayinPeriod(startDate, endDate);
-            calories = databaseFacade.getPeriodCalories(startDate, endDate);
-=======
             endDate = DateHelper.changeDateTimeToMidnight(endDate);
             consumedEntriesList = databaseFacade.getCaloriesPerDayinPeriod(startDate,endDate);
             calories = databaseFacade.getPeriodCalories(startDate,endDate);
->>>>>>> master
+
             DataPoint[] dataPointInterfaces = new DataPoint[consumedEntriesList.size()];
             for (int i = 0; i < consumedEntriesList.size(); i++) {
                 dataPointInterfaces[i] = (new DataPoint(consumedEntriesList.get(i).unique1.getTime(), consumedEntriesList.get(i).unique2 / 100));

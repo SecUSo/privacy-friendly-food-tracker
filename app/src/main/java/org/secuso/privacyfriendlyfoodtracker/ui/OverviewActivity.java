@@ -16,11 +16,8 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 */
 package org.secuso.privacyfriendlyfoodtracker.ui;
 
-<<<<<<< HEAD
 import org.secuso.privacyfriendlyfoodtracker.database.Goals;
-=======
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntries;
->>>>>>> master
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseEntry;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.OverviewViewModel;
@@ -101,7 +98,7 @@ public class OverviewActivity extends AppCompatActivity {
         date = intent.getLongExtra("DATE", System.currentTimeMillis());
 
         viewModel = ViewModelProviders.of(this).get(OverviewViewModel.class);
-        viewModel.init(getDateForActivity());
+        refreshData();
 
         viewModel.getList().observe(this, new Observer<List<DatabaseEntry>>() {
             @Override
@@ -137,6 +134,11 @@ public class OverviewActivity extends AppCompatActivity {
         } catch (Exception e){
             Log.e("Error", e.getMessage());
         }
+    }
+
+    private void refreshData() {
+        viewModel.init(getDateForActivity());
+
     }
 
     /**
@@ -336,9 +338,15 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     private void changeDate(int i) {
-
         date = date + (86400000 * i);
         refreshData();
+        viewModel.getList().observe(this, new Observer<List<DatabaseEntry>>() {
+            @Override
+            public void onChanged(@Nullable List<DatabaseEntry> databaseEntries) {
+                refreshFoodList(databaseEntries);
+                refreshTotalCalorieCounter(databaseEntries);
+            }
+        });
     }
 
     /**
@@ -390,6 +398,7 @@ public class OverviewActivity extends AppCompatActivity {
                 deleteSelectedCards();
                 selectedCards = 0;
                 toggleDeletionMenuVisibility();
+                refreshData();
             }
 
         });
@@ -539,6 +548,7 @@ public class OverviewActivity extends AppCompatActivity {
                             String amountField = input.getText().toString();
                             if(amountField.length() != 0 ){
                                 editDatabaseEntry(amountField, entry.id);
+                                refreshData();
                             }
                         }
                     });
