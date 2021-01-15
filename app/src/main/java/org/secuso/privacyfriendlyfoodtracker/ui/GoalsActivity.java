@@ -20,6 +20,7 @@ package org.secuso.privacyfriendlyfoodtracker.ui;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -182,6 +183,8 @@ public class GoalsActivity extends AppCompatActivity {
                         int idealWeightInt = getIntValue(addGoalView,idealWeightField.getText().toString(), idealWeightField, R.string.error_weight_missing);
                         if (resultCaloriesInt > 0 && idealWeightInt > 0) {
                             makeDatabaseEntry(resultCaloriesInt, idealWeightInt);
+                            Intent intent = new Intent(GoalsActivity.this, BaseStatisticActivity.class);
+                            startActivity(intent);
                         }
                     }
                 });
