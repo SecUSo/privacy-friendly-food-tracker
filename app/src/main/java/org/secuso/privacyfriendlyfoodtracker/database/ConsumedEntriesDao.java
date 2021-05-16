@@ -16,6 +16,7 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 */
 package org.secuso.privacyfriendlyfoodtracker.database;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -59,8 +60,7 @@ public interface ConsumedEntriesDao {
     @Query("SELECT * FROM consumedEntries WHERE productId=:productId AND amount=:amount AND date=:date AND name=:name  ")
     List<ConsumedEntries> findExistingConsumedEntries( int productId, int amount,  Date date, String name);
 
-    @Query("SELECT * FROM consumedEntries WHERE date=:date")
-    List<ConsumedEntries> findConsumedEntriesForDate(final Date date);
+
 
     @Query("DELETE FROM consumedEntries")
     void deleteAll();

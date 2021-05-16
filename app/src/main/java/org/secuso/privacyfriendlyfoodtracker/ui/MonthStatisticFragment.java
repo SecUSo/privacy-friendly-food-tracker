@@ -144,8 +144,8 @@ public class MonthStatisticFragment extends Fragment {
 
         try {
 
-            final Date startDate = getMonthByValue(-1);
-            final Date endDate = getMonthByValue(0);
+            final Date startDate = DateHelper.changeDateTimeToMidnight(getMonthByValue(-1));
+            final Date endDate = DateHelper.changeDateTimeToMidnight(getMonthByValue(0));
             List<ConsumedEntrieAndProductDao.DateCalories> consumedEntriesList = databaseFacade.getCaloriesPerDayinPeriod(startDate,endDate);
             List<ConsumedEntrieAndProductDao.DateCalories> calories = databaseFacade.getPeriodCalories(startDate,endDate);
 
@@ -190,20 +190,6 @@ public class MonthStatisticFragment extends Fragment {
                 satFatDataPointInterfaces[i] = (new DataPoint(consumedSatFatEntriesList.get(i).unique1.getTime(), consumedSatFatEntriesList.get(i).unique2/100));
             }
 
-
-            if (calories.size() != 0) {
-
-                Calendar startDateCalendar = Calendar.getInstance();
-                startDateCalendar.setTime(startDate);
-                Calendar endDateCalendar = Calendar.getInstance();
-                endDateCalendar.setTime(endDate);
-                float periodCalories = calories.get(0).unique2;
-                float periodDays = daysBetween( endDateCalendar,startDateCalendar);
-                float averageCalories = periodCalories/periodDays;
-                BigDecimal averageCaloriesBigDecimal = round(averageCalories,0) ;
-                textView.setText(averageCaloriesBigDecimal.toString());
-
-            }
 
             Calendar startDateCalendar = Calendar.getInstance();
             startDateCalendar.setTime(startDate);

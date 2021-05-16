@@ -142,13 +142,16 @@ public class WeekStatisticFragment extends Fragment {
 
     void UpdateGraph() {
 
+        List<ConsumedEntrieAndProductDao.DateCalories> consumedEntriesList = new ArrayList<>();
+        List<ConsumedEntrieAndProductDao.DateCalories> calories = new ArrayList<>();
         try {
-
             Date startDate = getWeekByValue(-1);
+            startDate = DateHelper.changeDateTimeToMidnight(startDate); //set time to midnight so the period does not depend on the time of day
             Date endDate = getWeekByValue(0);
+            endDate = DateHelper.changeDateTimeToMidnight(endDate);
+            consumedEntriesList = databaseFacade.getCaloriesPerDayinPeriod(startDate,endDate);
+            calories = databaseFacade.getPeriodCalories(startDate,endDate);
 
-            List<ConsumedEntrieAndProductDao.DateCalories> consumedEntriesList = databaseFacade.getCaloriesPerDayinPeriod(startDate, endDate);
-            List<ConsumedEntrieAndProductDao.DateCalories> calories = databaseFacade.getPeriodCalories(startDate, endDate);
             DataPoint[] dataPointInterfaces = new DataPoint[consumedEntriesList.size()];
             for (int i = 0; i < consumedEntriesList.size(); i++) {
                 dataPointInterfaces[i] = (new DataPoint(consumedEntriesList.get(i).unique1.getTime(), consumedEntriesList.get(i).unique2/100));
@@ -189,7 +192,8 @@ public class WeekStatisticFragment extends Fragment {
                 satFatDataPointInterfaces[i] = (new DataPoint(consumedSatFatEntriesList.get(i).unique1.getTime(), consumedSatFatEntriesList.get(i).unique2/100));
             }
 
-            int weekdays = 8;
+            int weekdays = 7;
+
 
             float averageCalories = calories.get(0).unique2 / weekdays;
             float averageCarbs = carbs.get(0).unique2 / weekdays;
@@ -294,5 +298,6 @@ public class WeekStatisticFragment extends Fragment {
         Date date = DateHelper.changeWeek(sharedStatisticViewModel.getDate(), value);
         return date;
     }
+
 
 }

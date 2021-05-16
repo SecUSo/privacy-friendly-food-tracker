@@ -51,4 +51,20 @@ public class DateHelper {
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
         return dateFormat.format(date);
     }
+
+    /**
+     * Sets a given Date's time to 00:00:00.00, so getting a weeks daily calories works reliably.
+     * @param date the date whose time shall be midnight
+     * @return the new changed date
+     */
+    public static Date changeDateTimeToMidnight(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar.getTime();
+    }
 }

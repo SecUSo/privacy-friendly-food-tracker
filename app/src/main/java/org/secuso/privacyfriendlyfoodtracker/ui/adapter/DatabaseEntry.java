@@ -29,8 +29,8 @@ public class DatabaseEntry {
     public float satFat;
     public int amount;
     public String name;
-    public String id;
-    public DatabaseEntry(String id, String name, int amount, float energy, float carbs, float sugar, float protein, float fat, float satFat){
+    public int id;
+    public DatabaseEntry(int id, String name, int amount, float energy, float carbs, float sugar, float protein, float fat, float satFat){
         this.id = id;
         this.amount = amount;
         this.energy = energy;

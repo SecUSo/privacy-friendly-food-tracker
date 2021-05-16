@@ -20,10 +20,15 @@ import java.util.List;
 import java.util.concurrent.Executors;
 
 public class OverviewViewModel extends AndroidViewModel {
-    private MutableLiveData<List<DatabaseEntry>> list = new MutableLiveData<>();
+    private LiveData<List<DatabaseEntry>> list = new MutableLiveData<>();
 
     DatabaseFacade dbHelper = null;
 
+    /**
+     *
+     * @param application
+
+     */
     public OverviewViewModel(@NonNull Application application) {
         super(application);
 
@@ -34,13 +39,12 @@ public class OverviewViewModel extends AndroidViewModel {
         }
     }
 
-    public void init(final Date day) {
-        Executors.newSingleThreadExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                list.postValue(dbHelper.getEntriesForDay(day));
-            }
-        });
+    /**
+     *
+     * @param day The date for which the database entries are to be fetched
+     * */
+    public void init(Date day) {
+        list = dbHelper.getConsumedEntriesForDay(day);
     }
 
     public LiveData<List<DatabaseEntry>> getList() {
@@ -55,4 +59,5 @@ public class OverviewViewModel extends AndroidViewModel {
     public void editEntryById(int id, int amount) {
         dbHelper.editEntryById(id, amount);
     }
+
 }
