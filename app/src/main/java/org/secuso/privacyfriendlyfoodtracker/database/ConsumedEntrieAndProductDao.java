@@ -70,7 +70,7 @@ public interface ConsumedEntrieAndProductDao {
     @Query("SELECT consumedEntries.date AS unique1, sum(product.satFat*consumedEntries.amount/100) AS unique2 FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id  WHERE consumedEntries.date BETWEEN :dayst AND :dayet")
     List<DateCalories> getSatFatPeriod(final Date dayst, final Date dayet);
 
-    @Query("SELECT consumedEntries.amount AS amount, consumedEntries.id AS id,consumedEntries.name as name, product.energy as energy FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id WHERE consumedEntries.date=:day")
+    @Query("SELECT consumedEntries.amount AS amount, consumedEntries.id AS id,consumedEntries.name as name, product.energy as energy, product.carbs as carbs, product.sugar as sugar, product.protein as protein, product.fat as fat, product.satFat as satFat FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id WHERE consumedEntries.date=:day")
     LiveData<List<DatabaseEntry>> findConsumedEntriesForDate(final Date day);
 
     static class DateCalories
