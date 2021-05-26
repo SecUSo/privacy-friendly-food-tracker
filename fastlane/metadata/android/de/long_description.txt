@@ -1,0 +1,30 @@
+Dieser Ernährungstracker hilft, die tägliche Kalorienaufnahme zu ermitteln.
+Zu diesem Zweck kann der Nutzer alle konsumierten Lebensmittel mitsamt Gewicht
+eintragen, die App berechnet dann die Gesamtkalorienzahl und erlaubt eine
+Analyse des Kalorienkonsums über größere Zeiträume. Die App gehört zur
+Gruppe der Privacy Friendly Apps, die von der Forschungsgruppe SECUSO am
+Karlsruher Institut für Technologie entwickelt wird. Mehr Informationen können
+unter https://secuso.org/pfa gefunden werden.
+
+Was macht diese App anders als andere Ernährungstracker?
+- Es werden absolut keine Daten über den Nutzer gesammelt und/oder verarbeitet.
+- Die Datenbank mit Einträgen wird verschlüsselt, um absolute Privatsphäre zu garantieren.
+- Die App braucht keine sensiblen Berechtigungen. Nur der Internetzugriff wird für die
+Suchfunktion benötigt.
+- Zudem wird komplett auf Tracker und Werbung jeglicher Art verzichtet.
+
+Welche Funktionen hat die App?
+- Personalisierung durch Erstellen eigener Produkte
+- Berechnung der Gesamtkalorienzahl für einen Tag
+- Erstellen von Statistiken, die den Gesamt- sowie Durchschnittskonsum an
+Kalorien uber eine Woche bzw. einen Monat anzeigen
+- Kalenderübersicht zum schnellen Auswählen einzelner Tage
+- Verschlüsselung der Daten auf dem Gerät, so dass nur der Benutzer Zugriff
+auf die Daten hat
+- Onlinesuche, um Produkte schnell und einfach zu finden
+
+Bitte beachten: Die Onlinesuche stellt Anfragen an die Datenbank OpenFood-
+Facts. Dies erlaubt es der Datenbank theoretisch, die Ernährungsgewohnheiten über die Suchanfragen zu verfolgen. Für absolute Privatsphäre ist es also empfehlenswert,
+auf die Onlinesuche zu verzichten (Es wird erst online gesucht, wenn
+der "Suchen"-Knopf gedrückt wird). Die App funktioniert auch problemlos ohne
+Internetzugriff.
