@@ -48,6 +48,14 @@
                 android:value="org.secuso.privacyfriendlyfoodtracker.ui.MainActivity" />
         </activity>
         <activity
+            android:name=".ui.GoalsActivity"
+            android:label="@string/action_goals"
+            android:parentActivityName=".ui.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlyfoodtracker.ui.MainActivity" />
+        </activity>
+        <activity
             android:name=".ui.HelpActivity"
             android:label="@string/help"
             android:parentActivityName=".ui.MainActivity"

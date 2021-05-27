@@ -37,9 +37,11 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
+import org.secuso.privacyfriendlyfoodtracker.database.Goals;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.ui.helper.DateHelper;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
+import org.secuso.privacyfriendlyfoodtracker.ui.helper.GraphViewHelper;
 import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.SharedStatisticViewModel;
 
 import java.math.BigDecimal;
@@ -157,6 +159,14 @@ public class MonthStatisticFragment extends Fragment {
             GraphView graph = (GraphView) parentHolder.findViewById(R.id.graph);
             LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPointInterfaces);
             graph.addSeries(series);
+
+            Goals goals = databaseFacade.getLastGoals();
+            if (goals != null && goals.dailycalorie > 0) {
+                LineGraphSeries<DataPoint> seriesGoal = new GraphViewHelper().goalsSeries(goals, startDate, endDate);
+                seriesGoal.setColor(getResources().getColor(R.color.colorAccentGreen));
+                graph.addSeries(seriesGoal);
+            }
+
             graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(referenceActivity));
             graph.getGridLabelRenderer().setHumanRounding(false, true);
             graph.getViewport().setMinX(startDate.getTime());

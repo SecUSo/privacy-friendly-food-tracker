@@ -16,11 +16,11 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 */
 package org.secuso.privacyfriendlyfoodtracker.ui;
 
+import org.secuso.privacyfriendlyfoodtracker.database.Goals;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntries;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseEntry;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.OverviewViewModel;
-import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.SharedStatisticViewModel;
 import org.secuso.privacyfriendlyfoodtracker.ui.views.CheckableCardView;
 import org.secuso.privacyfriendlyfoodtracker.R;
 
@@ -29,12 +29,12 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Database;
 import android.content.DialogInterface;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -42,6 +42,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -77,6 +78,7 @@ public class OverviewActivity extends AppCompatActivity {
     private int selectedCards;
 
     private OverviewViewModel viewModel;
+    private DatabaseFacade databaseFacade;
 
     /**
      * sets up the activity
@@ -96,7 +98,7 @@ public class OverviewActivity extends AppCompatActivity {
         date = intent.getLongExtra("DATE", System.currentTimeMillis());
 
         viewModel = ViewModelProviders.of(this).get(OverviewViewModel.class);
-        viewModel.init(getDateForActivity());
+        refreshData();
 
         viewModel.getList().observe(this, new Observer<List<DatabaseEntry>>() {
             @Override
@@ -111,6 +113,32 @@ public class OverviewActivity extends AppCompatActivity {
 
         setUpFloatingActionButton();
         setupActionBar();
+
+        final Button left_arrow = this.findViewById(R.id.left_arrow);
+        left_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeDate(-1);
+            }
+        });
+        final Button right_arrow = this.findViewById(R.id.right_arrow);
+        right_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeDate(+1);
+            }
+        });
+
+        try {
+            databaseFacade = new DatabaseFacade(this.getApplicationContext());
+        } catch (Exception e){
+            Log.e("Error", e.getMessage());
+        }
+    }
+
+    private void refreshData() {
+        viewModel.init(getDateForActivity());
+
     }
 
     /**
@@ -273,6 +301,7 @@ public class OverviewActivity extends AppCompatActivity {
     private void refreshTotalCalorieCounter(@Nullable List<DatabaseEntry> entries) {
         BigDecimal totalCalories = new BigDecimal("0");
         TextView heading = this.findViewById(R.id.overviewHeading);
+        TextView headingCal = this.findViewById(R.id.overviewHeadingCal);
         String cal = getString(R.string.total_calories);
         Date d = getDateForActivity();
         String formattedDate = getFormattedDate(d);
@@ -282,7 +311,16 @@ public class OverviewActivity extends AppCompatActivity {
                 // totalCalories += (e.energy * e.amount) / 100;
             }
         }
-        heading.setText(String.format(Locale.ENGLISH, "   %s: %.2f %s", formattedDate, totalCalories, cal));
+        heading.setText(String.format(Locale.ENGLISH, "%s", formattedDate));
+        Goals goals = databaseFacade.getLastGoals();
+        if (goals != null && goals.dailycalorie > 0 ) {
+            if (totalCalories.compareTo(new BigDecimal(goals.dailycalorie)) > 0) {
+                headingCal.setTextColor(getResources().getColor(R.color.colorAccentViolet));
+            } else {
+                headingCal.setTextColor(getResources().getColor(R.color.colorAccentGreen));
+            }
+        }
+        headingCal.setText(String.format(Locale.ENGLISH, "%.2f %s", totalCalories, cal));
     }
 
     /**
@@ -290,10 +328,25 @@ public class OverviewActivity extends AppCompatActivity {
      *
      * @return The Date object created from the date long variable.
      */
+
+
+
     private Date getDateForActivity() {
         Date d = new Date();
         d.setTime(date);
         return d;
+    }
+
+    private void changeDate(int i) {
+        date = date + (86400000 * i);
+        refreshData();
+        viewModel.getList().observe(this, new Observer<List<DatabaseEntry>>() {
+            @Override
+            public void onChanged(@Nullable List<DatabaseEntry> databaseEntries) {
+                refreshFoodList(databaseEntries);
+                refreshTotalCalorieCounter(databaseEntries);
+            }
+        });
     }
 
     /**
@@ -345,6 +398,7 @@ public class OverviewActivity extends AppCompatActivity {
                 deleteSelectedCards();
                 selectedCards = 0;
                 toggleDeletionMenuVisibility();
+                refreshData();
             }
 
         });
@@ -494,6 +548,7 @@ public class OverviewActivity extends AppCompatActivity {
                             String amountField = input.getText().toString();
                             if(amountField.length() != 0 ){
                                 editDatabaseEntry(amountField, entry.id);
+                                refreshData();
                             }
                         }
                     });
