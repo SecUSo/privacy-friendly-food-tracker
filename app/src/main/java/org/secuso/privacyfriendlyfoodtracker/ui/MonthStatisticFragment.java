@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,23 +32,16 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.ui.helper.DateHelper;
-import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
 import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.SharedStatisticViewModel;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
-import static org.secuso.privacyfriendlyfoodtracker.ui.helper.MathHelper.round;
+import static org.secuso.privacyfriendlyfoodtracker.ui.WeekStatisticFragment.updateGraphUsingNdayPeriod;
 
 
 /**
@@ -61,6 +55,9 @@ public class MonthStatisticFragment extends Fragment {
     View parentHolder;
     TextView textView;
     DatabaseFacade databaseFacade;
+    TextView carbsTextView;
+    TextView proteinTextView;
+    TextView fatTextView;
 
     public MonthStatisticFragment() {
         // Required empty public constructor
@@ -80,6 +77,10 @@ public class MonthStatisticFragment extends Fragment {
             Log.e("Error", e.getMessage());
         }
         textView = parentHolder.findViewById(R.id.periodCalories1);
+        carbsTextView = parentHolder.findViewById(R.id.periodCarbs1);
+        proteinTextView = parentHolder.findViewById(R.id.periodProtein1);
+        fatTextView = parentHolder.findViewById(R.id.periodFat1);
+
         final TextView editText = (TextView) parentHolder.findViewById(R.id.datepicker);
         editText.setText(DateHelper.dateToString(sharedStatisticViewModel.getDate()));
         editText.setOnClickListener(new View.OnClickListener() {
@@ -131,43 +132,16 @@ public class MonthStatisticFragment extends Fragment {
     }
 
     void UpdateGraph() {
-
-        try {
-
-            final Date startDate = DateHelper.changeDateTimeToMidnight(getMonthByValue(-1));
-            final Date endDate = DateHelper.changeDateTimeToMidnight(getMonthByValue(0));
-            List<ConsumedEntrieAndProductDao.DateCalories> consumedEntriesList = databaseFacade.getCaloriesPerDayinPeriod(startDate,endDate);
-            List<ConsumedEntrieAndProductDao.DateCalories> calories = databaseFacade.getPeriodCalories(startDate,endDate);
-            DataPoint[] dataPointInterfaces = new DataPoint[consumedEntriesList.size()];
-            for (int i = 0; i < consumedEntriesList.size(); i++) {
-                dataPointInterfaces[i] = (new DataPoint(consumedEntriesList.get(i).unique1.getTime(), consumedEntriesList.get(i).unique2/100));
-            }
-            if (calories.size() != 0) {
-
-                Calendar startDateCalendar = Calendar.getInstance();
-                startDateCalendar.setTime(startDate);
-                Calendar endDateCalendar = Calendar.getInstance();
-                endDateCalendar.setTime(endDate);
-                float periodCalories = calories.get(0).unique2;
-                float periodDays = daysBetween( endDateCalendar,startDateCalendar);
-                float averageCalories = periodCalories/periodDays;
-                BigDecimal averageCaloriesBigDecimal = round(averageCalories,0) ;
-                textView.setText(averageCaloriesBigDecimal.toString());
-            }
-            GraphView graph = (GraphView) parentHolder.findViewById(R.id.graph);
-            LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPointInterfaces);
-            graph.addSeries(series);
-            graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(referenceActivity));
-            graph.getGridLabelRenderer().setHumanRounding(false, true);
-            graph.getViewport().setMinX(startDate.getTime());
-            graph.getViewport().setMaxX(endDate.getTime());
-            graph.getViewport().setXAxisBoundsManual(true);
-            graph.getGridLabelRenderer().setTextSize(40);
-            graph.getViewport().setScrollable(true);
-            graph.getGridLabelRenderer().setHorizontalLabelsAngle(135);
-        } catch (Exception e) {
-            Log.e("Error", e.getMessage());
-        }
+        Log.i("Month...UpdateGraph","UpdateGraph called");
+        final Date startDate = DateHelper.changeDateTimeToMidnight(getMonthByValue(-1));
+        final Date endDate = DateHelper.changeDateTimeToMidnight(getMonthByValue(0));
+        Calendar startDateCalendar = Calendar.getInstance();
+        startDateCalendar.setTime(startDate);
+        Calendar endDateCalendar = Calendar.getInstance();
+        endDateCalendar.setTime(endDate);
+        int monthDays = (int) daysBetween( endDateCalendar,startDateCalendar);
+        updateGraphUsingNdayPeriod(parentHolder,referenceActivity,databaseFacade,textView,
+                carbsTextView,proteinTextView, fatTextView,startDate,endDate, monthDays);
     }
 
     /**

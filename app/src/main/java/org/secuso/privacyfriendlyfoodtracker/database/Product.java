@@ -32,12 +32,22 @@ public class Product {
     public final int id;
     public final String name;
     public final float energy;
+    public final float carbs;
+    public final float sugar;
+    public final float protein;
+    public final float fat;
+    public final float satFat;
     public final String barcode;
 
-    public Product(final int id, String name, float energy, String barcode) {
+    public Product(final int id, String name, float energy, float carbs, float sugar, float protein, float fat, float satFat, String barcode) {
         this.id = id;
         this.name = name;
         this.energy = energy;
+        this.carbs = carbs;
+        this.sugar = sugar;
+        this.protein = protein;
+        this.fat = fat;
+        this.satFat = satFat;
         this.barcode = barcode;
     }
 }

@@ -192,9 +192,37 @@ public class SearchFoodFragment extends Fragment {
                             cal = cal.split(" ")[0];
                             float calories = Float.parseFloat(cal);
 
+                            TextView carbView = childView.findViewById(R.id.resultCarbs);
+                            String carbsString = carbView.getText().toString();
+                            carbsString = carbsString.split(" ")[0];
+                            float carbs = Float.parseFloat(carbsString);
+
+                            String sugarString = carbView.getText().toString();
+                            sugarString = sugarString.split("\\(")[1].split("\\)")[0];
+                            float sugar = Float.parseFloat(sugarString);
+
+                            TextView protView = childView.findViewById(R.id.resultProtein);
+                            String prot = protView.getText().toString();
+                            prot = prot.split(" ")[0];
+                            float protein = Float.parseFloat(prot);
+
+                            TextView fatView = childView.findViewById(R.id.resultFat);
+                            String fatS = fatView.getText().toString();
+                            fatS = fatS.split(" ")[0];
+                            float fat = Float.parseFloat(fatS);
+
+                            String satFatS = fatView.getText().toString();
+                            satFatS = satFatS.split("\\(")[1].split("\\)")[0];
+                            float satFat = Float.parseFloat(satFatS);
+
                             ((BaseAddFoodActivity) referenceActivity).id = id;
                             ((BaseAddFoodActivity) referenceActivity).name = name;
                             ((BaseAddFoodActivity) referenceActivity).calories = calories;
+                            ((BaseAddFoodActivity) referenceActivity).carbs = carbs;
+                            ((BaseAddFoodActivity) referenceActivity).sugar = sugar;
+                            ((BaseAddFoodActivity) referenceActivity).protein = protein;
+                            ((BaseAddFoodActivity) referenceActivity).fat = fat;
+                            ((BaseAddFoodActivity) referenceActivity).satFat = satFat;
                             ((BaseAddFoodActivity) referenceActivity).productSet = true;
                             ViewPager pager = referenceActivity.findViewById(R.id.pager_food);
                             System.out.println("Setting page");
