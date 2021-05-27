@@ -17,6 +17,7 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 package org.secuso.privacyfriendlyfoodtracker.network;
 
 import org.secuso.privacyfriendlyfoodtracker.network.models.ProductResponse;
+import org.secuso.privacyfriendlyfoodtracker.network.models.ProductApiResponse;
 
 import java.util.List;
 
@@ -37,4 +38,7 @@ public interface ProductApiService {
 
     @GET("/cgi/search.pl?product_size=1&search_simple=0&action=process&json=1")
     Call<ProductResponse> listProductsFromPage(@Query("search_terms") String productName, @Query("page") String page );
+
+    @GET("/api/v0/product/{barcode}.json")
+    Call<ProductApiResponse> getProductFromBarcode(@Path("barcode") String barcode);
 }
