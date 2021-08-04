@@ -113,7 +113,7 @@ public class SearchFoodFragment extends Fragment {
 
         foodList.addItemDecoration(new DividerItemDecoration(referenceActivity.getApplicationContext(), LinearLayoutManager.VERTICAL));
 
-        final SearchResultAdapter adapter = new SearchResultAdapter(databaseFacade.findMostCommonProducts());
+        final SearchResultAdapter adapter = new SearchResultAdapter(databaseFacade.findMostCommonProducts(), FoodInfosToShow.getFoodInfosShownAsMap(getContext()));
         final EditText search = parentHolder.findViewById(R.id.search_term);
 
         foodList.setAdapter(adapter);
@@ -187,42 +187,22 @@ public class SearchFoodFragment extends Fragment {
                             TextView nameView = childView.findViewById(R.id.resultName);
                             String name = nameView.getText().toString();
 
+                            /* this used to be the way of getting the selected products calories etc.
+                            I do not understand, why it was done through parsing textViews contents.
+                            I changed it to instead use the product's id and getting the product from the adapter.
+
                             TextView calView = childView.findViewById(R.id.resultCalories);
                             String cal = calView.getText().toString();
                             cal = cal.split(" ")[0];
                             float calories = Float.parseFloat(cal);
 
-                            TextView carbView = childView.findViewById(R.id.resultCarbs);
-                            String carbsString = carbView.getText().toString();
-                            carbsString = carbsString.split(" ")[0];
-                            float carbs = Float.parseFloat(carbsString);
-
-                            String sugarString = carbView.getText().toString();
-                            sugarString = sugarString.split("\\(")[1].split("\\)")[0];
-                            float sugar = Float.parseFloat(sugarString);
-
-                            TextView protView = childView.findViewById(R.id.resultProtein);
-                            String prot = protView.getText().toString();
-                            prot = prot.split(" ")[0];
-                            float protein = Float.parseFloat(prot);
-
-                            TextView fatView = childView.findViewById(R.id.resultFat);
-                            String fatS = fatView.getText().toString();
-                            fatS = fatS.split(" ")[0];
-                            float fat = Float.parseFloat(fatS);
-
-                            String satFatS = fatView.getText().toString();
-                            satFatS = satFatS.split("\\(")[1].split("\\)")[0];
-                            float satFat = Float.parseFloat(satFatS);
+                             */
+                            Product product= adapter.getProductFromId(id);
 
                             ((BaseAddFoodActivity) referenceActivity).id = id;
                             ((BaseAddFoodActivity) referenceActivity).name = name;
-                            ((BaseAddFoodActivity) referenceActivity).calories = calories;
-                            ((BaseAddFoodActivity) referenceActivity).carbs = carbs;
-                            ((BaseAddFoodActivity) referenceActivity).sugar = sugar;
-                            ((BaseAddFoodActivity) referenceActivity).protein = protein;
-                            ((BaseAddFoodActivity) referenceActivity).fat = fat;
-                            ((BaseAddFoodActivity) referenceActivity).satFat = satFat;
+                            ((BaseAddFoodActivity) referenceActivity).calories = product.energy;
+                            ((BaseAddFoodActivity) referenceActivity).selectedProduct = product;
                             ((BaseAddFoodActivity) referenceActivity).productSet = true;
                             ViewPager pager = referenceActivity.findViewById(R.id.pager_food);
                             System.out.println("Setting page");
@@ -258,7 +238,8 @@ public class SearchFoodFragment extends Fragment {
                 // search in the local db first
                 System.out.println(s.toString());
                 SearchResultAdapter newAdapter = new SearchResultAdapter(
-                        databaseFacade.getProductByName(s.toString())
+                        databaseFacade.getProductByName(s.toString()),
+                        FoodInfosToShow.getFoodInfosShownAsMap(getContext())
                 );
                 foodList.setAdapter(newAdapter);
             }
@@ -290,7 +271,7 @@ public class SearchFoodFragment extends Fragment {
                                         products.add(convertedProd);
                                     }
                                 }
-                                SearchResultAdapter newAdapter = new SearchResultAdapter(products);
+                                SearchResultAdapter newAdapter = new SearchResultAdapter(products, FoodInfosToShow.getFoodInfosShownAsMap(getContext()));
                                 foodList.setAdapter(newAdapter);
                                 foodList.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -338,7 +319,7 @@ public class SearchFoodFragment extends Fragment {
                                     products.add(convertedProd);
                                 }
                             }
-                            SearchResultAdapter newAdapter = new SearchResultAdapter(products);
+                            SearchResultAdapter newAdapter = new SearchResultAdapter(products, FoodInfosToShow.getFoodInfosShownAsMap(getContext()));
                             foodList.setAdapter(newAdapter);
                             foodList.addOnScrollListener(new RecyclerView.OnScrollListener() {
 

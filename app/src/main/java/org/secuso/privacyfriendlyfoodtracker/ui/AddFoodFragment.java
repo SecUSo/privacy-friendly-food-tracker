@@ -18,6 +18,8 @@ package org.secuso.privacyfriendlyfoodtracker.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -29,12 +31,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.SharedStatisticViewModel;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 
 /**
@@ -50,11 +57,9 @@ public class AddFoodFragment extends Fragment {
     DatabaseFacade databaseFacade;
     EditText amountField;
     EditText caloriesField;
-    EditText carbsField;
-    EditText sugarField;
-    EditText proteinField;
-    EditText fatField;
-    EditText satFatField;
+
+    Map<String,TextInputLayout> otherFoodInfoTextInputLayouts = new HashMap<>();
+    Map<String, EditText> otherFoodInfoEditTexts = new HashMap<>();
     /**
      * The required empty public constructor
      */
@@ -87,21 +92,47 @@ public class AddFoodFragment extends Fragment {
 
         amountField = parentHolder.findViewById(R.id.input_amount);
         caloriesField = parentHolder.findViewById(R.id.input_calories);
-        carbsField = parentHolder.findViewById(R.id.input_carbs);
-        sugarField = parentHolder.findViewById(R.id.input_sugar);
-        proteinField = parentHolder.findViewById(R.id.input_protein);
-        fatField = parentHolder.findViewById(R.id.input_fat);
-        satFatField = parentHolder.findViewById(R.id.input_satFat);
+
+
+        ConstraintLayout constraintLayout = parentHolder.findViewById(R.id.addFoodFieldLayout);
+
+        int idOfPredecessor = R.id.inputCalories;
+        for(Map.Entry<String,FoodInfo> foodInfoEntry: FoodInfosToShow.getFoodInfosShownAsMap(getContext()).entrySet()){
+            FoodInfo foodInfo = foodInfoEntry.getValue();
+            TextInputLayout currentTIL = new TextInputLayout(getContext());
+            currentTIL.setId(View.generateViewId());
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            currentTIL.setLayoutParams(layoutParams);
+
+            EditText currentET = new EditText(getContext());
+
+            currentET.setLayoutParams(layoutParams);
+            currentET.setMaxLines(1);
+            currentET.setFilters(caloriesFilter);
+
+
+            currentTIL.setHint(foodInfo.getName() + " in " + foodInfo.getUnit());
+
+            currentTIL.addView(currentET);
+            constraintLayout.addView(currentTIL);
+            ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(constraintLayout);
+
+            constraintSet.connect(currentTIL.getId(), ConstraintSet.TOP, idOfPredecessor, ConstraintSet.BOTTOM, 0);
+            constraintSet.applyTo(constraintLayout);
+
+            idOfPredecessor = currentTIL.getId();
+
+            otherFoodInfoEditTexts.put(foodInfoEntry.getKey(),currentET);
+            otherFoodInfoTextInputLayouts.put(foodInfoEntry.getKey(), currentTIL);
+            //System.out.println("added" + foodInfo.getName() + " in " + foodInfo.getUnit());
+        }
+
 
         amountField.setFilters(amountFilter);
         amountField.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         caloriesField.setFilters(caloriesFilter);
-        carbsField.setFilters(caloriesFilter);
-        sugarField.setFilters(caloriesFilter);
-        proteinField.setFilters(caloriesFilter);
-        fatField.setFilters(caloriesFilter);
-        satFatField.setFilters(caloriesFilter);
 
 
         FloatingActionButton fab = parentHolder.findViewById(R.id.addEntry);
@@ -115,38 +146,32 @@ public class AddFoodFragment extends Fragment {
 
                 String calories = caloriesField.getText().toString();
 
-                String carbs = carbsField.getText().toString();
 
-                String sugar = sugarField.getText().toString();
-
-                String protein = proteinField.getText().toString();
-
-                String fat = fatField.getText().toString();
-
-                String satFat = satFatField.getText().toString();
-
-
-                //replace empty macro slots with "0"
-                if("".equals(carbs)){
-                    carbs="0";
-                }
-                if("".equals(sugar)){
-                    sugar="0";
-                }
-                if("".equals(protein)){
-                    protein="0";
-                }
-                if("".equals(fat)){
-                    fat="0";
-                }
-                if("".equals(satFat)){
-                    satFat="0";
-                }
                 // validation
-                boolean validated = validateResponses(name, amount, calories, carbs, sugar, protein, fat, satFat, view);
+                boolean validated = validateResponses(name, amount, calories);
+                //now parse the other Infos and validate and put the parsed values into yet another Map
+                Map<String, Float> fieldValues =new  HashMap<>();
+                for(Map.Entry<String, EditText> editTextEntry : otherFoodInfoEditTexts.entrySet()){
+                    try {
+                        String etValue = editTextEntry.getValue().getText().toString();
+                        Float fieldValue;
+                        if ("".equals(etValue)){
+                            fieldValue = 0.0f;
+                        }else{
+                            fieldValue = Float.parseFloat(etValue);
+                        }
+                        fieldValues.put(editTextEntry.getKey(),fieldValue);
+                    } catch (NumberFormatException e) {
+                        showErrorMessageString(otherFoodInfoTextInputLayouts.get(editTextEntry.getKey()), getResources().getString(R.string.error_fieldname_nan, FoodInfosToShow.foodInfos.get(editTextEntry.getKey())));
+                        validated = false;
+                    }
+                }
 
                 if(validated) {
-                    boolean entrySuccessful = makeDatabaseEntry(name, amount, calories, carbs, sugar, protein, fat, satFat);
+
+
+
+                    boolean entrySuccessful = makeDatabaseEntry(name, amount, calories, fieldValues);
                     if (!entrySuccessful){
                         showErrorMessage(view, R.string.error_database);
                     } else {
@@ -172,11 +197,7 @@ public class AddFoodFragment extends Fragment {
         if(isVisible && referenceActivity.productSet) {
             EditText nameField = parentHolder.findViewById(R.id.input_food);
             EditText caloriesField = parentHolder.findViewById(R.id.input_calories);
-            EditText carbsField = parentHolder.findViewById(R.id.input_carbs);
-            EditText sugarField = parentHolder.findViewById(R.id.input_sugar);
-            EditText proteinField = parentHolder.findViewById(R.id.input_protein);
-            EditText fatField = parentHolder.findViewById(R.id.input_fat);
-            EditText satFatField = parentHolder.findViewById(R.id.input_satFat);
+
 
 
             nameField.setText(referenceActivity.name);
@@ -189,39 +210,18 @@ public class AddFoodFragment extends Fragment {
             caloriesField.setClickable(false);
             caloriesField.setTextColor(getResources().getColor(R.color.middlegrey));
 
-            carbsField.setText(String.format(Locale.ENGLISH, "%.2f", referenceActivity.carbs));
-            carbsField.setFocusable(false);
-            carbsField.setClickable(false);
-            carbsField.setTextColor(getResources().getColor(R.color.middlegrey));
-
-            sugarField.setText(String.format(Locale.ENGLISH, "%.2f", referenceActivity.sugar));
-            sugarField.setFocusable(false);
-            sugarField.setClickable(false);
-            sugarField.setTextColor(getResources().getColor(R.color.middlegrey));
-
-            proteinField.setText(String.format(Locale.ENGLISH, "%.2f", referenceActivity.protein));
-            proteinField.setFocusable(false);
-            proteinField.setClickable(false);
-            proteinField.setTextColor(getResources().getColor(R.color.middlegrey));
-
-            fatField.setText(String.format(Locale.ENGLISH, "%.2f", referenceActivity.fat));
-            fatField.setFocusable(false);
-            fatField.setClickable(false);
-            fatField.setTextColor(getResources().getColor(R.color.middlegrey));
-
-            satFatField.setText(String.format(Locale.ENGLISH, "%.2f", referenceActivity.satFat));
-            satFatField.setFocusable(false);
-            satFatField.setClickable(false);
-            satFatField.setTextColor(getResources().getColor(R.color.middlegrey));
+            for(Map.Entry<String,EditText> editTextEntry : otherFoodInfoEditTexts.entrySet()){
+                EditText currentEt = editTextEntry.getValue();
+                //TODO dafür sorgen, dass referenceActivity.otherFoodInfo gefüllt wird
+                currentEt.setText(String.format(Locale.ENGLISH, "%.2f", FoodInfosToShow.getFoodInfoValueByKey(referenceActivity.selectedProduct,editTextEntry.getKey())));
+                currentEt.setFocusable(false);
+                currentEt.setClickable(false);
+                currentEt.setTextColor(getResources().getColor(R.color.middlegrey));
+            }
 
         } else if (isVisible && !referenceActivity.productSet) {
             EditText nameField = parentHolder.findViewById(R.id.input_food);
             EditText caloriesField = parentHolder.findViewById(R.id.input_calories);
-            EditText carbsField = parentHolder.findViewById(R.id.input_carbs);
-            EditText sugarField = parentHolder.findViewById(R.id.input_sugar);
-            EditText proteinField = parentHolder.findViewById(R.id.input_protein);
-            EditText fatField = parentHolder.findViewById(R.id.input_fat);
-            EditText satFatField = parentHolder.findViewById(R.id.input_satFat);
 
             nameField.setText("");
             nameField.setFocusable(true);
@@ -235,38 +235,32 @@ public class AddFoodFragment extends Fragment {
             caloriesField.setClickable(true);
             caloriesField.setTextColor(getResources().getColor(R.color.black));
 
-            carbsField.setText("");
-            carbsField.setFocusable(true);
-            carbsField.setFocusableInTouchMode(true);
-            carbsField.setClickable(true);
-            carbsField.setTextColor(getResources().getColor(R.color.black));
-
-            sugarField.setText("");
-            sugarField.setFocusable(true);
-            sugarField.setFocusableInTouchMode(true);
-            sugarField.setClickable(true);
-            sugarField.setTextColor(getResources().getColor(R.color.black));
-
-            proteinField.setText("");
-            proteinField.setFocusable(true);
-            proteinField.setFocusableInTouchMode(true);
-            proteinField.setClickable(true);
-            proteinField.setTextColor(getResources().getColor(R.color.black));
-
-            fatField.setText("");
-            fatField.setFocusable(true);
-            fatField.setFocusableInTouchMode(true);
-            fatField.setClickable(true);
-            fatField.setTextColor(getResources().getColor(R.color.black));
-
-            satFatField.setText("");
-            satFatField.setFocusable(true);
-            satFatField.setFocusableInTouchMode(true);
-            satFatField.setClickable(true);
-            satFatField.setTextColor(getResources().getColor(R.color.black));
+            for(Map.Entry<String,EditText> editTextEntry : otherFoodInfoEditTexts.entrySet()){
+                EditText currentEt = editTextEntry.getValue();
+                currentEt.setText("");
+                currentEt.setFocusable(true);
+                currentEt.setFocusableInTouchMode(true);
+                currentEt.setClickable(true);
+                currentEt.setTextColor(getResources().getColor(R.color.black));
+            }
         }
     }
 
+
+    /***
+     * Map.getOrDefault does not exist in Api<24 :/
+     * @param map
+     * @param key
+     * @param defaultValue
+     * @return the mapped value or the default, if no mapping exists
+     */
+    private Float getOrDefault(Map<String,Float> map, String key, float defaultValue){
+        Float ret = map.get(key);
+        if(ret==null){
+            ret = defaultValue;
+        }
+        return ret;
+    }
     /**
      * Create a new db entry
      * @param name Name of the food
@@ -274,18 +268,15 @@ public class AddFoodFragment extends Fragment {
      * @param caloriesString calories per 100g
      * @return true if successful
      */
-    private boolean makeDatabaseEntry(String name, String amountString, String caloriesString, String carbsString, String sugarString, String proteinString, String fatString, String satFatString) {
+    private boolean makeDatabaseEntry(String name, String amountString, String caloriesString, Map<String,Float> otherFieldValues) {
         try {
             int amount = Integer.parseInt(amountString);
             float calories = Float.parseFloat(caloriesString);
-            float carbs = Float.parseFloat(carbsString);
-            float sugar = Float.parseFloat(sugarString);
-            float protein = Float.parseFloat(proteinString);
-            float fat = Float.parseFloat(fatString);
-            float satFat = Float.parseFloat(satFatString);
+
 
             // We haven't explicitly chosen a product so the productId is 0 for unknown
-            databaseFacade.insertEntry(amount, ((BaseAddFoodActivity) referenceActivity).date, name, calories, carbs, sugar, protein, fat, satFat, 0);
+            databaseFacade.insertEntry(amount, ((BaseAddFoodActivity) referenceActivity).date, name, calories,
+                    getOrDefault(otherFieldValues, "carbs", 0.0f), getOrDefault(otherFieldValues, "sugar", 0.0f), getOrDefault(otherFieldValues, "protein", 0.0f), getOrDefault(otherFieldValues, "fat", 0.0f), getOrDefault(otherFieldValues, "satFat", 0.0f), getOrDefault(otherFieldValues, "salt", 0.0f), getOrDefault(otherFieldValues, "vitaminA_retinol", 0.0f), getOrDefault(otherFieldValues, "betaCarotin", 0.0f), getOrDefault(otherFieldValues, "vitaminD", 0.0f), getOrDefault(otherFieldValues, "vitaminE", 0.0f), getOrDefault(otherFieldValues, "vitaminK", 0.0f), getOrDefault(otherFieldValues, "thiamin_B1", 0.0f), getOrDefault(otherFieldValues, "riboflavin_B2", 0.0f), getOrDefault(otherFieldValues, "niacin", 0.0f), getOrDefault(otherFieldValues, "vitaminB6", 0.0f), getOrDefault(otherFieldValues, "folat", 0.0f), getOrDefault(otherFieldValues, "pantothenacid", 0.0f), getOrDefault(otherFieldValues, "biotin", 0.0f), getOrDefault(otherFieldValues, "cobalamin_B12", 0.0f), getOrDefault(otherFieldValues, "vitaminC", 0.0f), getOrDefault(otherFieldValues, "natrium", 0.0f), getOrDefault(otherFieldValues, "chlorid", 0.0f), getOrDefault(otherFieldValues, "kalium", 0.0f), getOrDefault(otherFieldValues, "calcium", 0.0f), getOrDefault(otherFieldValues, "phosphor", 0.0f), getOrDefault(otherFieldValues, "magnesium", 0.0f), getOrDefault(otherFieldValues, "eisen", 0.0f), getOrDefault(otherFieldValues, "jod", 0.0f), getOrDefault(otherFieldValues, "fluorid", 0.0f), getOrDefault(otherFieldValues, "zink", 0.0f), getOrDefault(otherFieldValues, "selen", 0.0f), getOrDefault(otherFieldValues, "kupfer", 0.0f), getOrDefault(otherFieldValues, "mangan", 0.0f), getOrDefault(otherFieldValues, "chrom", 0.0f), getOrDefault(otherFieldValues, "molybdaen", 0.0f), 0);
         } catch (Exception e) {
             // something went wrong so the entry wasn't successful
             e.printStackTrace();
@@ -299,10 +290,9 @@ public class AddFoodFragment extends Fragment {
      * @param name name of the product
      * @param amount amount in g
      * @param calories calories per 100g
-     * @param view the view
      * @return returns true is all entries are valid
      */
-    private boolean validateResponses(String name, String amount, String calories, String carbs, String sugar, String protein, String fat, String satFat, View view) {
+    private boolean validateResponses(String name, String amount, String calories) {
         if("".equals(name)){
             showErrorMessage(referenceActivity.findViewById(R.id.inputFoodName), R.string.error_food_missing);
             return false;
@@ -329,27 +319,11 @@ public class AddFoodFragment extends Fragment {
             showErrorMessage(referenceActivity.findViewById(R.id.inputCalories), R.string.error_calories_nan);
             return false;
         }
-        try {
-            Float.parseFloat(carbs);
-        } catch (NumberFormatException e) {
-            showErrorMessage(referenceActivity.findViewById(R.id.inputCalories), R.string.error_carbs_nan);
-            return false;
-        }
-        try {
-            Float.parseFloat(protein);
-        } catch (NumberFormatException e) {
-            showErrorMessage(referenceActivity.findViewById(R.id.inputCalories), R.string.error_protein_nan);
-            return false;
-        }
-        try {
-            Float.parseFloat(fat);
-        } catch (NumberFormatException e) {
-            showErrorMessage(referenceActivity.findViewById(R.id.inputCalories), R.string.error_fat_nan);
-            return false;
-        }
 
         return true;
     }
+
+
 
     private void showErrorMessage(View view, int errorMessageId){
         // reset error messages
@@ -365,6 +339,12 @@ public class AddFoodFragment extends Fragment {
             //otherwise show a generic error message
             Snackbar.make(view, errorMessageId, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
+        }
+    }
+    private void showErrorMessageString(View view, String errorMessage){
+        if(view instanceof TextInputLayout){
+            TextInputLayout til = (TextInputLayout) view;
+            til.setError(errorMessage);
         }
     }
 

@@ -74,7 +74,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
                                     }
                                 }
                             })
-                            .addMigrations(MIGRATION_1_2).build();
+                            .addMigrations(MIGRATION_1_2).addMigrations(MIGRATION_2_3).build();
 
                 }
             }
@@ -89,6 +89,20 @@ public abstract class ApplicationDatabase extends RoomDatabase {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             String[] newFields = new String[]{"carbs","sugar", "protein", "fat","satFat"};
+            for(String field : newFields) {
+                database.execSQL("ALTER TABLE Product "
+                        + " ADD COLUMN "+ field +" REAL NOT NULL default 0");
+            }
+        }
+    };
+
+    /***
+     * Migrate database so it also contains micro nutriments.
+     */
+    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            String[] newFields = new String[]{"salt", "vitaminA_retinol", "betaCarotin", "vitaminD", "vitaminE", "vitaminK", "thiamin_B1", "riboflavin_B2", "niacin", "vitaminB6", "folat", "pantothenacid", "biotin", "cobalamin_B12", "vitaminC", "natrium", "chlorid", "kalium", "calcium", "phosphor", "magnesium", "eisen", "jod", "fluorid", "zink", "selen", "kupfer", "mangan", "chrom", "molybdaen"};
             for(String field : newFields) {
                 database.execSQL("ALTER TABLE Product "
                         + " ADD COLUMN "+ field +" REAL NOT NULL default 0");

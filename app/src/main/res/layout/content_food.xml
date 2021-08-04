@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/addFoodFieldLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -74,110 +75,6 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/inputCarbs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:errorEnabled="true"
-            app:layout_constraintTop_toBottomOf="@+id/inputCalories">
-
-
-
-            <EditText
-                android:id="@+id/input_carbs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_food_carbs"
-                android:inputType="numberDecimal"
-                android:maxLines="1"
-                tools:layout_editor_absoluteX="45dp"
-                tools:layout_editor_absoluteY="235dp" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/inputSugar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:errorEnabled="true"
-            app:layout_constraintTop_toBottomOf="@+id/inputCarbs"
-            >
-
-
-            <EditText
-                android:id="@+id/input_sugar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_food_sugar"
-                android:inputType="numberDecimal"
-                android:maxLines="1"
-                tools:layout_editor_absoluteX="45dp"
-                tools:layout_editor_absoluteY="235dp" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/inputProtein"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:errorEnabled="true"
-            app:layout_constraintTop_toBottomOf="@+id/inputSugar">
-
-
-
-            <EditText
-                android:id="@+id/input_protein"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_food_protein"
-                android:inputType="numberDecimal"
-                android:maxLines="1"
-                tools:layout_editor_absoluteX="45dp"
-                tools:layout_editor_absoluteY="235dp" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/inputFat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:errorEnabled="true"
-            app:layout_constraintTop_toBottomOf="@+id/inputProtein">
-
-
-
-            <EditText
-                android:id="@+id/input_fat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_food_fat"
-                android:inputType="numberDecimal"
-                android:maxLines="1"
-                tools:layout_editor_absoluteX="45dp"
-                tools:layout_editor_absoluteY="235dp" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/inputSatFat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:errorEnabled="true"
-            app:layout_constraintTop_toBottomOf="@+id/inputFat">
-
-
-
-            <EditText
-                android:id="@+id/input_satFat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_food_satFat"
-                android:inputType="numberDecimal"
-                android:maxLines="1"
-                tools:layout_editor_absoluteX="45dp"
-                tools:layout_editor_absoluteY="235dp" />
-
-        </android.support.design.widget.TextInputLayout>
 
 
 

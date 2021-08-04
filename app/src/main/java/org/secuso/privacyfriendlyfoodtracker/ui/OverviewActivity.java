@@ -23,12 +23,14 @@ import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.OverviewViewModel;
 import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.SharedStatisticViewModel;
 import org.secuso.privacyfriendlyfoodtracker.ui.views.CheckableCardView;
 import org.secuso.privacyfriendlyfoodtracker.R;
+import org.w3c.dom.Text;
 
 import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Database;
 import android.content.DialogInterface;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Barrier;
@@ -37,6 +39,7 @@ import android.support.v7.widget.CardView;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.support.v7.widget.Toolbar;
@@ -45,6 +48,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -58,10 +62,12 @@ import android.os.Bundle;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * The overview for a day
@@ -78,6 +84,15 @@ public class OverviewActivity extends AppCompatActivity {
     private int selectedCards;
 
     private OverviewViewModel viewModel;
+
+    /***
+     * Maps containing UI elements for the food infos to show.
+     */
+    private Map<String, TextView> tvFoodInfoNameMap = new HashMap<>();
+    private Map<String, TextView> tvFoodInfoAmountMap = new HashMap<>();
+    private Map<String, ProgressBar> pbFoodInfoProgressMap = new HashMap<>();
+
+    private ProgressBar progressBarCalories = null;
 
     /**
      * sets up the activity
@@ -273,13 +288,9 @@ public class OverviewActivity extends AppCompatActivity {
      */
     private void refreshTotalCalorieCounter(@Nullable List<DatabaseEntry> entries) {
         BigDecimal totalCalories = new BigDecimal("0");
-        BigDecimal totalCarbs = new BigDecimal("0");
-        BigDecimal totalSugar = new BigDecimal("0");
-        BigDecimal totalProtein = new BigDecimal("0");
-        BigDecimal totalFat = new BigDecimal("0");
-        BigDecimal totalSatFat = new BigDecimal("0");
+
         TextView heading = this.findViewById(R.id.overviewHeading);
-        TextView macrosOverview = this.findViewById(R.id.overviewMacros);
+
 
         String cal = getString(R.string.total_calories);
         Date d = getDateForActivity();
@@ -287,17 +298,188 @@ public class OverviewActivity extends AppCompatActivity {
         if(entries != null) {
             for (DatabaseEntry e : entries) {
                 totalCalories = totalCalories.add(BigDecimal.valueOf(e.energy * e.amount / 100));
-                totalCarbs = totalCarbs.add(BigDecimal.valueOf(e.carbs * e.amount / 100));
-                totalSugar = totalSugar.add(BigDecimal.valueOf(e.sugar * e.amount / 100));
-                totalProtein = totalProtein.add(BigDecimal.valueOf(e.protein * e.amount / 100));
-                totalFat = totalFat.add(BigDecimal.valueOf(e.fat * e.amount / 100));
-                totalSatFat = totalSatFat.add(BigDecimal.valueOf(e.satFat * e.amount / 100));
-
-                // totalCalories += (e.energy * e.amount) / 100;
             }
         }
-        heading.setText(String.format(Locale.ENGLISH, "   %s: %.2f %s", formattedDate, totalCalories, cal));
-        macrosOverview.setText(String.format(Locale.ENGLISH, "Carbs(sugar): %.2f (%.2f) - Protein: %.2f - Fat (sat.): %.2f (%.2f)", totalCarbs, totalSugar, totalProtein, totalFat, totalSatFat));
+        heading.setText(String.format(Locale.ENGLISH, "%s", formattedDate));
+
+        TextView tvCaloriesAmount = this.findViewById(R.id.caloriesAmountTv);
+        tvCaloriesAmount.setText(String.format(Locale.ENGLISH, "%.2f %s", totalCalories, cal));
+
+        boolean rebuildLayout=false;
+        boolean showDailyGoals = true;
+
+
+        Map<String,FoodInfo> foodInfosToShow = FoodInfosToShow.getFoodInfosShownAsMap(this);
+        if(!tvFoodInfoAmountMap.isEmpty()){// if there already is a map with textviews, check if all foodinfos have a view, if not the maps get cleared, so the layout can be created in the next loop without problems
+            for(Map.Entry<String,FoodInfo> foodInfoEntry : foodInfosToShow.entrySet()){
+                if(!tvFoodInfoAmountMap.containsKey(foodInfoEntry.getKey())){
+                    clearLayoutAndMaps();
+                    rebuildLayout = true;
+                    break;
+                }
+            }
+            for(Map.Entry<String, TextView> textViewEntry : tvFoodInfoAmountMap.entrySet()){//do the same as above for textview map entries, to see if maybe food infos have changed to not show, so an empty textview would be dangling around
+                if(!foodInfosToShow.containsKey(textViewEntry.getKey())){
+                    clearLayoutAndMaps();
+                    rebuildLayout = true;
+                    break;
+                }
+            }
+        }else{
+            rebuildLayout = true;
+        }
+
+
+        ConstraintLayout constraintLayout = findViewById(R.id.overviewContentConstraintLayout);
+
+
+        //add progressBar if daily goal specified
+        if(showDailyGoals){
+            if(progressBarCalories == null){
+                clearLayoutAndMaps();
+                rebuildLayout = true;
+
+                progressBarCalories = new ProgressBar(this, null,
+                        android.R.attr.progressBarStyleHorizontal);
+                progressBarCalories.setId(View.generateViewId());
+                ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                progressBarCalories.setLayoutParams(layoutParams);
+
+                constraintLayout.addView(progressBarCalories);
+
+
+                ConstraintSet constraintSet = new ConstraintSet();
+                constraintSet.clone(constraintLayout);
+
+                constraintSet.connect(progressBarCalories.getId(), ConstraintSet.TOP, R.id.caloriesNameTv, ConstraintSet.BOTTOM, 0);
+
+                constraintSet.connect(progressBarCalories.getId(), ConstraintSet.LEFT, constraintLayout.getId(), ConstraintSet.LEFT, 0);
+                constraintSet.connect(progressBarCalories.getId(), ConstraintSet.RIGHT, constraintLayout.getId(), ConstraintSet.RIGHT, 0);
+
+
+                constraintSet.applyTo(constraintLayout);
+
+            }
+        }else{
+            if(progressBarCalories != null){
+                constraintLayout.removeView(progressBarCalories);
+
+                clearLayoutAndMaps();
+                rebuildLayout = true;
+            }
+        }
+
+        int idOfPredecessor = showDailyGoals ? progressBarCalories.getId() : R.id.caloriesNameTv;
+        for(Map.Entry<String,FoodInfo> foodInfoEntry : foodInfosToShow.entrySet()){
+
+            TextView tvFoodInfoName=null;
+            TextView tvFoodInfoAmount=null;
+            ProgressBar progressBar = null;
+            if(tvFoodInfoAmountMap.containsKey(foodInfoEntry.getKey())){ //this could be also replaced by a check for rebuildLayout
+                tvFoodInfoAmount = tvFoodInfoAmountMap.get(foodInfoEntry.getKey());
+                tvFoodInfoName = tvFoodInfoNameMap.get(foodInfoEntry.getKey()); //tvFoodInfoName should never be needed, when it already exists. But atm I leave it there.
+                if(showDailyGoals){
+                    progressBar = pbFoodInfoProgressMap.get(foodInfoEntry.getKey());
+                }
+            }else {
+                tvFoodInfoAmount = new TextView(this);
+                tvFoodInfoName = new TextView(this);
+
+
+                tvFoodInfoName.setId(View.generateViewId());
+                tvFoodInfoAmount.setId(View.generateViewId());
+
+                if(showDailyGoals) {
+                    progressBar = new ProgressBar(this, null,
+                            android.R.attr.progressBarStyleHorizontal);
+                    progressBar.setId(View.generateViewId());
+                }
+
+                tvFoodInfoName.setText(foodInfoEntry.getValue().getName());
+
+                tvFoodInfoName.setGravity(Gravity.LEFT);
+                tvFoodInfoAmount.setGravity(Gravity.RIGHT);
+
+
+                constraintLayout.addView(tvFoodInfoName);
+                constraintLayout.addView(tvFoodInfoAmount);
+
+                if(showDailyGoals) {
+                    ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                    progressBar.setLayoutParams(layoutParams);
+                    constraintLayout.addView(progressBar);
+                }
+
+
+                ConstraintSet constraintSet = new ConstraintSet();
+                constraintSet.clone(constraintLayout);
+
+                constraintSet.connect(tvFoodInfoName.getId(), ConstraintSet.TOP, idOfPredecessor, ConstraintSet.BOTTOM, 0);
+                constraintSet.connect(tvFoodInfoAmount.getId(), ConstraintSet.TOP, idOfPredecessor, ConstraintSet.BOTTOM, 0);
+
+                constraintSet.connect(tvFoodInfoName.getId(), ConstraintSet.LEFT, constraintLayout.getId(), ConstraintSet.LEFT, 0);
+                constraintSet.connect(tvFoodInfoAmount.getId(), ConstraintSet.RIGHT, constraintLayout.getId(), ConstraintSet.RIGHT, 0);
+
+                if(showDailyGoals) {
+                    constraintSet.connect(progressBar.getId(), ConstraintSet.TOP, tvFoodInfoAmount.getId(), ConstraintSet.BOTTOM, 0);
+                    constraintSet.connect(progressBar.getId(), ConstraintSet.LEFT, constraintLayout.getId(), ConstraintSet.LEFT, 0);
+                    constraintSet.connect(progressBar.getId(), ConstraintSet.RIGHT, constraintLayout.getId(), ConstraintSet.RIGHT, 0);
+                }
+
+                constraintSet.applyTo(constraintLayout);
+
+                tvFoodInfoAmountMap.put(foodInfoEntry.getKey(),tvFoodInfoAmount);
+                tvFoodInfoNameMap.put(foodInfoEntry.getKey(),tvFoodInfoName);
+
+                if(showDailyGoals) {
+                    pbFoodInfoProgressMap.put(foodInfoEntry.getKey(), progressBar);
+                }
+            }
+
+
+
+
+
+            BigDecimal totalAmount = new BigDecimal("0");
+
+            for (DatabaseEntry e : entries) {
+                totalAmount = totalAmount.add(BigDecimal.valueOf(FoodInfosToShow.getFoodInfoValueByKey(e,foodInfoEntry.getKey()) * e.amount / 100));
+            }
+            tvFoodInfoAmount.setText(String.format(Locale.ENGLISH, "%1$.2f%2$s",totalAmount,foodInfoEntry.getValue().getUnit()));
+
+
+
+            idOfPredecessor = showDailyGoals? progressBar.getId() : tvFoodInfoName.getId();
+        }
+        if(rebuildLayout) {
+            ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(constraintLayout);
+
+            constraintSet.connect(R.id.DailyList, ConstraintSet.TOP, idOfPredecessor, ConstraintSet.BOTTOM, 0);
+
+            constraintSet.applyTo(constraintLayout);
+        }
+
+    }
+
+    /***
+     * Removes all views that are in maps and then clears the maps. Call if new foodInfos shall be shown
+     * or something about the daily goals changes
+     */
+    private void clearLayoutAndMaps() {
+        ConstraintLayout constraintLayout = findViewById(R.id.overviewContentConstraintLayout);
+        for(Map.Entry<String, TextView> tvEntry : tvFoodInfoAmountMap.entrySet()){
+            constraintLayout.removeView(tvEntry.getValue());
+        }
+        for(Map.Entry<String, TextView> tvEntry : tvFoodInfoNameMap.entrySet()){
+            constraintLayout.removeView(tvEntry.getValue());
+        }
+        for(Map.Entry<String, ProgressBar> pbEntry : pbFoodInfoProgressMap.entrySet()){
+            constraintLayout.removeView(pbEntry.getValue());
+        }
+        tvFoodInfoAmountMap.clear();
+        tvFoodInfoNameMap.clear();
+        pbFoodInfoProgressMap.clear();
     }
 
     /**
@@ -377,56 +559,15 @@ public class OverviewActivity extends AppCompatActivity {
         return (e.amount * e.energy) / 100;
     }
 
-    /**
-     * The consumed carbs per entry
-     *
-     * @param e a DatabaseEntry
-     * @return the calculated consumed carbs
+    /***
+     * Given a key identifying a FoodInfo (e.g. "carbs") and a db entry calculate the consumed amount
+     * of the FoodInfo
+     * @param key
+     * @return
      */
-    private float getConsumedCarbsForEntry(DatabaseEntry e) {
-        return (e.amount * e.carbs) / 100;
+    private float getConsumedFoodInfoAmountForEntry(DatabaseEntry e,String key) {
+        return (e.amount * FoodInfosToShow.getFoodInfoValueByKey(e,key)) / 100;
     }
-
-    /**
-     * The consumed sugar per entry
-     *
-     * @param e a DatabaseEntry
-     * @return the calculated consumed sugar
-     */
-    private float getConsumedSugarForEntry(DatabaseEntry e) {
-        return (e.amount * e.sugar) / 100;
-    }
-
-    /**
-     * The consumed protein per entry
-     *
-     * @param e a DatabaseEntry
-     * @return the calculated consumed protein
-     */
-    private float getConsumedProteinForEntry(DatabaseEntry e) {
-        return (e.amount * e.protein) / 100;
-    }
-
-    /**
-     * The consumed fat per entry
-     *
-     * @param e a DatabaseEntry
-     * @return the calculated consumed fat
-     */
-    private float getConsumedFatForEntry(DatabaseEntry e) {
-        return (e.amount * e.fat) / 100;
-    }
-
-    /**
-     * The consumed saturated fat per entry
-     *
-     * @param e a DatabaseEntry
-     * @return the calculated consumed fat
-     */
-    private float getConsumedSatFatForEntry(DatabaseEntry e) {
-        return (e.amount * e.satFat) / 100;
-    }
-
     /**
      * Creates a CheckedCardView from the entry
      *
@@ -467,27 +608,13 @@ public class OverviewActivity extends AppCompatActivity {
         amount.setText(Integer.toString(e.amount) + "g");
         energy.setText(String.format(Locale.ENGLISH, "   %.2f kCal/100g", e.energy));
 
-        //only print out macros with mass > 0
         String calorieAndMacrosText = String.format(Locale.ENGLISH, "%.2f kCal",getConsumedCaloriesForEntry(e));
-        float consumedCarbs = getConsumedCarbsForEntry(e);
-        if(consumedCarbs > 0.01){
-            calorieAndMacrosText += String.format(Locale.ENGLISH, "\n%.2fg Carbs",consumedCarbs);
-        }
-        float consumedSugar = getConsumedSugarForEntry(e);
-        if(consumedSugar > 0.01){
-            calorieAndMacrosText += String.format(Locale.ENGLISH, "\n%.2fg Sugar",consumedSugar);
-        }
-        float consumedProtein = getConsumedProteinForEntry(e);
-        if(consumedProtein > 0.01){
-            calorieAndMacrosText += String.format(Locale.ENGLISH, "\n%.2fg Protein",consumedProtein);
-        }
-        float consumedFat = getConsumedFatForEntry(e);
-        if(consumedFat > 0.01){
-            calorieAndMacrosText += String.format(Locale.ENGLISH, "\n%.2fg Fat",consumedFat);
-        }
-        float consumedSatFat = getConsumedSatFatForEntry(e);
-        if(consumedSatFat > 0.01){
-            calorieAndMacrosText += String.format(Locale.ENGLISH, "\n%.2fg sat. Fat",consumedSatFat);
+
+        for(Map.Entry<String,FoodInfo> foodInfoEntry : FoodInfosToShow.getFoodInfosShownAsMap(getApplicationContext()).entrySet()){
+            float consumedAmount = getConsumedFoodInfoAmountForEntry(e,foodInfoEntry.getKey());
+            if(consumedAmount > 0.01){
+                calorieAndMacrosText += String.format(Locale.ENGLISH, "\n%1$.2f%2$s %3$s",consumedAmount,foodInfoEntry.getValue().getUnit(), foodInfoEntry.getValue().getName());
+            }
         }
         calories.setText(calorieAndMacrosText);
         // id is just an invisible attribute on each card
@@ -535,6 +662,8 @@ public class OverviewActivity extends AppCompatActivity {
         setListenersForCardView(c, e);
         return c;
     }
+
+
 
     /**
      * Set up listeners for whenever an entry is touched

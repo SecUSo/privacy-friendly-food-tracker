@@ -5,7 +5,7 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId "org.secuso.privacyfriendlyfoodtracker"
+        applicationId "org.secuso.privacyfriendlyfoodtracker3"
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 4

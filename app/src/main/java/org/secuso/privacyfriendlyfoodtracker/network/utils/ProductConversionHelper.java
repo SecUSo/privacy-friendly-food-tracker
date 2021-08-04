@@ -71,6 +71,7 @@ public class ProductConversionHelper {
         }
 
         // if the id is equals to 0 then the room database creates a new id (primary key)
-        return new Product(0, product.getProductName(), energy_100g, carbs, sugar, protein, fat, satFat, product.getCode());
+        //TODO: fetch the real values instead of just 0s
+        return new Product(0, product.getProductName(), energy_100g, carbs, sugar, protein, fat, satFat, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, product.getCode());
     }
 }

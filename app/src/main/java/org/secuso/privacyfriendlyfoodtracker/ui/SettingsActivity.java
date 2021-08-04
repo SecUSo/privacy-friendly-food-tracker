@@ -26,12 +26,17 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
+import android.preference.SwitchPreference;
 import android.view.MenuItem;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.ui.helper.BaseActivity;
+
+import java.util.Map;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -118,8 +123,7 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     protected int getNavigationDrawerID() {
-        //return R.id.nav_settings;
-        return 0;
+        return R.id.nav_settings;
     }
 
     /**
@@ -186,10 +190,29 @@ public class SettingsActivity extends BaseActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
+        public void createFoodInfoPreferences(Context context, PreferenceCategory screen){
+            for(Map.Entry<String,FoodInfo> foodInfoEntry : FoodInfosToShow.foodInfos.entrySet()){
+                SwitchPreference notificationPreference = new SwitchPreference(context);
+                notificationPreference.setKey(foodInfoEntry.getKey());
+                notificationPreference.setTitle(foodInfoEntry.getValue().getName());
+                screen.addPreference(notificationPreference);
+            }
+        }
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_general);
+            //addPreferencesFromResource(R.xml.pref_general);
+            Context context = getActivity();//dont know whther this will work?
+            PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(context);
+
+            PreferenceCategory whatToShowCategory = new PreferenceCategory(context);
+            whatToShowCategory.setKey("what_info_to_show_category");
+            whatToShowCategory.setTitle("What Food Info To Show");
+            screen.addPreference(whatToShowCategory);
+
+            createFoodInfoPreferences(context,whatToShowCategory);
+            setPreferenceScreen(screen);
+
             //setHasOptionsMenu(true);
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
@@ -211,4 +234,5 @@ public class SettingsActivity extends BaseActivity {
             return super.onOptionsItemSelected(item);
         }
     }
+
 }

@@ -110,9 +110,9 @@
     <string name="save">Save</string>
 
     <string name="search_for">Search for a product</string>
-    <string name="error_carbs_nan" >Only numbers are allowed for carbs</string>
-    <string name="error_protein_nan" >Only numbers are allowed for protein</string>
-    <string name="error_fat_nan" >Only numbers are allowed for fat</string>
+    <string name="error_carbs_nan">Only numbers are allowed for carbs</string>
+    <string name="error_protein_nan">Only numbers are allowed for protein</string>
+    <string name="error_fat_nan">Only numbers are allowed for fat</string>
     <string name="hint_food_macros">g/100g</string>
     <string name="hint_food_carbs">Carbs in g/100g</string>
     <string name="hint_food_protein">Protein in g/100g</string>
@@ -122,4 +122,29 @@
     <string name="fatPerWeek">Average fat (saturated fat) per day</string>
     <string name="hint_food_sugar">Sugar in g/100g</string>
     <string name="hint_food_satFat">Saturated Fat in g/100g</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="title_activity_settings2">SettingsActivity2</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="action_settings2">Settings</string>
+    <string name="error_fieldname_nan">Only numbers are allowed for %1$s</string>
+    <string name="calories">Calories</string>
 </resources>
