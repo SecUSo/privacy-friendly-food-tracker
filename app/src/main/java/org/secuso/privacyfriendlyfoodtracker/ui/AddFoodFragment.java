@@ -109,6 +109,7 @@ public class AddFoodFragment extends Fragment {
             currentET.setLayoutParams(layoutParams);
             currentET.setMaxLines(1);
             currentET.setFilters(caloriesFilter);
+            currentET.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
 
             currentTIL.setHint(foodInfo.getName() + " in " + foodInfo.getUnit());
