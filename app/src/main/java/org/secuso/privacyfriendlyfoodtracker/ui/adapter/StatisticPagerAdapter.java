@@ -22,8 +22,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
-import org.secuso.privacyfriendlyfoodtracker.ui.MonthStatisticFragment;
-import org.secuso.privacyfriendlyfoodtracker.ui.WeekStatisticFragment;
+import org.secuso.privacyfriendlyfoodtracker.ui.StatisticFragment;
 
 /**
  * Implementation of PagerAdapter that uses a Fragment to manage each page. This class also handles saving and restoring of fragment's state.
@@ -54,9 +53,9 @@ public class StatisticPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new WeekStatisticFragment();
+                return StatisticFragment.newInstance(true);
             case 1:
-                return new MonthStatisticFragment();
+                return StatisticFragment.newInstance(false);
         }
         return null;
     }

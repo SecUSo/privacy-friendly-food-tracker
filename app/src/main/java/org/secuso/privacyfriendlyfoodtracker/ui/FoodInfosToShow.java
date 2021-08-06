@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
 import org.secuso.privacyfriendlyfoodtracker.database.Product;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseEntry;
 
@@ -275,6 +276,94 @@ public class FoodInfosToShow {
                 return product.chrom;
             case "molybdaen":
                 return product.molybdaen;
+        }
+        return 0.0f;
+    }
+
+    /***
+     * Given a key identifying a FoodInfo and a Product containing all FoodInfoValues, return
+     * the specified FoodInfo's value from the Product. Possible keys are those present in
+     * FoodInfosToShow.foodInfos, e.g. "carbs".
+     *
+     * Meta: This does exactly the same like getFoodInfoValueByKey(DatabaseEntry,String), just for the
+     * Product class. It would probably be nicer to just have Product and DatabaseEntry implement an
+     * interface offering getters for every food info. TODO.
+     * @param product
+     * @param key
+     * @return
+     */
+    public static float getFoodInfoValueByKey(ConsumedEntrieAndProductDao.DateNutriments product, String key){
+        switch(key){
+            case "carbs":
+                return product.carbsConsumed;
+            case "sugar":
+                return product.sugarConsumed;
+            case "protein":
+                return product.proteinConsumed;
+            case "fat":
+                return product.fatConsumed;
+            case "satFat":
+                return product.satFatConsumed;
+            case "salt":
+                return product.saltConsumed;
+            case "vitaminA_retinol":
+                return product.vitaminA_retinolConsumed;
+            case "betaCarotin":
+                return product.betaCarotinConsumed;
+            case "vitaminD":
+                return product.vitaminDConsumed;
+            case "vitaminE":
+                return product.vitaminEConsumed;
+            case "vitaminK":
+                return product.vitaminKConsumed;
+            case "thiamin_B1":
+                return product.thiamin_B1Consumed;
+            case "riboflavin_B2":
+                return product.riboflavin_B2Consumed;
+            case "niacin":
+                return product.niacinConsumed;
+            case "vitaminB6":
+                return product.vitaminB6Consumed;
+            case "folat":
+                return product.folatConsumed;
+            case "pantothenacid":
+                return product.pantothenacidConsumed;
+            case "biotin":
+                return product.biotinConsumed;
+            case "cobalamin_B12":
+                return product.cobalamin_B12Consumed;
+            case "vitaminC":
+                return product.vitaminCConsumed;
+            case "natrium":
+                return product.natriumConsumed;
+            case "chlorid":
+                return product.chloridConsumed;
+            case "kalium":
+                return product.kaliumConsumed;
+            case "calcium":
+                return product.calciumConsumed;
+            case "phosphor":
+                return product.phosphorConsumed;
+            case "magnesium":
+                return product.magnesiumConsumed;
+            case "eisen":
+                return product.eisenConsumed;
+            case "jod":
+                return product.jodConsumed;
+            case "fluorid":
+                return product.fluoridConsumed;
+            case "zink":
+                return product.zinkConsumed;
+            case "selen":
+                return product.selenConsumed;
+            case "kupfer":
+                return product.kupferConsumed;
+            case "mangan":
+                return product.manganConsumed;
+            case "chrom":
+                return product.chromConsumed;
+            case "molybdaen":
+                return product.molybdaenConsumed;
         }
         return 0.0f;
     }

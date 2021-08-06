@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.WeekStatisticFragment">
-
+    tools:context=".ui.StatisticFragment">
 
 
     <ScrollView
@@ -29,6 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -72,7 +72,6 @@
                             android:background="@mipmap/ic__black_right_arrow_timmed" />
                     </LinearLayout>
                 </LinearLayout>
-
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -84,6 +83,7 @@
                 card_view:cardCornerRadius="4dp">
 
                 <LinearLayout
+                    android:id="@+id/statisticLinLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -109,66 +109,7 @@
                         android:id="@+id/graph"
                         android:layout_width="match_parent"
                         android:layout_height="200dip" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/carbsPerWeek" />
-
-                        <TextView
-                            android:id="@+id/periodCarbs1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <com.jjoe64.graphview.GraphView
-                        android:id="@+id/graphCarbs"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dip" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/proteinPerWeek" />
-
-                        <TextView
-                            android:id="@+id/periodProtein1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <com.jjoe64.graphview.GraphView
-                        android:id="@+id/graphProtein"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dip" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/fatPerWeek" />
-
-                        <TextView
-                            android:id="@+id/periodFat1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <com.jjoe64.graphview.GraphView
-                        android:id="@+id/graphFat"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dip" />
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>

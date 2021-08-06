@@ -146,5 +146,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="action_settings2">Settings</string>
     <string name="error_fieldname_nan">Only numbers are allowed for %1$s</string>
+    <string name="statistics_average_nutriments">Average %1$s per day:\n%2$s %3$s</string>
     <string name="calories">Calories</string>
 </resources>

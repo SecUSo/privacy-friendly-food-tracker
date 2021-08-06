@@ -60,6 +60,7 @@ public class AddFoodFragment extends Fragment {
 
     Map<String,TextInputLayout> otherFoodInfoTextInputLayouts = new HashMap<>();
     Map<String, EditText> otherFoodInfoEditTexts = new HashMap<>();
+
     /**
      * The required empty public constructor
      */
@@ -105,7 +106,6 @@ public class AddFoodFragment extends Fragment {
             currentTIL.setLayoutParams(layoutParams);
 
             EditText currentET = new EditText(getContext());
-
             currentET.setLayoutParams(layoutParams);
             currentET.setMaxLines(1);
             currentET.setFilters(caloriesFilter);

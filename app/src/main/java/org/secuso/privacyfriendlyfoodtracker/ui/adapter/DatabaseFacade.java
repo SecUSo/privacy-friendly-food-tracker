@@ -182,6 +182,26 @@ public class DatabaseFacade {
     }
 
     /**
+     * Returns the sum of every nutriment per day for a time period.
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the calories sum per day and the associated date
+     */
+    public List<ConsumedEntrieAndProductDao.DateNutriments> getPeriodNutriments(java.util.Date startDate, java.util.Date endDate){
+        return    consumedEntrieAndProductDao.getNutrimentsPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
+
+    /**
+     * Returns the sum of every nutriment between two dates.
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the calories sum (list position 0)
+     */
+    public List<ConsumedEntrieAndProductDao.DateNutriments> getNutrimentsPerDayinPeriod(java.util.Date startDate, java.util.Date endDate){
+        return consumedEntrieAndProductDao.getNutrimentsPerDayinPeriod(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()));
+    }
+
+    /**
      * Returns the sum of carbs per day for a time period.
      * @param startDate the start date
      * @param endDate the end date
