@@ -24,6 +24,11 @@ import java.util.Set;
  */
 public class FoodInfosToShow {
 
+    public static final String GOAL_DONT_EXCEED = "daily_goal_dont_exceed";
+    /***
+     * The prefix of the preference key storing food info's daily goal.
+     */
+    static final String GOAL_KEY_PREFIX = "daily_goal_";
     /***
      * Idea for later: If the need arises to allow users to change order of food infos:
      * Implement getter method which uses ordered list of food info keys and returns a new
@@ -72,17 +77,6 @@ public class FoodInfosToShow {
 
 
 
-    public static List<FoodInfo> getFoodInfosShown(Context context){
-        SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(context);
-        List<FoodInfo> foodInfosToShow = new ArrayList<>();
-        for(Map.Entry<String,FoodInfo> foodInfoEntry : foodInfos.entrySet()){
-            if(sharedPreferences.getBoolean(foodInfoEntry.getKey(),false)){
-                foodInfosToShow.add(foodInfoEntry.getValue());
-            }
-        }
-        return foodInfosToShow;
-    }
 
     /***
      * Returns a Map containing all FoodInfos that shall be shown in the app. E.g. if the user wished
@@ -366,5 +360,35 @@ public class FoodInfosToShow {
                 return product.molybdaenConsumed;
         }
         return 0.0f;
+    }
+
+    /***
+     * Returns the daily goal for a food info by key, if stored in preferences. If no goal is defined,
+     * returns null.
+     * @param context Context needed to get the preferences.
+     * @return null if no goal defined, else the goal.
+     */
+    public static Float getDailyGoalFromPreferences(Context context, String key){
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(context);
+        String dailyGoalText = sharedPreferences.getString(GOAL_KEY_PREFIX+key,"");
+        if(dailyGoalText.equals("")){
+            return null;
+        }else{
+            Float dailyGoal=Float.parseFloat(dailyGoalText);
+            return dailyGoal;
+        }
+    }
+
+    /***
+     * return whether the user set the goal to be one that she aims to exceed or not.
+     * @param context
+     * @param key
+     * @return
+     */
+    public static boolean getDontExceedDailyGoalFromPreferences(Context context, String key){
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getBoolean(GOAL_DONT_EXCEED+key,false);
     }
 }

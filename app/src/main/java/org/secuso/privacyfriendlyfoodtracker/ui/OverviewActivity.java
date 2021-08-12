@@ -30,7 +30,13 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Database;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Barrier;
@@ -302,11 +308,18 @@ public class OverviewActivity extends AppCompatActivity {
         }
         heading.setText(String.format(Locale.ENGLISH, "%s", formattedDate));
 
+        Float caloriesDailyGoal = FoodInfosToShow.getDailyGoalFromPreferences(this,"calories");
+
         TextView tvCaloriesAmount = this.findViewById(R.id.caloriesAmountTv);
-        tvCaloriesAmount.setText(String.format(Locale.ENGLISH, "%.2f %s", totalCalories, cal));
+        String caloriesAmountText;
+        if(caloriesDailyGoal != null){
+            caloriesAmountText = getResources().getString( R.string.overview_nutriment_amount_of_goal, totalCalories, caloriesDailyGoal, cal);
+        }else{
+            caloriesAmountText = getResources().getString( R.string.overview_nutriment_amount, totalCalories, cal);
+        }
+        tvCaloriesAmount.setText(caloriesAmountText);
 
         boolean rebuildLayout=false;
-        boolean showDailyGoals = true;
 
 
         Map<String,FoodInfo> foodInfosToShow = FoodInfosToShow.getFoodInfosShownAsMap(this);
@@ -334,7 +347,7 @@ public class OverviewActivity extends AppCompatActivity {
 
 
         //add progressBar if daily goal specified
-        if(showDailyGoals){
+        if(caloriesDailyGoal != null){
             if(progressBarCalories == null){
                 clearLayoutAndMaps();
                 rebuildLayout = true;
@@ -360,6 +373,8 @@ public class OverviewActivity extends AppCompatActivity {
                 constraintSet.applyTo(constraintLayout);
 
             }
+            styleProgressBarByFoodInfoKey(progressBarCalories,"calories",totalCalories.floatValue(), caloriesDailyGoal);
+
         }else{
             if(progressBarCalories != null){
                 constraintLayout.removeView(progressBarCalories);
@@ -369,16 +384,17 @@ public class OverviewActivity extends AppCompatActivity {
             }
         }
 
-        int idOfPredecessor = showDailyGoals ? progressBarCalories.getId() : R.id.caloriesNameTv;
+        int idOfPredecessor = caloriesDailyGoal != null ? progressBarCalories.getId() : R.id.caloriesNameTv;
         for(Map.Entry<String,FoodInfo> foodInfoEntry : foodInfosToShow.entrySet()){
 
             TextView tvFoodInfoName=null;
             TextView tvFoodInfoAmount=null;
             ProgressBar progressBar = null;
+            Float dailyGoal = FoodInfosToShow.getDailyGoalFromPreferences(this,foodInfoEntry.getKey());
             if(tvFoodInfoAmountMap.containsKey(foodInfoEntry.getKey())){ //this could be also replaced by a check for rebuildLayout
                 tvFoodInfoAmount = tvFoodInfoAmountMap.get(foodInfoEntry.getKey());
                 tvFoodInfoName = tvFoodInfoNameMap.get(foodInfoEntry.getKey()); //tvFoodInfoName should never be needed, when it already exists. But atm I leave it there.
-                if(showDailyGoals){
+                if(dailyGoal != null){
                     progressBar = pbFoodInfoProgressMap.get(foodInfoEntry.getKey());
                 }
             }else {
@@ -389,7 +405,7 @@ public class OverviewActivity extends AppCompatActivity {
                 tvFoodInfoName.setId(View.generateViewId());
                 tvFoodInfoAmount.setId(View.generateViewId());
 
-                if(showDailyGoals) {
+                if(dailyGoal != null) {
                     progressBar = new ProgressBar(this, null,
                             android.R.attr.progressBarStyleHorizontal);
                     progressBar.setId(View.generateViewId());
@@ -404,7 +420,7 @@ public class OverviewActivity extends AppCompatActivity {
                 constraintLayout.addView(tvFoodInfoName);
                 constraintLayout.addView(tvFoodInfoAmount);
 
-                if(showDailyGoals) {
+                if(dailyGoal != null) {
                     ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
                     progressBar.setLayoutParams(layoutParams);
                     constraintLayout.addView(progressBar);
@@ -420,7 +436,7 @@ public class OverviewActivity extends AppCompatActivity {
                 constraintSet.connect(tvFoodInfoName.getId(), ConstraintSet.LEFT, constraintLayout.getId(), ConstraintSet.LEFT, 0);
                 constraintSet.connect(tvFoodInfoAmount.getId(), ConstraintSet.RIGHT, constraintLayout.getId(), ConstraintSet.RIGHT, 0);
 
-                if(showDailyGoals) {
+                if(dailyGoal != null) {
                     constraintSet.connect(progressBar.getId(), ConstraintSet.TOP, tvFoodInfoAmount.getId(), ConstraintSet.BOTTOM, 0);
                     constraintSet.connect(progressBar.getId(), ConstraintSet.LEFT, constraintLayout.getId(), ConstraintSet.LEFT, 0);
                     constraintSet.connect(progressBar.getId(), ConstraintSet.RIGHT, constraintLayout.getId(), ConstraintSet.RIGHT, 0);
@@ -431,7 +447,7 @@ public class OverviewActivity extends AppCompatActivity {
                 tvFoodInfoAmountMap.put(foodInfoEntry.getKey(),tvFoodInfoAmount);
                 tvFoodInfoNameMap.put(foodInfoEntry.getKey(),tvFoodInfoName);
 
-                if(showDailyGoals) {
+                if(dailyGoal != null) {
                     pbFoodInfoProgressMap.put(foodInfoEntry.getKey(), progressBar);
                 }
             }
@@ -445,11 +461,21 @@ public class OverviewActivity extends AppCompatActivity {
             for (DatabaseEntry e : entries) {
                 totalAmount = totalAmount.add(BigDecimal.valueOf(FoodInfosToShow.getFoodInfoValueByKey(e,foodInfoEntry.getKey()) * e.amount / 100));
             }
-            tvFoodInfoAmount.setText(String.format(Locale.ENGLISH, "%1$.2f%2$s",totalAmount,foodInfoEntry.getValue().getUnit()));
 
+            String nutrimentFoodAmountText;
+            if(dailyGoal != null){
+                nutrimentFoodAmountText = getResources().getString( R.string.overview_nutriment_amount_of_goal, totalAmount, dailyGoal, foodInfoEntry.getValue().getUnit());
+            }else{
+                nutrimentFoodAmountText = getResources().getString( R.string.overview_nutriment_amount, totalAmount, foodInfoEntry.getValue().getUnit());
+            }
 
+            tvFoodInfoAmount.setText(nutrimentFoodAmountText);
 
-            idOfPredecessor = showDailyGoals? progressBar.getId() : tvFoodInfoName.getId();
+            if(dailyGoal != null){
+                styleProgressBarByFoodInfoKey(progressBar,foodInfoEntry.getKey(),totalAmount.floatValue(), dailyGoal);
+            }
+
+            idOfPredecessor = dailyGoal != null ? progressBar.getId() : tvFoodInfoName.getId();
         }
         if(rebuildLayout) {
             ConstraintSet constraintSet = new ConstraintSet();
@@ -459,6 +485,52 @@ public class OverviewActivity extends AppCompatActivity {
 
             constraintSet.applyTo(constraintLayout);
         }
+
+    }
+
+    /***
+     * Sets a progressBar's progress and styles its colors depending on whether the set goal has been
+     * exceed or subceeded and whether this was wanted.
+     * @param progressBar
+     * @param foodInfoKey
+     * @param amount
+     * @param goal
+     */
+    private void styleProgressBarByFoodInfoKey(ProgressBar progressBar, String foodInfoKey,float amount, float goal){
+        boolean dontExceed = FoodInfosToShow.getDontExceedDailyGoalFromPreferences(this,foodInfoKey);
+        float fraction = amount/goal;
+        boolean isExceeded = fraction > 1.0;
+
+        if(isExceeded){
+            progressBar.setProgress((int)(1/fraction * 100));
+            if(dontExceed){
+                setProgressBarProgressAndRemainingColor(progressBar, getResources().getColor(R.color.progress_too_much_allowed), getResources().getColor(R.color.progress_too_much_extent));
+            }else{
+                setProgressBarProgressAndRemainingColor(progressBar, getResources().getColor(R.color.progress_enough_allowed), getResources().getColor(R.color.progress_enough_extent));
+            }
+        }else {
+            progressBar.setProgress((int)(fraction * 100));
+            if(dontExceed){
+                progressBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.progress_enough_allowed)));
+            }else{
+                progressBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.progress_too_much_allowed)));
+            }
+        }
+    }
+
+    /***
+     * Changes a progress bars progress-part to colorProgress and the remaining part of the bar to colorRemaining.
+     * @param progressBar
+     * @param colorProgress
+     * @param colorRemaining
+     */
+    private void setProgressBarProgressAndRemainingColor(ProgressBar progressBar, int colorProgress, int colorRemaining) {
+        progressBar.setProgressTintList(ColorStateList.valueOf(colorProgress));
+        //parts of the progressbar are accessable as a layerd list/LayerDrawable
+        LayerDrawable layers = (LayerDrawable) progressBar.getProgressDrawable().mutate();
+
+        layers.getDrawable(0).setTintMode(PorterDuff.Mode.SRC);
+        layers.getDrawable(0).setTint(colorRemaining);
 
     }
 

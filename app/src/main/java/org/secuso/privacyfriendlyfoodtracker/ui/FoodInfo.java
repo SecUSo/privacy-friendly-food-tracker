@@ -1,5 +1,12 @@
 package org.secuso.privacyfriendlyfoodtracker.ui;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /***
  * Contains information about the infos about a food. E.g. there is a FoodInfo("carbs", "g")
  * indicating that food can contain "Carbs" which are measured in gramm.

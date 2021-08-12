@@ -33,4 +33,9 @@
     </array>
 
     <color name="ic_launcher_background">#3680BB</color>
+    <color name="progress_too_much_extent" >#B71C1C</color>
+    <color name="progress_too_much_allowed" >#F57F17</color>
+    <color name="progress_enough_allowed" >#81C784</color>
+    <color name="progress_enough_extent" >#1B5E20</color>
+
 </resources>

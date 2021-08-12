@@ -148,4 +148,9 @@
     <string name="error_fieldname_nan">Only numbers are allowed for %1$s</string>
     <string name="statistics_average_nutriments">Average %1$s per day:\n%2$s %3$s</string>
     <string name="calories">Calories</string>
+    <string name="daily_goals_setting_category_heading">Your daily goals</string>
+    <string name="daily_goals_dont_exceed_setting">Don\'t exceed %1$s goal</string>
+    <string name="daily_goal_setting">%1$s goal in %2$s</string>
+    <string name="overview_nutriment_amount">%1$.1f %2$s</string>
+    <string name="overview_nutriment_amount_of_goal">%1$.1f/%2$.1f %3$s</string>
 </resources>

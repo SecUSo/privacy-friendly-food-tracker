@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -190,12 +191,13 @@ public class SettingsActivity extends BaseActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
+
         public void createFoodInfoPreferences(Context context, PreferenceCategory screen){
             for(Map.Entry<String,FoodInfo> foodInfoEntry : FoodInfosToShow.foodInfos.entrySet()){
-                SwitchPreference notificationPreference = new SwitchPreference(context);
-                notificationPreference.setKey(foodInfoEntry.getKey());
-                notificationPreference.setTitle(foodInfoEntry.getValue().getName());
-                screen.addPreference(notificationPreference);
+                SwitchPreference showFoodInfoPreference = new SwitchPreference(context);
+                showFoodInfoPreference.setKey(foodInfoEntry.getKey());
+                showFoodInfoPreference.setTitle(foodInfoEntry.getValue().getName());
+                screen.addPreference(showFoodInfoPreference);
             }
         }
         @Override
@@ -211,6 +213,14 @@ public class SettingsActivity extends BaseActivity {
             screen.addPreference(whatToShowCategory);
 
             createFoodInfoPreferences(context,whatToShowCategory);
+
+            PreferenceCategory dailyGoalsCategory = new PreferenceCategory(context);
+            dailyGoalsCategory.setKey("daily_goals_category");
+            dailyGoalsCategory.setTitle(R.string.daily_goals_setting_category_heading);
+            screen.addPreference(dailyGoalsCategory);
+
+            createDailyGoalsPreferences(context,dailyGoalsCategory);
+
             setPreferenceScreen(screen);
 
             //setHasOptionsMenu(true);
@@ -221,6 +231,37 @@ public class SettingsActivity extends BaseActivity {
             // guidelines.
             //bindPreferenceSummaryToValue(findPreference("example_text"));
             //bindPreferenceSummaryToValue(findPreference("example_list"));
+        }
+
+        /***
+         * Create the preferences for setting daily goals and whether those goals should not
+         * be exceeded or not be subceeded
+         * @param context
+         * @param screen
+         */
+        private void createDailyGoalsPreferences(Context context, PreferenceCategory screen) {
+            EditTextPreference caloriesGoalPreference = new EditTextPreference(context);
+            caloriesGoalPreference.setKey(FoodInfosToShow.GOAL_KEY_PREFIX + "calories");
+            caloriesGoalPreference.setTitle(getResources().getString(R.string.daily_goal_setting,"Calories", "kCal"));
+
+            screen.addPreference(caloriesGoalPreference);
+
+            SwitchPreference caloriesGoalSwitchPreference = new SwitchPreference(context);
+            caloriesGoalSwitchPreference.setKey(FoodInfosToShow.GOAL_DONT_EXCEED + "calories");
+            caloriesGoalSwitchPreference.setTitle(getResources().getString(R.string.daily_goals_dont_exceed_setting,"Calories"));
+            screen.addPreference(caloriesGoalSwitchPreference);
+
+            for(Map.Entry<String,FoodInfo> foodInfoEntry : FoodInfosToShow.foodInfos.entrySet()){
+                EditTextPreference dailyGoalPreference = new EditTextPreference(context);
+                dailyGoalPreference.setKey(FoodInfosToShow.GOAL_KEY_PREFIX + foodInfoEntry.getKey());
+                dailyGoalPreference.setTitle(getResources().getString(R.string.daily_goal_setting,foodInfoEntry.getValue().getName(), foodInfoEntry.getValue().getUnit()));
+                screen.addPreference(dailyGoalPreference);
+
+                SwitchPreference dailyGoalSwitchPreference = new SwitchPreference(context);
+                dailyGoalSwitchPreference.setKey(FoodInfosToShow.GOAL_DONT_EXCEED + foodInfoEntry.getKey());
+                dailyGoalSwitchPreference.setTitle(getResources().getString(R.string.daily_goals_dont_exceed_setting,foodInfoEntry.getValue().getName()));
+                screen.addPreference(dailyGoalSwitchPreference);
+            }
         }
 
         @Override
