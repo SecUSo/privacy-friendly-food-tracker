@@ -112,4 +112,10 @@
     <string name="search_for">Search for a product</string>
 
     <string name="action_goal">kCal Goal</string>
+
+    <string name="btn_goal_cancel">Cancel</string>
+    <string name="btn_goal_save">Save</string>
+    <string name="goal_title">Set your daily goal</string>
+
+    <string name="preference_file_key">privacy-food-friendly-tracker</string>
 </resources>

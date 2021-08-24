@@ -106,4 +106,7 @@
 
     <string name="search_for">Nach einem Produkt suchen</string>
     <string name="action_goal">kCal Ziel</string>
+    <string name="btn_goal_cancel">Abbrechen</string>
+    <string name="btn_goal_save">Speichern</string>
+    <string name="goal_title">Setze dein Tagesziel</string>
 </resources>
