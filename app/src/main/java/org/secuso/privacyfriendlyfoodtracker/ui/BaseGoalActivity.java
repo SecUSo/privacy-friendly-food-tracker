@@ -21,6 +21,8 @@ import android.os.Bundle;
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.ui.helper.BaseActivity;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.content.SharedPreferences;
@@ -32,17 +34,13 @@ import android.widget.EditText;
  *
  * @author Andre Lutz
  */
-public class BaseGoalActivity extends AppCompatActivity {
+public class BaseGoalActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_base_goal);
-    }
-
-    protected int getNavigationDrawerID() {
-        return R.id.nav_goal;
     }
 
     public void onCancel(View view) {
@@ -58,6 +56,11 @@ public class BaseGoalActivity extends AppCompatActivity {
         editor.putFloat("goal", new Float(String.valueOf(goalNumber.getText())));
         editor.apply();
         finish();
+    }
+
+    @Override
+    protected int getNavigationDrawerID() {
+        return R.id.nav_goal;
     }
 
 
