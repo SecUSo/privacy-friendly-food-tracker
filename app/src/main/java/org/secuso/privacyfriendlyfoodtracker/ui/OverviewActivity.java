@@ -460,7 +460,7 @@ public class OverviewActivity extends AppCompatActivity {
             float totalAmount = 0;
 
             for (DatabaseEntry e : entries) {
-                totalAmount = totalAmount + (FoodInfosToShow.getFoodInfoValueByKey(e,foodInfoEntry.getKey(), foodInfoEntry.getValue()) * e.amount / 100);
+                totalAmount = totalAmount + (FoodInfosToShow.getFoodInfoValueByKey(e,foodInfoEntry.getKey(), foodInfoEntry.getValue(), getApplicationContext()) * e.amount / 100);
             }
 
             String nutrimentFoodAmountText;
@@ -639,7 +639,7 @@ public class OverviewActivity extends AppCompatActivity {
      * @return
      */
     private float getConsumedFoodInfoAmountForEntry(DatabaseEntry e,String key, FoodInfo foodInfo) {
-        return (e.amount * FoodInfosToShow.getFoodInfoValueByKey(e,key, foodInfo)) / 100;
+        return (e.amount * FoodInfosToShow.getFoodInfoValueByKey(e,key, foodInfo, getApplicationContext())) / 100;
     }
     /**
      * Creates a CheckedCardView from the entry

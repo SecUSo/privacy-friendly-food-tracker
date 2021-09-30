@@ -220,7 +220,7 @@ public class AddFoodFragment extends Fragment {
 
             for(Map.Entry<String,EditText> editTextEntry : otherFoodInfoEditTexts.entrySet()){
                 EditText currentEt = editTextEntry.getValue();
-                currentEt.setText(String.format(Locale.ENGLISH, "%.2f", FoodInfosToShow.getFoodInfoValueByKey(referenceActivity.selectedProduct,editTextEntry.getKey(), FoodInfosToShow.getAllFoodInfosAsMap().get(editTextEntry.getKey()))));
+                currentEt.setText(String.format(Locale.ENGLISH, "%.2f", FoodInfosToShow.getFoodInfoValueByKey(referenceActivity.selectedProduct,editTextEntry.getKey(), FoodInfosToShow.getAllFoodInfosAsMap(getContext()).get(editTextEntry.getKey()), getContext())));
                 currentEt.setFocusable(false);
                 currentEt.setClickable(false);
                 currentEt.setTextColor(getResources().getColor(R.color.middlegrey));

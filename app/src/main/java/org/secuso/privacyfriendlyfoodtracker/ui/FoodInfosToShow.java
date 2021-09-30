@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
 import org.secuso.privacyfriendlyfoodtracker.database.Product;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseEntry;
@@ -56,44 +57,54 @@ public class FoodInfosToShow {
      *
      */
     public static Map<String,FoodInfo> foodInfos=new LinkedHashMap<>(); // LinkedHashMap so entries are ordered by insertion
-    static {
+
+    /***
+     * populates the foodInfos Map with all the foodInfos. used to be a static block, but to access
+     * string ressources and thus make nutriment names translatable, was made a function with access
+     * to a context. Every method in here calls this method before doing anything else.
+     * @param context
+     */
+    static void populateFoodInfoMap(Context context) {
         //TODO check whether all units are sensible
-        foodInfos.put("carbs", new FoodInfo("Carbs", "g", "carbohydrates"));
-        foodInfos.put("sugar", new FoodInfo("Sugar", "g", "sugars"));
-        foodInfos.put("protein", new FoodInfo("Protein", "g", "proteins"));
-        foodInfos.put("fat", new FoodInfo("Fat", "g", "fat"));
-        foodInfos.put("satFat", new FoodInfo("SatFat", "g", "saturated-fat"));
-        foodInfos.put("salt", new FoodInfo("Salt", "g", "salt"));
-        foodInfos.put("fiber", new FoodInfo("Fiber", "g", "fiber"));
-        foodInfos.put("vitaminA_retinol", new FoodInfo("Vitamin A", "mg", "vitamin-a"));
-        foodInfos.put("betaCarotin", new FoodInfo("Beta-Carotin", "mg", null));
-        foodInfos.put("vitaminD", new FoodInfo("Vitamin D", "mg", "vitamin-d"));
-        foodInfos.put("vitaminE", new FoodInfo("Vitamin E", "mg", "vitamin-e"));
-        foodInfos.put("vitaminK", new FoodInfo("Vitamin K", "mg", "vitamin-k"));
-        foodInfos.put("thiamin_B1", new FoodInfo("Vitamin B1", "mg", "vitamin-b1"));
-        foodInfos.put("riboflavin_B2", new FoodInfo("Vitamin B2", "mg", "vitamin-b2"));
-        foodInfos.put("niacin", new FoodInfo("Niacin", "mg", null));
-        foodInfos.put("vitaminB6", new FoodInfo("Vitamin B6", "mg", "vitamin-b6"));
-        foodInfos.put("folat", new FoodInfo("Folat", "mg", null));
-        foodInfos.put("pantothenacid", new FoodInfo("Pantothenacid", "mg", "pantothenic-acid"));
-        foodInfos.put("biotin", new FoodInfo("Biotin", "mg", "biotin"));
-        foodInfos.put("cobalamin_B12", new FoodInfo("Vitamin B12", "mg", "vitamin-b12"));
-        foodInfos.put("vitaminC", new FoodInfo("Vitamin C", "mg", "vitamin-c"));
-        foodInfos.put("natrium", new FoodInfo("Natrium", "mg", "sodium"));
-        foodInfos.put("chlorid", new FoodInfo("Chlorid", "mg", "chloride"));
-        foodInfos.put("kalium", new FoodInfo("Kalium", "mg", "potassium"));
-        foodInfos.put("calcium", new FoodInfo("Calcium", "mg", "calcium")); 
-        foodInfos.put("phosphor", new FoodInfo("Phosphor", "mg", "phosphorus"));
-        foodInfos.put("magnesium", new FoodInfo("Magnesium", "mg", "magnesium"));
-        foodInfos.put("eisen", new FoodInfo("Iron", "mg", "iron"));
-        foodInfos.put("jod", new FoodInfo("Jod", "mg", "iodine"));
-        foodInfos.put("fluorid", new FoodInfo("Fluorid", "mg", "fluoride"));
-        foodInfos.put("zink", new FoodInfo("Zink", "mg", "zinc"));
-        foodInfos.put("selen", new FoodInfo("Selen", "mg", "selenium"));
-        foodInfos.put("kupfer", new FoodInfo("Kupfer", "mg", "copper"));
-        foodInfos.put("mangan", new FoodInfo("Mangan", "mg", "manganese"));
-        foodInfos.put("chrom", new FoodInfo("Chrom", "mg", "chromium"));
-        foodInfos.put("molybdaen", new FoodInfo("Molybdaen", "mg", "molybdenum"));
+        if(!foodInfos.isEmpty()){
+            return;
+        }
+        foodInfos.put("carbs", new FoodInfo(context.getString(R.string.nutriment_name_carbs), "g", "carbohydrates"));
+        foodInfos.put("sugar", new FoodInfo(context.getString(R.string.nutriment_name_sugar), "g", "sugars"));
+        foodInfos.put("protein", new FoodInfo(context.getString(R.string.nutriment_name_protein), "g", "proteins"));
+        foodInfos.put("fat", new FoodInfo(context.getString(R.string.nutriment_name_fat), "g", "fat"));
+        foodInfos.put("satFat", new FoodInfo(context.getString(R.string.nutriment_name_sat_fat), "g", "saturated-fat"));
+        foodInfos.put("salt", new FoodInfo(context.getString(R.string.nutriment_name_salt), "g", "salt"));
+        foodInfos.put("fiber", new FoodInfo(context.getString(R.string.nutriment_name_fiber), "g", "fiber"));
+        foodInfos.put("vitaminA_retinol", new FoodInfo(context.getString(R.string.nutriment_name_vitamin_a), "mg", "vitamin-a"));
+        foodInfos.put("betaCarotin", new FoodInfo(context.getString(R.string.nutriment_name_beta_carotene), "mg", null));
+        foodInfos.put("vitaminD", new FoodInfo(context.getString(R.string.nutriment_name_vitamin_d), "mg", "vitamin-d"));
+        foodInfos.put("vitaminE", new FoodInfo(context.getString(R.string.nutriment_name_vitamin_e), "mg", "vitamin-e"));
+        foodInfos.put("vitaminK", new FoodInfo(context.getString(R.string.nutriment_name_vitamin_k), "mg", "vitamin-k"));
+        foodInfos.put("thiamin_B1", new FoodInfo(context.getString(R.string.nutriment_name_vitamin_b1), "mg", "vitamin-b1"));
+        foodInfos.put("riboflavin_B2", new FoodInfo(context.getString(R.string.nutriment_name_vitamin_b2), "mg", "vitamin-b2"));
+        foodInfos.put("niacin", new FoodInfo(context.getString(R.string.nutriment_name_niacin), "mg", null));
+        foodInfos.put("vitaminB6", new FoodInfo(context.getString(R.string.nutriment_name_vitamin_b6), "mg", "vitamin-b6"));
+        foodInfos.put("folat", new FoodInfo(context.getString(R.string.nutriment_name_folate), "mg", null));
+        foodInfos.put("pantothenacid", new FoodInfo(context.getString(R.string.nutriment_name_pantothenic_acid), "mg", "pantothenic-acid"));
+        foodInfos.put("biotin", new FoodInfo(context.getString(R.string.nutriment_name_biotin), "mg", "biotin"));
+        foodInfos.put("cobalamin_B12", new FoodInfo(context.getString(R.string.nutriment_name_vitamin_b12), "mg", "vitamin-b12"));
+        foodInfos.put("vitaminC", new FoodInfo(context.getString(R.string.nutriment_name_vitamin_c), "mg", "vitamin-c"));
+        foodInfos.put("natrium", new FoodInfo(context.getString(R.string.nutriment_name_natrium), "mg", "sodium"));
+        foodInfos.put("chlorid", new FoodInfo(context.getString(R.string.nutriment_name_chloride), "mg", "chloride"));
+        foodInfos.put("kalium", new FoodInfo(context.getString(R.string.nutriment_name_potassium), "mg", "potassium"));
+        foodInfos.put("calcium", new FoodInfo(context.getString(R.string.nutriment_name_calcium), "mg", "calcium")); 
+        foodInfos.put("phosphor", new FoodInfo(context.getString(R.string.nutriment_name_phosphorous), "mg", "phosphorus"));
+        foodInfos.put("magnesium", new FoodInfo(context.getString(R.string.nutriment_name_magnesium), "mg", "magnesium"));
+        foodInfos.put("eisen", new FoodInfo(context.getString(R.string.nutriment_name_iron), "mg", "iron"));
+        foodInfos.put("jod", new FoodInfo(context.getString(R.string.nutriment_name_iodine), "mg", "iodine"));
+        foodInfos.put("fluorid", new FoodInfo(context.getString(R.string.nutriment_name_fluoride), "mg", "fluoride"));
+        foodInfos.put("zink", new FoodInfo(context.getString(R.string.nutriment_name_zinc), "mg", "zinc"));
+        foodInfos.put("selen", new FoodInfo(context.getString(R.string.nutriment_name_selenium), "mg", "selenium"));
+        foodInfos.put("kupfer", new FoodInfo(context.getString(R.string.nutriment_name_copper), "mg", "copper"));
+        foodInfos.put("mangan", new FoodInfo(context.getString(R.string.nutriment_name_manganese), "mg", "manganese"));
+        foodInfos.put("chrom", new FoodInfo(context.getString(R.string.nutriment_name_chromium), "mg", "chromium"));
+        foodInfos.put("molybdaen", new FoodInfo(context.getString(R.string.nutriment_name_molybdenum), "mg", "molybdenum"));
     }
 
 
@@ -106,6 +117,8 @@ public class FoodInfosToShow {
      * @return
      */
     public static Map<String, FoodInfo> getFoodInfosShownAsMap(Context context){
+        populateFoodInfoMap(context);
+
         SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(context);
         Map<String, FoodInfo> foodInfosToShow = new LinkedHashMap<>(); //LinkedHashMap to keep order
@@ -131,9 +144,11 @@ public class FoodInfosToShow {
      * @param databaseEntry
      * @param key to decide which membervariable of databaseEntry should be used
      * @param foodInfo to convert the Value to foodInfo.unit before returning it
-     * @return
+     * @param context to make sure foodInfos have beeen populated
+     * @return The nutriments value in foodInfo.unit - if the key does not match any, 0.0f is returned and an error written to log.
      */
-    public static float getFoodInfoValueByKey(DatabaseEntry databaseEntry, String key, FoodInfo foodInfo){
+    public static float getFoodInfoValueByKey(DatabaseEntry databaseEntry, String key, FoodInfo foodInfo, Context context){
+        populateFoodInfoMap(context);
         float value=0.0f;
         switch(key){
             case "carbs":
@@ -262,9 +277,12 @@ public class FoodInfosToShow {
      * interface offering getters for every food info. TODO.
      * @param product
      * @param key
-     * @return
+     * @param foodInfo
+     * @param context to make sure foodInfos have beeen populated
+     * @return The nutriments value in foodInfo.unit - if the key does not match any, 0.0f is returned and an error written to log.
      */
-    public static float getFoodInfoValueByKey(Product product, String key, FoodInfo foodInfo){
+    public static float getFoodInfoValueByKey(Product product, String key, FoodInfo foodInfo, Context context){
+        populateFoodInfoMap(context);
         float value = 0.0f;
         switch(key){
             case "carbs":
@@ -396,9 +414,11 @@ public class FoodInfosToShow {
      * @param product
      * @param key
      * @param foodInfo used to convert the value to foodInfo.unit
-     * @return
+     * @param context to make sure foodInfos have beeen populated
+     * @return The nutriments value in foodInfo.unit - if the key does not match any, 0.0f is returned and an error written to log.
      */
-    public static float getFoodInfoValueByKey(ConsumedEntrieAndProductDao.DateNutriments product, String key, FoodInfo foodInfo){
+    public static float getFoodInfoValueByKey(ConsumedEntrieAndProductDao.DateNutriments product, String key, FoodInfo foodInfo, Context context){
+        populateFoodInfoMap(context);
         float value = 0.0f;
         switch(key){
             case "carbs":
@@ -525,6 +545,7 @@ public class FoodInfosToShow {
      * @return null if no goal defined, else the goal.
      */
     public static Float getDailyGoalFromPreferences(Context context, String key){
+        populateFoodInfoMap(context);
         SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(context);
         String dailyGoalText = sharedPreferences.getString(GOAL_KEY_PREFIX+key,"");
@@ -543,12 +564,14 @@ public class FoodInfosToShow {
      * @return
      */
     public static boolean getDontExceedDailyGoalFromPreferences(Context context, String key){
+        populateFoodInfoMap(context);
         SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean(GOAL_DONT_EXCEED+key,false);
     }
 
-    public static Map<String,FoodInfo> getAllFoodInfosAsMap() {
+    public static Map<String,FoodInfo> getAllFoodInfosAsMap(Context context) {
+        populateFoodInfoMap(context);
         return foodInfos;
     }
 }

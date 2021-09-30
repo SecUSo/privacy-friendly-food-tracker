@@ -134,7 +134,7 @@ public class SearchFoodFragment extends Fragment {
                                 products = new LinkedList<Product>();
                                 for (int i = 0; i < productResponse.getProducts().size(); i++) {
                                     NetworkProduct product = productResponse.getProducts().get(i);
-                                    Product convertedProd = ProductConversionHelper.conversionProduct(product);
+                                    Product convertedProd = ProductConversionHelper.conversionProduct(product, getContext());
                                     if (convertedProd != null) {
                                         products.add(convertedProd);
                                     }
@@ -266,7 +266,7 @@ public class SearchFoodFragment extends Fragment {
                                 products = new LinkedList<Product>();
                                 for (int i = 0; i < productResponse.getProducts().size(); i++) {
                                     NetworkProduct product = productResponse.getProducts().get(i);
-                                    Product convertedProd = ProductConversionHelper.conversionProduct(product);
+                                    Product convertedProd = ProductConversionHelper.conversionProduct(product, getContext());
                                     if (convertedProd != null) {
                                         products.add(convertedProd);
                                     }
@@ -314,7 +314,7 @@ public class SearchFoodFragment extends Fragment {
                             products = new LinkedList<Product>();
                             for (int i = 0; i < productResponse.getProducts().size(); i++) {
                                 NetworkProduct product = productResponse.getProducts().get(i);
-                                Product convertedProd = ProductConversionHelper.conversionProduct(product);
+                                Product convertedProd = ProductConversionHelper.conversionProduct(product, getContext());
                                 if (convertedProd != null) {
                                     products.add(convertedProd);
                                 }

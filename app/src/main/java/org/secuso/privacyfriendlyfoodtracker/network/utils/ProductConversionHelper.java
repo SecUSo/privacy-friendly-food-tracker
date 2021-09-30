@@ -1,5 +1,7 @@
 package org.secuso.privacyfriendlyfoodtracker.network.utils;
 
+import android.content.Context;
+
 import org.secuso.privacyfriendlyfoodtracker.database.Product;
 import org.secuso.privacyfriendlyfoodtracker.ui.FoodInfo;
 import org.secuso.privacyfriendlyfoodtracker.ui.FoodInfosToShow;
@@ -15,7 +17,7 @@ import static org.secuso.privacyfriendlyfoodtracker.helpers.MapHelper.getOrDefau
  * @author Andre Lutz
  */
 public class ProductConversionHelper {
-    public static Product conversionProduct(org.secuso.privacyfriendlyfoodtracker.network.models.NetworkProduct product) {
+    public static Product conversionProduct(org.secuso.privacyfriendlyfoodtracker.network.models.NetworkProduct product, Context context) {
         String energyS = product.getNutrimentEnergy();
         if (energyS.equals("")) {
             return null;
@@ -28,7 +30,7 @@ public class ProductConversionHelper {
         }
 
         Map<String, Float> fieldValuesinGper100g =new HashMap<>();
-        for(Map.Entry<String, FoodInfo> foodInfoEntry : FoodInfosToShow.getAllFoodInfosAsMap().entrySet()){
+        for(Map.Entry<String, FoodInfo> foodInfoEntry : FoodInfosToShow.getAllFoodInfosAsMap(context).entrySet()){
             String amountInGtext = product.getNutrimentInGper100gByKey(foodInfoEntry.getKey());
             float amountInG = 0;
             if(!"".equals(amountInGtext)){
