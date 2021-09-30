@@ -117,7 +117,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         //((TextView) holder.mCardView.findViewById(R.id.resultCalories)).setText(String.format(Locale.ENGLISH,"%.2f kCal", mDataset.get(position).energy));
         String calPlusFoodInfoText =String.format(Locale.ENGLISH,"%.2f kCal", mDataset.get(position).energy);
         for(Map.Entry<String, FoodInfo> foodInfoEntry: mFoodInfosToShow.entrySet()){
-            calPlusFoodInfoText += String.format(Locale.ENGLISH,"\n%.2f %s %s", FoodInfosToShow.getFoodInfoValueByKey(mDataset.get(position),foodInfoEntry.getKey()), foodInfoEntry.getValue().getUnit(),foodInfoEntry.getValue().getName());
+            calPlusFoodInfoText += String.format(Locale.ENGLISH,"\n%.2f %s %s", FoodInfosToShow.getFoodInfoValueByKey(mDataset.get(position),foodInfoEntry.getKey(), foodInfoEntry.getValue()), foodInfoEntry.getValue().getUnit(),foodInfoEntry.getValue().getName());
         }
         ((TextView) holder.mCardView.findViewById(R.id.resultCalories)).setText(calPlusFoodInfoText);
         ((TextView) holder.mCardView.findViewById(R.id.resultId)).setText(String.format(Locale.ENGLISH, "%d", mDataset.get(position).id));

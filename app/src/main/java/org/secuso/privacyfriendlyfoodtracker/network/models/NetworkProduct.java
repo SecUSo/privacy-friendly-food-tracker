@@ -492,51 +492,13 @@ public class NetworkProduct {
 
 
     /**
-     * @return The carbs per 100g
+     * @param key the nutriment's key in openfoodfacts, e.g. "salt"
+     * @return The nutriment's amount per 100g of product in grams
      */
-    public String getNutrimentCarbs() {
-        if(nutriments.containsKey("carbohydrates_100g")){
-            return nutriments.get("carbohydrates_100g").toString();
-        }
-        return "";
-    }
-
-    /**
-     * @return The sugar per 100g
-     */
-    public String getNutrimentSugar() {
-        if(nutriments.containsKey("sugars_100g")){
-            return nutriments.get("sugars_100g").toString();
-        }
-        return "";
-    }
-
-    /**
-     * @return The protein per 100g
-     */
-    public String getNutrimentProtein() {
-        if(nutriments.containsKey("proteins_100g")){
-            return nutriments.get("proteins_100g").toString();
-        }
-        return "";
-    }
-
-    /**
-     * @return The fat per 100g
-     */
-    public String getNutrimentFat() {
-        if(nutriments.containsKey("fat_100g")){
-            return nutriments.get("fat_100g").toString();
-        }
-        return "";
-    }
-
-    /**
-     * @return The protein per 100g
-     */
-    public String getNutrimentSatFat() {
-        if(nutriments.containsKey("saturated-fat_100g")){
-            return nutriments.get("saturated-fat_100g").toString();
+    public String getNutrimentInGper100gByKey(String key) {
+        String off_field = String.format("%1$s_100g", key);
+        if(nutriments.containsKey(off_field)){
+            return nutriments.get(off_field).toString();
         }
         return "";
     }

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
 import org.secuso.privacyfriendlyfoodtracker.database.Product;
@@ -34,45 +35,65 @@ public class FoodInfosToShow {
      * Implement getter method which uses ordered list of food info keys and returns a new
      * linkedHashMap, where entries from foodInfo map are inserted according to the ordered list of
      * food info keys.
+     *
+     * How to add further foodInfos:
+     *   in FoodInfosToShow:
+     *   - in static block add new FoodInfo to map (foodInfos.put("carbs", new FoodInfo("Carbs", "g", "carbohydrates"));)
+     *   - add key in getFoodInfoValueByKey
+     *   in Product:
+     *   - add fields, modify constructors etc.
+     *   DatabaseFacade:
+     *   - add new parameter to insertProductPrivate
+     *   - insertEntry
+     *   AddFoodFragment
+     *   - makedatabasentry
+     *   ProductDao
+     *   - findexistingproduct
+     *   DatabaseEntry
+     *   - add field
+     *   ConsumedEntrieAndProductDao
+     *
+     *
      */
     public static Map<String,FoodInfo> foodInfos=new LinkedHashMap<>(); // LinkedHashMap so entries are ordered by insertion
     static {
-        //TODO check whether all units are correct, especially vitamins etc. maybe some of them are rather micro than milligram
-        foodInfos.put("carbs", new FoodInfo("Carbs", "g"));
-        foodInfos.put("sugar", new FoodInfo("Sugar", "g"));
-        foodInfos.put("protein", new FoodInfo("Protein", "g"));
-        foodInfos.put("fat", new FoodInfo("Fat", "g"));
-        foodInfos.put("satFat", new FoodInfo("SatFat", "g"));
-        foodInfos.put("salt", new FoodInfo("Salt", "g"));
-        foodInfos.put("vitaminA_retinol", new FoodInfo("Vitamin A", "mg"));
-        foodInfos.put("betaCarotin", new FoodInfo("Beta-Carotin", "mg"));
-        foodInfos.put("vitaminD", new FoodInfo("Vitamin D", "mg"));
-        foodInfos.put("vitaminE", new FoodInfo("Vitamin E", "mg"));
-        foodInfos.put("vitaminK", new FoodInfo("Vitamin K", "mg"));
-        foodInfos.put("thiamin_B1", new FoodInfo("Vitamin B1", "mg"));
-        foodInfos.put("riboflavin_B2", new FoodInfo("Vitamin B2", "mg"));
-        foodInfos.put("niacin", new FoodInfo("Niacin", "mg"));
-        foodInfos.put("vitaminB6", new FoodInfo("Vitamin B6", "mg"));
-        foodInfos.put("folat", new FoodInfo("Folat", "mg"));
-        foodInfos.put("pantothenacid", new FoodInfo("Pantothenacid", "mg"));
-        foodInfos.put("biotin", new FoodInfo("Biotin", "mg"));
-        foodInfos.put("cobalamin_B12", new FoodInfo("Vitamin B12", "mg"));
-        foodInfos.put("vitaminC", new FoodInfo("Vitamin C", "mg"));
-        foodInfos.put("natrium", new FoodInfo("Natrium", "mg"));
-        foodInfos.put("chlorid", new FoodInfo("Chlorid", "mg"));
-        foodInfos.put("kalium", new FoodInfo("Kalium", "mg"));
-        foodInfos.put("calcium", new FoodInfo("Calcium", "mg"));
-        foodInfos.put("phosphor", new FoodInfo("Phosphor", "mg"));
-        foodInfos.put("magnesium", new FoodInfo("Magnesium", "mg"));
-        foodInfos.put("eisen", new FoodInfo("Eisen", "mg"));
-        foodInfos.put("jod", new FoodInfo("Jod", "mg"));
-        foodInfos.put("fluorid", new FoodInfo("Fluorid", "mg"));
-        foodInfos.put("zink", new FoodInfo("Zink", "mg"));
-        foodInfos.put("selen", new FoodInfo("Selen", "mg"));
-        foodInfos.put("kupfer", new FoodInfo("Kupfer", "mg"));
-        foodInfos.put("mangan", new FoodInfo("Mangan", "mg"));
-        foodInfos.put("chrom", new FoodInfo("Chrom", "mg"));
-        foodInfos.put("molybdaen", new FoodInfo("Molybdaen", "mg"));
+        //TODO check whether all units are sensible
+        foodInfos.put("carbs", new FoodInfo("Carbs", "g", "carbohydrates"));
+        foodInfos.put("sugar", new FoodInfo("Sugar", "g", "sugars"));
+        foodInfos.put("protein", new FoodInfo("Protein", "g", "proteins"));
+        foodInfos.put("fat", new FoodInfo("Fat", "g", "fat"));
+        foodInfos.put("satFat", new FoodInfo("SatFat", "g", "saturated-fat"));
+        foodInfos.put("salt", new FoodInfo("Salt", "g", "salt"));
+        foodInfos.put("fiber", new FoodInfo("Fiber", "g", "fiber"));
+        foodInfos.put("vitaminA_retinol", new FoodInfo("Vitamin A", "mg", "vitamin-a"));
+        foodInfos.put("betaCarotin", new FoodInfo("Beta-Carotin", "mg", null));
+        foodInfos.put("vitaminD", new FoodInfo("Vitamin D", "mg", "vitamin-d"));
+        foodInfos.put("vitaminE", new FoodInfo("Vitamin E", "mg", "vitamin-e"));
+        foodInfos.put("vitaminK", new FoodInfo("Vitamin K", "mg", "vitamin-k"));
+        foodInfos.put("thiamin_B1", new FoodInfo("Vitamin B1", "mg", "vitamin-b1"));
+        foodInfos.put("riboflavin_B2", new FoodInfo("Vitamin B2", "mg", "vitamin-b2"));
+        foodInfos.put("niacin", new FoodInfo("Niacin", "mg", null));
+        foodInfos.put("vitaminB6", new FoodInfo("Vitamin B6", "mg", "vitamin-b6"));
+        foodInfos.put("folat", new FoodInfo("Folat", "mg", null));
+        foodInfos.put("pantothenacid", new FoodInfo("Pantothenacid", "mg", "pantothenic-acid"));
+        foodInfos.put("biotin", new FoodInfo("Biotin", "mg", "biotin"));
+        foodInfos.put("cobalamin_B12", new FoodInfo("Vitamin B12", "mg", "vitamin-b12"));
+        foodInfos.put("vitaminC", new FoodInfo("Vitamin C", "mg", "vitamin-c"));
+        foodInfos.put("natrium", new FoodInfo("Natrium", "mg", "sodium"));
+        foodInfos.put("chlorid", new FoodInfo("Chlorid", "mg", "chloride"));
+        foodInfos.put("kalium", new FoodInfo("Kalium", "mg", "potassium"));
+        foodInfos.put("calcium", new FoodInfo("Calcium", "mg", "calcium")); 
+        foodInfos.put("phosphor", new FoodInfo("Phosphor", "mg", "phosphorus"));
+        foodInfos.put("magnesium", new FoodInfo("Magnesium", "mg", "magnesium"));
+        foodInfos.put("eisen", new FoodInfo("Iron", "mg", "iron"));
+        foodInfos.put("jod", new FoodInfo("Jod", "mg", "iodine"));
+        foodInfos.put("fluorid", new FoodInfo("Fluorid", "mg", "fluoride"));
+        foodInfos.put("zink", new FoodInfo("Zink", "mg", "zinc"));
+        foodInfos.put("selen", new FoodInfo("Selen", "mg", "selenium"));
+        foodInfos.put("kupfer", new FoodInfo("Kupfer", "mg", "copper"));
+        foodInfos.put("mangan", new FoodInfo("Mangan", "mg", "manganese"));
+        foodInfos.put("chrom", new FoodInfo("Chrom", "mg", "chromium"));
+        foodInfos.put("molybdaen", new FoodInfo("Molybdaen", "mg", "molybdenum"));
     }
 
 
@@ -99,8 +120,8 @@ public class FoodInfosToShow {
 
 
     /***
-     * Given a key identifying a FoodInfo and a DatabaseEntry containing all FoodInfoValues, return
-     * the specified FoodInfo's value from the DatabaseEntry. Possible keys are those present in
+     * Given a key identifying a FoodInfo, the FoodInfo object itself and a DatabaseEntry containing all FoodInfoValues, return
+     * the specified FoodInfo's value from the DatabaseEntry converted to the FoodInfo objects unit. Possible keys are those present in
      * FoodInfosToShow.foodInfos, e.g. "carbs".
      *
      * Meta: I also thought about implementing getting a FoodInfo's value from a DatabaseEntry by
@@ -108,83 +129,128 @@ public class FoodInfosToShow {
      * way would be a little more object-oriented, but maybe too convoluted, so i stuck with this simple
      * key lookup.
      * @param databaseEntry
-     * @param key
+     * @param key to decide which membervariable of databaseEntry should be used
+     * @param foodInfo to convert the Value to foodInfo.unit before returning it
      * @return
      */
-    public static float getFoodInfoValueByKey(DatabaseEntry databaseEntry, String key){
+    public static float getFoodInfoValueByKey(DatabaseEntry databaseEntry, String key, FoodInfo foodInfo){
+        float value=0.0f;
         switch(key){
             case "carbs":
-                return databaseEntry.carbs;
+                value= databaseEntry.carbs;
+                break;
             case "sugar":
-                    return databaseEntry.sugar;
+                value= databaseEntry.sugar;
+                break;
             case "protein":
-                return databaseEntry.protein;
+                value= databaseEntry.protein;
+                break;
             case "fat":
-                return databaseEntry.fat;
+                value= databaseEntry.fat;
+                break;
             case "satFat":
-                return databaseEntry.satFat;
+                value= databaseEntry.satFat;
+                break;
             case "salt":
-                return databaseEntry.salt;
+                value= databaseEntry.salt;
+                break;
+            case "fiber":
+                value= databaseEntry.fiber;
+                break;
             case "vitaminA_retinol":
-                return databaseEntry.vitaminA_retinol;
+                value= databaseEntry.vitaminA_retinol;
+                break;
             case "betaCarotin":
-                return databaseEntry.betaCarotin;
+                value= databaseEntry.betaCarotin;
+                break;
             case "vitaminD":
-                return databaseEntry.vitaminD;
+                value= databaseEntry.vitaminD;
+                break;
             case "vitaminE":
-                return databaseEntry.vitaminE;
+                value= databaseEntry.vitaminE;
+                break;
             case "vitaminK":
-                return databaseEntry.vitaminK;
+                value= databaseEntry.vitaminK;
+                break;
             case "thiamin_B1":
-                return databaseEntry.thiamin_B1;
+                value= databaseEntry.thiamin_B1;
+                break;
             case "riboflavin_B2":
-                return databaseEntry.riboflavin_B2;
+                value= databaseEntry.riboflavin_B2;
+                break;
             case "niacin":
-                return databaseEntry.niacin;
+                value= databaseEntry.niacin;
+                break;
             case "vitaminB6":
-                return databaseEntry.vitaminB6;
+                value= databaseEntry.vitaminB6;
+                break;
             case "folat":
-                return databaseEntry.folat;
+                value= databaseEntry.folat;
+                break;
             case "pantothenacid":
-                return databaseEntry.pantothenacid;
+                value= databaseEntry.pantothenacid;
+                break;
             case "biotin":
-                return databaseEntry.biotin;
+                value= databaseEntry.biotin;
+                break;
             case "cobalamin_B12":
-                return databaseEntry.cobalamin_B12;
+                value= databaseEntry.cobalamin_B12;
+                break;
             case "vitaminC":
-                return databaseEntry.vitaminC;
+                value= databaseEntry.vitaminC;
+                break;
             case "natrium":
-                return databaseEntry.natrium;
+                value= databaseEntry.natrium;
+                break;
             case "chlorid":
-                return databaseEntry.chlorid;
+                value= databaseEntry.chlorid;
+                break;
             case "kalium":
-                return databaseEntry.kalium;
+                value= databaseEntry.kalium;
+                break;
             case "calcium":
-                return databaseEntry.calcium;
+                value= databaseEntry.calcium;
+                break;
             case "phosphor":
-                return databaseEntry.phosphor;
+                value= databaseEntry.phosphor;
+                break;
             case "magnesium":
-                return databaseEntry.magnesium;
+                value= databaseEntry.magnesium;
+                break;
             case "eisen":
-                return databaseEntry.eisen;
+                value= databaseEntry.eisen;
+                break;
             case "jod":
-                return databaseEntry.jod;
+                value= databaseEntry.jod;
+                break;
             case "fluorid":
-                return databaseEntry.fluorid;
+                value= databaseEntry.fluorid;
+                break;
             case "zink":
-                return databaseEntry.zink;
+                value= databaseEntry.zink;
+                break;
             case "selen":
-                return databaseEntry.selen;
+                value= databaseEntry.selen;
+                break;
             case "kupfer":
-                return databaseEntry.kupfer;
+                value= databaseEntry.kupfer;
+                break;
             case "mangan":
-                return databaseEntry.mangan;
+                value= databaseEntry.mangan;
+                break;
             case "chrom":
-                return databaseEntry.chrom;
+                value= databaseEntry.chrom;
+                break;
             case "molybdaen":
-                return databaseEntry.molybdaen;
+                value= databaseEntry.molybdaen;
+                break;
         }
-        return 0.0f;
+        try {
+            value = foodInfo.convertAmountInGramsToUnits(value);
+        } catch (FoodInfo.NoConversionDefinedException e) {
+            Log.e("FoodInfosToShow", "getFoodInfoValueByKey: No conversion for FoodInfo with key "+key, e);
+        }
+        return value;
     }
     /***
      * Given a key identifying a FoodInfo and a Product containing all FoodInfoValues, return
@@ -198,85 +264,130 @@ public class FoodInfosToShow {
      * @param key
      * @return
      */
-    public static float getFoodInfoValueByKey(Product product, String key){
+    public static float getFoodInfoValueByKey(Product product, String key, FoodInfo foodInfo){
+        float value = 0.0f;
         switch(key){
             case "carbs":
-                return product.carbs;
+                value =  product.carbs;
+                break;
             case "sugar":
-                return product.sugar;
+                value =  product.sugar;
+                break;
             case "protein":
-                return product.protein;
+                value =  product.protein;
+                break;
             case "fat":
-                return product.fat;
+                value =  product.fat;
+                break;
             case "satFat":
-                return product.satFat;
+                value =  product.satFat;
+                break;
             case "salt":
-                return product.salt;
+                value =  product.salt;
+                break;
+            case "fiber":
+                value =  product.fiber;
+                break;
             case "vitaminA_retinol":
-                return product.vitaminA_retinol;
+                value =  product.vitaminA_retinol;
+                break;
             case "betaCarotin":
-                return product.betaCarotin;
+                value =  product.betaCarotin;
+                break;
             case "vitaminD":
-                return product.vitaminD;
+                value =  product.vitaminD;
+                break;
             case "vitaminE":
-                return product.vitaminE;
+                value =  product.vitaminE;
+                break;
             case "vitaminK":
-                return product.vitaminK;
+                value =  product.vitaminK;
+                break;
             case "thiamin_B1":
-                return product.thiamin_B1;
+                value =  product.thiamin_B1;
+                break;
             case "riboflavin_B2":
-                return product.riboflavin_B2;
+                value =  product.riboflavin_B2;
+                break;
             case "niacin":
-                return product.niacin;
+                value =  product.niacin;
+                break;
             case "vitaminB6":
-                return product.vitaminB6;
+                value =  product.vitaminB6;
+                break;
             case "folat":
-                return product.folat;
+                value =  product.folat;
+                break;
             case "pantothenacid":
-                return product.pantothenacid;
+                value =  product.pantothenacid;
+                break;
             case "biotin":
-                return product.biotin;
+                value =  product.biotin;
+                break;
             case "cobalamin_B12":
-                return product.cobalamin_B12;
+                value =  product.cobalamin_B12;
+                break;
             case "vitaminC":
-                return product.vitaminC;
+                value =  product.vitaminC;
+                break;
             case "natrium":
-                return product.natrium;
+                value =  product.natrium;
+                break;
             case "chlorid":
-                return product.chlorid;
+                value =  product.chlorid;
+                break;
             case "kalium":
-                return product.kalium;
+                value =  product.kalium;
+                break;
             case "calcium":
-                return product.calcium;
+                value =  product.calcium;
+                break;
             case "phosphor":
-                return product.phosphor;
+                value =  product.phosphor;
+                break;
             case "magnesium":
-                return product.magnesium;
+                value =  product.magnesium;
+                break;
             case "eisen":
-                return product.eisen;
+                value =  product.eisen;
+                break;
             case "jod":
-                return product.jod;
+                value =  product.jod;
+                break;
             case "fluorid":
-                return product.fluorid;
+                value =  product.fluorid;
+                break;
             case "zink":
-                return product.zink;
+                value =  product.zink;
+                break;
             case "selen":
-                return product.selen;
+                value =  product.selen;
+                break;
             case "kupfer":
-                return product.kupfer;
+                value =  product.kupfer;
+                break;
             case "mangan":
-                return product.mangan;
+                value =  product.mangan;
+                break;
             case "chrom":
-                return product.chrom;
+                value =  product.chrom;
+                break;
             case "molybdaen":
-                return product.molybdaen;
+                value =  product.molybdaen;
+                break;
         }
-        return 0.0f;
-    }
+        try {
+            value = foodInfo.convertAmountInGramsToUnits(value);
+        } catch (FoodInfo.NoConversionDefinedException e) {
+            Log.e("FoodInfosToShow", "getFoodInfoValueByKey: No conversion for FoodInfo with key "+key, e);
+        }
+        return value;    }
 
     /***
      * Given a key identifying a FoodInfo and a Product containing all FoodInfoValues, return
-     * the specified FoodInfo's value from the Product. Possible keys are those present in
+     * the specified FoodInfo's value from the Product. use the given FoodInfo object to convert
+     * the value to FoodInfo.unit before returning.
+     * Possible keys are those present in
      * FoodInfosToShow.foodInfos, e.g. "carbs".
      *
      * Meta: This does exactly the same like getFoodInfoValueByKey(DatabaseEntry,String), just for the
@@ -284,82 +395,127 @@ public class FoodInfosToShow {
      * interface offering getters for every food info. TODO.
      * @param product
      * @param key
+     * @param foodInfo used to convert the value to foodInfo.unit
      * @return
      */
-    public static float getFoodInfoValueByKey(ConsumedEntrieAndProductDao.DateNutriments product, String key){
+    public static float getFoodInfoValueByKey(ConsumedEntrieAndProductDao.DateNutriments product, String key, FoodInfo foodInfo){
+        float value = 0.0f;
         switch(key){
             case "carbs":
-                return product.carbsConsumed;
+                value= product.carbsConsumed;
+                break;
             case "sugar":
-                return product.sugarConsumed;
+                value= product.sugarConsumed;
+                break;
             case "protein":
-                return product.proteinConsumed;
+                value= product.proteinConsumed;
+                break;
             case "fat":
-                return product.fatConsumed;
+                value= product.fatConsumed;
+                break;
             case "satFat":
-                return product.satFatConsumed;
+                value= product.satFatConsumed;
+                break;
             case "salt":
-                return product.saltConsumed;
+                value= product.saltConsumed;
+                break;
+            case "fiber":
+                value= product.fiberConsumed;
+                break;
             case "vitaminA_retinol":
-                return product.vitaminA_retinolConsumed;
+                value= product.vitaminA_retinolConsumed;
+                break;
             case "betaCarotin":
-                return product.betaCarotinConsumed;
+                value= product.betaCarotinConsumed;
+                break;
             case "vitaminD":
-                return product.vitaminDConsumed;
+                value= product.vitaminDConsumed;
+                break;
             case "vitaminE":
-                return product.vitaminEConsumed;
+                value= product.vitaminEConsumed;
+                break;
             case "vitaminK":
-                return product.vitaminKConsumed;
+                value= product.vitaminKConsumed;
+                break;
             case "thiamin_B1":
-                return product.thiamin_B1Consumed;
+                value= product.thiamin_B1Consumed;
+                break;
             case "riboflavin_B2":
-                return product.riboflavin_B2Consumed;
+                value= product.riboflavin_B2Consumed;
+                break;
             case "niacin":
-                return product.niacinConsumed;
+                value= product.niacinConsumed;
+                break;
             case "vitaminB6":
-                return product.vitaminB6Consumed;
+                value= product.vitaminB6Consumed;
+                break;
             case "folat":
-                return product.folatConsumed;
+                value= product.folatConsumed;
+                break;
             case "pantothenacid":
-                return product.pantothenacidConsumed;
+                value= product.pantothenacidConsumed;
+                break;
             case "biotin":
-                return product.biotinConsumed;
+                value= product.biotinConsumed;
+                break;
             case "cobalamin_B12":
-                return product.cobalamin_B12Consumed;
+                value= product.cobalamin_B12Consumed;
+                break;
             case "vitaminC":
-                return product.vitaminCConsumed;
+                value= product.vitaminCConsumed;
+                break;
             case "natrium":
-                return product.natriumConsumed;
+                value= product.natriumConsumed;
+                break;
             case "chlorid":
-                return product.chloridConsumed;
+                value= product.chloridConsumed;
+                break;
             case "kalium":
-                return product.kaliumConsumed;
+                value= product.kaliumConsumed;
+                break;
             case "calcium":
-                return product.calciumConsumed;
+                value= product.calciumConsumed;
+                break;
             case "phosphor":
-                return product.phosphorConsumed;
+                value= product.phosphorConsumed;
+                break;
             case "magnesium":
-                return product.magnesiumConsumed;
+                value= product.magnesiumConsumed;
+                break;
             case "eisen":
-                return product.eisenConsumed;
+                value= product.eisenConsumed;
+                break;
             case "jod":
-                return product.jodConsumed;
+                value= product.jodConsumed;
+                break;
             case "fluorid":
-                return product.fluoridConsumed;
+                value= product.fluoridConsumed;
+                break;
             case "zink":
-                return product.zinkConsumed;
+                value= product.zinkConsumed;
+                break;
             case "selen":
-                return product.selenConsumed;
+                value= product.selenConsumed;
+                break;
             case "kupfer":
-                return product.kupferConsumed;
+                value= product.kupferConsumed;
+                break;
             case "mangan":
-                return product.manganConsumed;
+                value= product.manganConsumed;
+                break;
             case "chrom":
-                return product.chromConsumed;
+                value= product.chromConsumed;
+                break;
             case "molybdaen":
-                return product.molybdaenConsumed;
+                value= product.molybdaenConsumed;
+                break;
         }
-        return 0.0f;
+        try {
+            value = foodInfo.convertAmountInGramsToUnits(value);
+        } catch (FoodInfo.NoConversionDefinedException e) {
+            Log.e("FoodInfosToShow", "getFoodInfoValueByKey: No conversion for FoodInfo with key "+key, e);
+        }
+        return value;
     }
 
     /***
@@ -390,5 +546,9 @@ public class FoodInfosToShow {
         SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean(GOAL_DONT_EXCEED+key,false);
+    }
+
+    public static Map<String,FoodInfo> getAllFoodInfosAsMap() {
+        return foodInfos;
     }
 }

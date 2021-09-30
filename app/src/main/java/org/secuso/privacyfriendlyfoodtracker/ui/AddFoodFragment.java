@@ -34,12 +34,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.secuso.privacyfriendlyfoodtracker.R;
+import org.secuso.privacyfriendlyfoodtracker.helpers.MapHelper;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.SharedStatisticViewModel;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -161,6 +160,15 @@ public class AddFoodFragment extends Fragment {
                         }else{
                             fieldValue = Float.parseFloat(etValue);
                         }
+                        // convert the entered value which is in the foodinfos unit/100g to g/100g
+                        try {
+                            fieldValue = FoodInfosToShow.getFoodInfosShownAsMap(getContext()).get(editTextEntry.getKey()).convertAmountInUnitsToGrams(fieldValue);
+                        } catch (FoodInfo.NoConversionDefinedException e) {
+                            Log.e("AddFoodFragment", "onClick: No conversion defined for " + editTextEntry.getKey(), e);
+                            e.printStackTrace();
+                            fieldValue = 0.0f; //rather save 0 than a false because not converted value?
+                        }
+
                         fieldValues.put(editTextEntry.getKey(),fieldValue);
                     } catch (NumberFormatException e) {
                         showErrorMessageString(otherFoodInfoTextInputLayouts.get(editTextEntry.getKey()), getResources().getString(R.string.error_fieldname_nan, FoodInfosToShow.foodInfos.get(editTextEntry.getKey())));
@@ -169,7 +177,6 @@ public class AddFoodFragment extends Fragment {
                 }
 
                 if(validated) {
-
 
 
                     boolean entrySuccessful = makeDatabaseEntry(name, amount, calories, fieldValues);
@@ -213,8 +220,7 @@ public class AddFoodFragment extends Fragment {
 
             for(Map.Entry<String,EditText> editTextEntry : otherFoodInfoEditTexts.entrySet()){
                 EditText currentEt = editTextEntry.getValue();
-                //TODO dafür sorgen, dass referenceActivity.otherFoodInfo gefüllt wird
-                currentEt.setText(String.format(Locale.ENGLISH, "%.2f", FoodInfosToShow.getFoodInfoValueByKey(referenceActivity.selectedProduct,editTextEntry.getKey())));
+                currentEt.setText(String.format(Locale.ENGLISH, "%.2f", FoodInfosToShow.getFoodInfoValueByKey(referenceActivity.selectedProduct,editTextEntry.getKey(), FoodInfosToShow.getAllFoodInfosAsMap().get(editTextEntry.getKey()))));
                 currentEt.setFocusable(false);
                 currentEt.setClickable(false);
                 currentEt.setTextColor(getResources().getColor(R.color.middlegrey));
@@ -248,20 +254,6 @@ public class AddFoodFragment extends Fragment {
     }
 
 
-    /***
-     * Map.getOrDefault does not exist in Api<24 :/
-     * @param map
-     * @param key
-     * @param defaultValue
-     * @return the mapped value or the default, if no mapping exists
-     */
-    private Float getOrDefault(Map<String,Float> map, String key, float defaultValue){
-        Float ret = map.get(key);
-        if(ret==null){
-            ret = defaultValue;
-        }
-        return ret;
-    }
     /**
      * Create a new db entry
      * @param name Name of the food
@@ -277,7 +269,7 @@ public class AddFoodFragment extends Fragment {
 
             // We haven't explicitly chosen a product so the productId is 0 for unknown
             databaseFacade.insertEntry(amount, ((BaseAddFoodActivity) referenceActivity).date, name, calories,
-                    getOrDefault(otherFieldValues, "carbs", 0.0f), getOrDefault(otherFieldValues, "sugar", 0.0f), getOrDefault(otherFieldValues, "protein", 0.0f), getOrDefault(otherFieldValues, "fat", 0.0f), getOrDefault(otherFieldValues, "satFat", 0.0f), getOrDefault(otherFieldValues, "salt", 0.0f), getOrDefault(otherFieldValues, "vitaminA_retinol", 0.0f), getOrDefault(otherFieldValues, "betaCarotin", 0.0f), getOrDefault(otherFieldValues, "vitaminD", 0.0f), getOrDefault(otherFieldValues, "vitaminE", 0.0f), getOrDefault(otherFieldValues, "vitaminK", 0.0f), getOrDefault(otherFieldValues, "thiamin_B1", 0.0f), getOrDefault(otherFieldValues, "riboflavin_B2", 0.0f), getOrDefault(otherFieldValues, "niacin", 0.0f), getOrDefault(otherFieldValues, "vitaminB6", 0.0f), getOrDefault(otherFieldValues, "folat", 0.0f), getOrDefault(otherFieldValues, "pantothenacid", 0.0f), getOrDefault(otherFieldValues, "biotin", 0.0f), getOrDefault(otherFieldValues, "cobalamin_B12", 0.0f), getOrDefault(otherFieldValues, "vitaminC", 0.0f), getOrDefault(otherFieldValues, "natrium", 0.0f), getOrDefault(otherFieldValues, "chlorid", 0.0f), getOrDefault(otherFieldValues, "kalium", 0.0f), getOrDefault(otherFieldValues, "calcium", 0.0f), getOrDefault(otherFieldValues, "phosphor", 0.0f), getOrDefault(otherFieldValues, "magnesium", 0.0f), getOrDefault(otherFieldValues, "eisen", 0.0f), getOrDefault(otherFieldValues, "jod", 0.0f), getOrDefault(otherFieldValues, "fluorid", 0.0f), getOrDefault(otherFieldValues, "zink", 0.0f), getOrDefault(otherFieldValues, "selen", 0.0f), getOrDefault(otherFieldValues, "kupfer", 0.0f), getOrDefault(otherFieldValues, "mangan", 0.0f), getOrDefault(otherFieldValues, "chrom", 0.0f), getOrDefault(otherFieldValues, "molybdaen", 0.0f), 0);
+                    MapHelper.getOrDefault(otherFieldValues, "carbs", 0.0f), MapHelper.getOrDefault(otherFieldValues, "sugar", 0.0f), MapHelper.getOrDefault(otherFieldValues, "protein", 0.0f), MapHelper.getOrDefault(otherFieldValues, "fat", 0.0f), MapHelper.getOrDefault(otherFieldValues, "satFat", 0.0f), MapHelper.getOrDefault(otherFieldValues, "salt", 0.0f), MapHelper.getOrDefault(otherFieldValues, "fiber", 0.0f), MapHelper.getOrDefault(otherFieldValues, "vitaminA_retinol", 0.0f), MapHelper.getOrDefault(otherFieldValues, "betaCarotin", 0.0f), MapHelper.getOrDefault(otherFieldValues, "vitaminD", 0.0f), MapHelper.getOrDefault(otherFieldValues, "vitaminE", 0.0f), MapHelper.getOrDefault(otherFieldValues, "vitaminK", 0.0f), MapHelper.getOrDefault(otherFieldValues, "thiamin_B1", 0.0f), MapHelper.getOrDefault(otherFieldValues, "riboflavin_B2", 0.0f), MapHelper.getOrDefault(otherFieldValues, "niacin", 0.0f), MapHelper.getOrDefault(otherFieldValues, "vitaminB6", 0.0f), MapHelper.getOrDefault(otherFieldValues, "folat", 0.0f), MapHelper.getOrDefault(otherFieldValues, "pantothenacid", 0.0f), MapHelper.getOrDefault(otherFieldValues, "biotin", 0.0f), MapHelper.getOrDefault(otherFieldValues, "cobalamin_B12", 0.0f), MapHelper.getOrDefault(otherFieldValues, "vitaminC", 0.0f), MapHelper.getOrDefault(otherFieldValues, "natrium", 0.0f), MapHelper.getOrDefault(otherFieldValues, "chlorid", 0.0f), MapHelper.getOrDefault(otherFieldValues, "kalium", 0.0f), MapHelper.getOrDefault(otherFieldValues, "calcium", 0.0f), MapHelper.getOrDefault(otherFieldValues, "phosphor", 0.0f), MapHelper.getOrDefault(otherFieldValues, "magnesium", 0.0f), MapHelper.getOrDefault(otherFieldValues, "eisen", 0.0f), MapHelper.getOrDefault(otherFieldValues, "jod", 0.0f), MapHelper.getOrDefault(otherFieldValues, "fluorid", 0.0f), MapHelper.getOrDefault(otherFieldValues, "zink", 0.0f), MapHelper.getOrDefault(otherFieldValues, "selen", 0.0f), MapHelper.getOrDefault(otherFieldValues, "kupfer", 0.0f), MapHelper.getOrDefault(otherFieldValues, "mangan", 0.0f), MapHelper.getOrDefault(otherFieldValues, "chrom", 0.0f), MapHelper.getOrDefault(otherFieldValues, "molybdaen", 0.0f), 0);
         } catch (Exception e) {
             // something went wrong so the entry wasn't successful
             e.printStackTrace();

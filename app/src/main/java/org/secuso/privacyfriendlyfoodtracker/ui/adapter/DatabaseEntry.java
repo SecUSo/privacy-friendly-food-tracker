@@ -28,6 +28,7 @@ public class DatabaseEntry {
     public float fat;
     public float satFat;
     public float salt;
+    public float fiber;
 
     //vitamins and minerals
     //soluable in fat vitamins
@@ -67,7 +68,7 @@ public class DatabaseEntry {
     public String name;
     public int id;
     public DatabaseEntry(int id, String name, int amount, float energy, float carbs, float sugar, float protein, float fat, float satFat,
-                         float salt, float vitaminA_retinol, float betaCarotin, float vitaminD, float vitaminE, float vitaminK, float thiamin_B1, float riboflavin_B2, float niacin, float vitaminB6, float folat, float pantothenacid, float biotin, float cobalamin_B12, float vitaminC, float natrium, float chlorid, float kalium, float calcium, float phosphor, float magnesium, float eisen, float jod, float fluorid, float zink, float selen, float kupfer, float mangan, float chrom, float molybdaen){
+                         float salt, float fiber, float vitaminA_retinol, float betaCarotin, float vitaminD, float vitaminE, float vitaminK, float thiamin_B1, float riboflavin_B2, float niacin, float vitaminB6, float folat, float pantothenacid, float biotin, float cobalamin_B12, float vitaminC, float natrium, float chlorid, float kalium, float calcium, float phosphor, float magnesium, float eisen, float jod, float fluorid, float zink, float selen, float kupfer, float mangan, float chrom, float molybdaen){
         this.id = id;
         this.amount = amount;
         this.energy = energy;
@@ -77,6 +78,7 @@ public class DatabaseEntry {
         this.fat = fat;
         this.satFat = satFat;
         this.salt=salt;
+        this.fiber = fiber;
 
         this.vitaminA_retinol=vitaminA_retinol;
         this.betaCarotin=betaCarotin;

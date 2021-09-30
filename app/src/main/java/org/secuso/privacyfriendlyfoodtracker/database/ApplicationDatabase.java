@@ -102,7 +102,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
     static final Migration MIGRATION_2_3 = new Migration(2, 3) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            String[] newFields = new String[]{"salt", "vitaminA_retinol", "betaCarotin", "vitaminD", "vitaminE", "vitaminK", "thiamin_B1", "riboflavin_B2", "niacin", "vitaminB6", "folat", "pantothenacid", "biotin", "cobalamin_B12", "vitaminC", "natrium", "chlorid", "kalium", "calcium", "phosphor", "magnesium", "eisen", "jod", "fluorid", "zink", "selen", "kupfer", "mangan", "chrom", "molybdaen"};
+            String[] newFields = new String[]{"salt", "fiber", "vitaminA_retinol", "betaCarotin", "vitaminD", "vitaminE", "vitaminK", "thiamin_B1", "riboflavin_B2", "niacin", "vitaminB6", "folat", "pantothenacid", "biotin", "cobalamin_B12", "vitaminC", "natrium", "chlorid", "kalium", "calcium", "phosphor", "magnesium", "eisen", "jod", "fluorid", "zink", "selen", "kupfer", "mangan", "chrom", "molybdaen"};
             for(String field : newFields) {
                 database.execSQL("ALTER TABLE Product "
                         + " ADD COLUMN "+ field +" REAL NOT NULL default 0");

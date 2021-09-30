@@ -44,6 +44,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -456,10 +457,10 @@ public class OverviewActivity extends AppCompatActivity {
 
 
 
-            BigDecimal totalAmount = new BigDecimal("0");
+            float totalAmount = 0;
 
             for (DatabaseEntry e : entries) {
-                totalAmount = totalAmount.add(BigDecimal.valueOf(FoodInfosToShow.getFoodInfoValueByKey(e,foodInfoEntry.getKey()) * e.amount / 100));
+                totalAmount = totalAmount + (FoodInfosToShow.getFoodInfoValueByKey(e,foodInfoEntry.getKey(), foodInfoEntry.getValue()) * e.amount / 100);
             }
 
             String nutrimentFoodAmountText;
@@ -472,7 +473,7 @@ public class OverviewActivity extends AppCompatActivity {
             tvFoodInfoAmount.setText(nutrimentFoodAmountText);
 
             if(dailyGoal != null){
-                styleProgressBarByFoodInfoKey(progressBar,foodInfoEntry.getKey(),totalAmount.floatValue(), dailyGoal);
+                styleProgressBarByFoodInfoKey(progressBar,foodInfoEntry.getKey(),totalAmount, dailyGoal);
             }
 
             idOfPredecessor = dailyGoal != null ? progressBar.getId() : tvFoodInfoName.getId();
@@ -637,8 +638,8 @@ public class OverviewActivity extends AppCompatActivity {
      * @param key
      * @return
      */
-    private float getConsumedFoodInfoAmountForEntry(DatabaseEntry e,String key) {
-        return (e.amount * FoodInfosToShow.getFoodInfoValueByKey(e,key)) / 100;
+    private float getConsumedFoodInfoAmountForEntry(DatabaseEntry e,String key, FoodInfo foodInfo) {
+        return (e.amount * FoodInfosToShow.getFoodInfoValueByKey(e,key, foodInfo)) / 100;
     }
     /**
      * Creates a CheckedCardView from the entry
@@ -683,7 +684,7 @@ public class OverviewActivity extends AppCompatActivity {
         String calorieAndMacrosText = String.format(Locale.ENGLISH, "%.2f kCal",getConsumedCaloriesForEntry(e));
 
         for(Map.Entry<String,FoodInfo> foodInfoEntry : FoodInfosToShow.getFoodInfosShownAsMap(getApplicationContext()).entrySet()){
-            float consumedAmount = getConsumedFoodInfoAmountForEntry(e,foodInfoEntry.getKey());
+            float consumedAmount = getConsumedFoodInfoAmountForEntry(e,foodInfoEntry.getKey(), foodInfoEntry.getValue());
             if(consumedAmount > 0.01){
                 calorieAndMacrosText += String.format(Locale.ENGLISH, "\n%1$.2f%2$s %3$s",consumedAmount,foodInfoEntry.getValue().getUnit(), foodInfoEntry.getValue().getName());
             }

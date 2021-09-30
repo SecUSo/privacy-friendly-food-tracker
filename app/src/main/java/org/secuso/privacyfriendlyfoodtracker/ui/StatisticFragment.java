@@ -261,9 +261,11 @@ public class StatisticFragment extends Fragment {
         for(Map.Entry<String,FoodInfo> foodInfoEntry : FoodInfosToShow.getFoodInfosShownAsMap(getContext()).entrySet()){
             DataPoint[] nutrimentDataPoints = new DataPoint[consumedNutrimentsEntriesList.size()];
             for (int i = 0; i < consumedNutrimentsEntriesList.size(); i++) {
-                nutrimentDataPoints[i] = (new DataPoint(consumedNutrimentsEntriesList.get(i).dateOfConsumption.getTime(), FoodInfosToShow.getFoodInfoValueByKey(consumedNutrimentsEntriesList.get(i), foodInfoEntry.getKey())/100));
+                float amountInUnits = FoodInfosToShow.getFoodInfoValueByKey(consumedNutrimentsEntriesList.get(i), foodInfoEntry.getKey(), foodInfoEntry.getValue());
+
+                nutrimentDataPoints[i] = (new DataPoint(consumedNutrimentsEntriesList.get(i).dateOfConsumption.getTime(), amountInUnits/100));
             }
-            float averageNutriment = FoodInfosToShow.getFoodInfoValueByKey(consumedNutriments.get(0),foodInfoEntry.getKey()) / periodLengthInDays;
+            float averageNutriment = FoodInfosToShow.getFoodInfoValueByKey(consumedNutriments.get(0),foodInfoEntry.getKey(),foodInfoEntry.getValue()) / periodLengthInDays;
             BigDecimal averageNutrimentBigDecimal = round(averageNutriment,0) ;
 
             TextView tvAverageNutriment = null;

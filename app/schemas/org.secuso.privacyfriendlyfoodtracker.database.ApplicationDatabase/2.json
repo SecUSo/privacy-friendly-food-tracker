@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "36282fcf09b983d08eea3aacd9b71510",
+    "identityHash": "0d39dcea4fa6876bd9c51ff9ab3da6a0",
     "entities": [
       {
         "tableName": "ConsumedEntries",
@@ -62,7 +62,7 @@
       },
       {
         "tableName": "Product",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `energy` REAL NOT NULL, `carbs` REAL NOT NULL, `sugar` REAL NOT NULL, `protein` REAL NOT NULL, `fat` REAL NOT NULL, `satFat` REAL NOT NULL, `salt` REAL NOT NULL, `vitaminA_retinol` REAL NOT NULL, `betaCarotin` REAL NOT NULL, `vitaminD` REAL NOT NULL, `vitaminE` REAL NOT NULL, `vitaminK` REAL NOT NULL, `thiamin_B1` REAL NOT NULL, `riboflavin_B2` REAL NOT NULL, `niacin` REAL NOT NULL, `vitaminB6` REAL NOT NULL, `folat` REAL NOT NULL, `pantothenacid` REAL NOT NULL, `biotin` REAL NOT NULL, `cobalamin_B12` REAL NOT NULL, `vitaminC` REAL NOT NULL, `natrium` REAL NOT NULL, `chlorid` REAL NOT NULL, `kalium` REAL NOT NULL, `calcium` REAL NOT NULL, `phosphor` REAL NOT NULL, `magnesium` REAL NOT NULL, `eisen` REAL NOT NULL, `jod` REAL NOT NULL, `fluorid` REAL NOT NULL, `zink` REAL NOT NULL, `selen` REAL NOT NULL, `kupfer` REAL NOT NULL, `mangan` REAL NOT NULL, `chrom` REAL NOT NULL, `molybdaen` REAL NOT NULL, `barcode` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `energy` REAL NOT NULL, `carbs` REAL NOT NULL, `sugar` REAL NOT NULL, `protein` REAL NOT NULL, `fat` REAL NOT NULL, `satFat` REAL NOT NULL, `salt` REAL NOT NULL, `fiber` REAL NOT NULL, `vitaminA_retinol` REAL NOT NULL, `betaCarotin` REAL NOT NULL, `vitaminD` REAL NOT NULL, `vitaminE` REAL NOT NULL, `vitaminK` REAL NOT NULL, `thiamin_B1` REAL NOT NULL, `riboflavin_B2` REAL NOT NULL, `niacin` REAL NOT NULL, `vitaminB6` REAL NOT NULL, `folat` REAL NOT NULL, `pantothenacid` REAL NOT NULL, `biotin` REAL NOT NULL, `cobalamin_B12` REAL NOT NULL, `vitaminC` REAL NOT NULL, `natrium` REAL NOT NULL, `chlorid` REAL NOT NULL, `kalium` REAL NOT NULL, `calcium` REAL NOT NULL, `phosphor` REAL NOT NULL, `magnesium` REAL NOT NULL, `eisen` REAL NOT NULL, `jod` REAL NOT NULL, `fluorid` REAL NOT NULL, `zink` REAL NOT NULL, `selen` REAL NOT NULL, `kupfer` REAL NOT NULL, `mangan` REAL NOT NULL, `chrom` REAL NOT NULL, `molybdaen` REAL NOT NULL, `barcode` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -115,6 +115,12 @@
           {
             "fieldPath": "salt",
             "columnName": "salt",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fiber",
+            "columnName": "fiber",
             "affinity": "REAL",
             "notNull": true
           },
@@ -311,7 +317,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"36282fcf09b983d08eea3aacd9b71510\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0d39dcea4fa6876bd9c51ff9ab3da6a0\")"
     ]
   }
 }
