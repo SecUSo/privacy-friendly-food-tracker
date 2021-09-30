@@ -63,7 +63,6 @@ public class FoodInfo {
                 throw new NoConversionDefinedException();
         }
     }
-    //TODO food info werte in g/100g speichern. zum displayen immer mit unit converten etc.
     /***
      * Takes an amount in this.unit units and converts it to grams. E.g. 100mg become 0.1g
      * @param amountInGrams
