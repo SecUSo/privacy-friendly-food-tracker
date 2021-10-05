@@ -171,7 +171,7 @@ public class AddFoodFragment extends Fragment {
 
                         fieldValues.put(editTextEntry.getKey(),fieldValue);
                     } catch (NumberFormatException e) {
-                        showErrorMessageString(otherFoodInfoTextInputLayouts.get(editTextEntry.getKey()), getResources().getString(R.string.error_fieldname_nan, FoodInfosToShow.foodInfos.get(editTextEntry.getKey())));
+                        showErrorMessageString(otherFoodInfoTextInputLayouts.get(editTextEntry.getKey()), getResources().getString(R.string.error_fieldname_nan, FoodInfosToShow.getFoodInfos(getContext()).get(editTextEntry.getKey())));
                         validated = false;
                     }
                 }

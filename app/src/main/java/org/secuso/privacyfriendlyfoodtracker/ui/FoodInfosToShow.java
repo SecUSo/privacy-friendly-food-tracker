@@ -56,8 +56,12 @@ public class FoodInfosToShow {
      *
      *
      */
-    public static Map<String,FoodInfo> foodInfos=new LinkedHashMap<>(); // LinkedHashMap so entries are ordered by insertion
+    private static Map<String,FoodInfo> foodInfos=new LinkedHashMap<>(); // LinkedHashMap so entries are ordered by insertion
 
+    public static Map<String,FoodInfo> getFoodInfos(Context context){
+        populateFoodInfoMap(context);
+        return foodInfos;
+    }
     /***
      * populates the foodInfos Map with all the foodInfos. used to be a static block, but to access
      * string ressources and thus make nutriment names translatable, was made a function with access

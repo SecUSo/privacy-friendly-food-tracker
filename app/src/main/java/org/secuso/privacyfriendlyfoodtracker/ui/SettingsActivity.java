@@ -193,7 +193,7 @@ public class SettingsActivity extends BaseActivity {
     public static class GeneralPreferenceFragment extends PreferenceFragment {
 
         public void createFoodInfoPreferences(Context context, PreferenceCategory screen){
-            for(Map.Entry<String,FoodInfo> foodInfoEntry : FoodInfosToShow.foodInfos.entrySet()){
+            for(Map.Entry<String,FoodInfo> foodInfoEntry : FoodInfosToShow.getFoodInfos(context).entrySet()){
                 SwitchPreference showFoodInfoPreference = new SwitchPreference(context);
                 showFoodInfoPreference.setKey(foodInfoEntry.getKey());
                 showFoodInfoPreference.setTitle(foodInfoEntry.getValue().getName());
@@ -251,7 +251,7 @@ public class SettingsActivity extends BaseActivity {
             caloriesGoalSwitchPreference.setTitle(getResources().getString(R.string.daily_goals_dont_exceed_setting,"Calories"));
             screen.addPreference(caloriesGoalSwitchPreference);
 
-            for(Map.Entry<String,FoodInfo> foodInfoEntry : FoodInfosToShow.foodInfos.entrySet()){
+            for(Map.Entry<String,FoodInfo> foodInfoEntry : FoodInfosToShow.getFoodInfos(context).entrySet()){
                 EditTextPreference dailyGoalPreference = new EditTextPreference(context);
                 dailyGoalPreference.setKey(FoodInfosToShow.GOAL_KEY_PREFIX + foodInfoEntry.getKey());
                 dailyGoalPreference.setTitle(getResources().getString(R.string.daily_goal_setting,foodInfoEntry.getValue().getName(), foodInfoEntry.getValue().getUnit()));
