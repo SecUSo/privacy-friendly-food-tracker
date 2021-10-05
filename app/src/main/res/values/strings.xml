@@ -189,4 +189,6 @@
     <string name="nutriment_name_manganese">Manganese</string>
     <string name="nutriment_name_chromium">Chromium</string>
     <string name="nutriment_name_molybdenum">Molybdenum</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -23,6 +23,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.ui.AddFoodFragment;
+import org.secuso.privacyfriendlyfoodtracker.ui.EditFoodFragment;
 import org.secuso.privacyfriendlyfoodtracker.ui.SearchFoodFragment;
 
 /**
@@ -57,6 +58,8 @@ public class AddFoodPagerAdapter extends FragmentStatePagerAdapter {
                 return new SearchFoodFragment();
             case 1:
                 return new AddFoodFragment();
+            case 2:
+                return new EditFoodFragment();
         }
         return null;
     }
@@ -68,7 +71,7 @@ public class AddFoodPagerAdapter extends FragmentStatePagerAdapter {
      */
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     /**
@@ -84,6 +87,8 @@ public class AddFoodPagerAdapter extends FragmentStatePagerAdapter {
                 return context.getResources().getString(R.string.search);
             case 1:
                 return context.getResources().getString(R.string.add);
+            case 2:
+                return "Edit";
             default:
                 return null;
         }
