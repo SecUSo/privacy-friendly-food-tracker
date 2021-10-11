@@ -24,6 +24,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.ui.AddFoodFragment;
 import org.secuso.privacyfriendlyfoodtracker.ui.EditFoodFragment;
+import org.secuso.privacyfriendlyfoodtracker.ui.EditFoodHolderFragment;
 import org.secuso.privacyfriendlyfoodtracker.ui.SearchFoodFragment;
 
 /**
@@ -57,9 +58,9 @@ public class AddFoodPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return new SearchFoodFragment();
             case 1:
-                return new AddFoodFragment();
+                return AddFoodFragment.newInstance(true);
             case 2:
-                return new EditFoodFragment();
+                return new EditFoodHolderFragment();
         }
         return null;
     }

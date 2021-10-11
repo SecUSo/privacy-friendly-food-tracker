@@ -26,9 +26,11 @@ import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntries;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntriesDao;
 import org.secuso.privacyfriendlyfoodtracker.database.Product;
 import org.secuso.privacyfriendlyfoodtracker.database.ProductDao;
+import org.secuso.privacyfriendlyfoodtracker.helpers.MapHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
@@ -94,6 +96,7 @@ public class DatabaseFacade {
         });
     }
 
+
     /**
      * Edit a database entry.
      * @param id the id
@@ -113,7 +116,24 @@ public class DatabaseFacade {
             }
         });
     }
-
+    /**
+     * Updates an entry bi id. If for a food info no new value is given, the old one is used.
+     * @param id the id
+     * @param name the new name
+     * @param energy the new energy
+     * @param otherFieldValues all FoodInfos given, if for a foodinfo key no value is given, the existing value is used
+     */
+    public void updateProductById(final int id, final String name, final float energy, final Map<String,Float> otherFieldValues){
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                Product oldProduct = productDao.findProductById(id);
+                Product updatedProduct = new Product(id, name, energy,
+                        MapHelper.getOrDefault(otherFieldValues, "carbs", oldProduct.carbs), MapHelper.getOrDefault(otherFieldValues, "sugar", oldProduct.sugar), MapHelper.getOrDefault(otherFieldValues, "protein", oldProduct.protein), MapHelper.getOrDefault(otherFieldValues, "fat", oldProduct.fat), MapHelper.getOrDefault(otherFieldValues, "satFat", oldProduct.satFat), MapHelper.getOrDefault(otherFieldValues, "salt", oldProduct.salt), MapHelper.getOrDefault(otherFieldValues, "fiber", oldProduct.fiber), MapHelper.getOrDefault(otherFieldValues, "vitaminA_retinol", oldProduct.vitaminA_retinol), MapHelper.getOrDefault(otherFieldValues, "betaCarotin", oldProduct.betaCarotin), MapHelper.getOrDefault(otherFieldValues, "vitaminD", oldProduct.vitaminD), MapHelper.getOrDefault(otherFieldValues, "vitaminE", oldProduct.vitaminE), MapHelper.getOrDefault(otherFieldValues, "vitaminK", oldProduct.vitaminK), MapHelper.getOrDefault(otherFieldValues, "thiamin_B1", oldProduct.thiamin_B1), MapHelper.getOrDefault(otherFieldValues, "riboflavin_B2", oldProduct.riboflavin_B2), MapHelper.getOrDefault(otherFieldValues, "niacin", oldProduct.niacin), MapHelper.getOrDefault(otherFieldValues, "vitaminB6", oldProduct.vitaminB6), MapHelper.getOrDefault(otherFieldValues, "folat", oldProduct.folat), MapHelper.getOrDefault(otherFieldValues, "pantothenacid", oldProduct.pantothenacid), MapHelper.getOrDefault(otherFieldValues, "biotin", oldProduct.biotin), MapHelper.getOrDefault(otherFieldValues, "cobalamin_B12", oldProduct.cobalamin_B12), MapHelper.getOrDefault(otherFieldValues, "vitaminC", oldProduct.vitaminC), MapHelper.getOrDefault(otherFieldValues, "natrium", oldProduct.natrium), MapHelper.getOrDefault(otherFieldValues, "chlorid", oldProduct.chlorid), MapHelper.getOrDefault(otherFieldValues, "kalium", oldProduct.kalium), MapHelper.getOrDefault(otherFieldValues, "calcium", oldProduct.calcium), MapHelper.getOrDefault(otherFieldValues, "phosphor", oldProduct.phosphor), MapHelper.getOrDefault(otherFieldValues, "magnesium", oldProduct.magnesium), MapHelper.getOrDefault(otherFieldValues, "eisen", oldProduct.eisen), MapHelper.getOrDefault(otherFieldValues, "jod", oldProduct.jod), MapHelper.getOrDefault(otherFieldValues, "fluorid", oldProduct.fluorid), MapHelper.getOrDefault(otherFieldValues, "zink", oldProduct.zink), MapHelper.getOrDefault(otherFieldValues, "selen", oldProduct.selen), MapHelper.getOrDefault(otherFieldValues, "kupfer", oldProduct.kupfer), MapHelper.getOrDefault(otherFieldValues, "mangan", oldProduct.mangan), MapHelper.getOrDefault(otherFieldValues, "chrom", oldProduct.chrom), MapHelper.getOrDefault(otherFieldValues, "molybdaen", oldProduct.molybdaen), "");
+                productDao.update(updatedProduct);
+            }
+        });
+    }
 
     /**
      * Crate a new Product

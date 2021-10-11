@@ -34,6 +34,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.secuso.privacyfriendlyfoodtracker.R;
+import org.secuso.privacyfriendlyfoodtracker.database.Product;
 import org.secuso.privacyfriendlyfoodtracker.helpers.MapHelper;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.SharedStatisticViewModel;
@@ -49,6 +50,7 @@ import java.util.Map;
  * @author Simon Reinkemeier
  */
 public class AddFoodFragment extends Fragment {
+    private static final String EXTRA_ISADD = "EXTRA_ISADD";
     SharedStatisticViewModel sharedStatisticViewModel;
     BaseAddFoodActivity referenceActivity;
     View parentHolder;
@@ -60,11 +62,27 @@ public class AddFoodFragment extends Fragment {
     Map<String,TextInputLayout> otherFoodInfoTextInputLayouts = new HashMap<>();
     Map<String, EditText> otherFoodInfoEditTexts = new HashMap<>();
 
+    boolean isAdd=true;//true if fragment is used to add, false if it is used to edit
+
     /**
      * The required empty public constructor
      */
     public AddFoodFragment() {
         // Required empty public constructor
+    }
+
+    /***
+     * Since fragments need an empty constructor, newInstance is used to create fragments for either
+     * add or edit food
+     * @param isAdd Whether to show add or edit UI
+     * @return
+     */
+    public static AddFoodFragment newInstance(boolean isAdd) {
+        AddFoodFragment f = new AddFoodFragment();
+        Bundle bdl = new Bundle(2);
+        bdl.putBoolean(EXTRA_ISADD, isAdd);
+        f.setArguments(bdl);
+        return f;
     }
 
     /**
@@ -77,7 +95,7 @@ public class AddFoodFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        isAdd = getArguments().getBoolean(EXTRA_ISADD,true);
 
         referenceActivity = (BaseAddFoodActivity) getActivity();
         parentHolder = inflater.inflate(R.layout.content_food, container, false);
@@ -87,12 +105,18 @@ public class AddFoodFragment extends Fragment {
         } catch (Exception e){
             Log.e("Error", e.getMessage());
         }
-        InputFilter[] amountFilter = { new InputFilter.LengthFilter(6) };
         InputFilter[] caloriesFilter = { new InputFilter.LengthFilter(10) };
-
-        amountField = parentHolder.findViewById(R.id.input_amount);
         caloriesField = parentHolder.findViewById(R.id.input_calories);
 
+        amountField = parentHolder.findViewById(R.id.input_amount);
+        if(isAdd) {
+            InputFilter[] amountFilter = {new InputFilter.LengthFilter(6)};
+            amountField.setFilters(amountFilter);
+            amountField.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }else{
+            TextInputLayout tilAmount = parentHolder.findViewById(R.id.inputFoodAmount);
+            tilAmount.setVisibility(View.GONE);
+        }
 
         ConstraintLayout constraintLayout = parentHolder.findViewById(R.id.addFoodFieldLayout);
 
@@ -129,20 +153,25 @@ public class AddFoodFragment extends Fragment {
         }
 
 
-        amountField.setFilters(amountFilter);
-        amountField.setInputType(InputType.TYPE_CLASS_NUMBER);
+
 
         caloriesField.setFilters(caloriesFilter);
 
 
         FloatingActionButton fab = parentHolder.findViewById(R.id.addEntry);
+        if(!isAdd){
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.button_confirm));
+        }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditText nameField = parentHolder.findViewById(R.id.input_food);
                 String name = nameField.getText().toString();
 
-                String amount = amountField.getText().toString();
+                String amount = "1";
+                if(isAdd){
+                    amount = amountField.getText().toString();
+                }
 
                 String calories = caloriesField.getText().toString();
 
@@ -177,56 +206,66 @@ public class AddFoodFragment extends Fragment {
                 }
 
                 if(validated) {
-
-
-                    boolean entrySuccessful = makeDatabaseEntry(name, amount, calories, fieldValues);
+                    boolean entrySuccessful;
+                    if(isAdd) {
+                        entrySuccessful=makeDatabaseEntry(name, amount, calories, fieldValues);
+                    }else{
+                        entrySuccessful = makeUpdate(referenceActivity.id,name, calories, fieldValues);
+                    }
                     if (!entrySuccessful){
                         showErrorMessage(view, R.string.error_database);
                     } else {
-                        referenceActivity.finish();
+                        if(isAdd) {
+                            referenceActivity.finish();
+                        }else{
+                            getFragmentManager().popBackStackImmediate();
+                        }
                     }
                 }
             }
         });
 
+        if(!isAdd){
+            //assuming setUserVisibleHint wont get called, because when editing the fragment just gets replaced
+            //and is not handled by the ViewPager
+            setPresets();
+        }
 
         return parentHolder;
     }
 
-    /**
-     * Called when the fragment is made visible to set correct presets for
-     * amount and food input
-     * @param isVisible indicates the visibility of the fragment
+    /***
+     * Set presets when adding a food (or when editing), if a product was selected.
      */
-    @Override
-    public void setUserVisibleHint(boolean isVisible) {
-        super.setUserVisibleHint(isVisible);
+    private void setPresets(){
+        if(referenceActivity.productSet) {
+            boolean focusableClickable = isAdd ? false : true;
+            int color = isAdd ? getResources().getColor(R.color.middlegrey) : getResources().getColor(R.color.black);
 
-        if(isVisible && referenceActivity.productSet) {
             EditText nameField = parentHolder.findViewById(R.id.input_food);
             EditText caloriesField = parentHolder.findViewById(R.id.input_calories);
 
 
 
             nameField.setText(referenceActivity.name);
-            nameField.setFocusable(false);
-            nameField.setClickable(false);
-            nameField.setTextColor(getResources().getColor(R.color.middlegrey));
+            nameField.setFocusable(focusableClickable);
+            nameField.setClickable(focusableClickable);
+            nameField.setTextColor(color);
 
             caloriesField.setText(String.format(Locale.ENGLISH, "%.2f", referenceActivity.calories));
-            caloriesField.setFocusable(false);
-            caloriesField.setClickable(false);
-            caloriesField.setTextColor(getResources().getColor(R.color.middlegrey));
+            caloriesField.setFocusable(focusableClickable);
+            caloriesField.setClickable(focusableClickable);
+            caloriesField.setTextColor(color);
 
             for(Map.Entry<String,EditText> editTextEntry : otherFoodInfoEditTexts.entrySet()){
                 EditText currentEt = editTextEntry.getValue();
                 currentEt.setText(String.format(Locale.ENGLISH, "%.2f", FoodInfosToShow.getFoodInfoValueByKey(referenceActivity.selectedProduct,editTextEntry.getKey(), FoodInfosToShow.getAllFoodInfosAsMap(getContext()).get(editTextEntry.getKey()), getContext())));
-                currentEt.setFocusable(false);
-                currentEt.setClickable(false);
-                currentEt.setTextColor(getResources().getColor(R.color.middlegrey));
+                currentEt.setFocusable(focusableClickable);
+                currentEt.setClickable(focusableClickable);
+                currentEt.setTextColor(color);
             }
 
-        } else if (isVisible && !referenceActivity.productSet) {
+        } else if (!referenceActivity.productSet) {
             EditText nameField = parentHolder.findViewById(R.id.input_food);
             EditText caloriesField = parentHolder.findViewById(R.id.input_calories);
 
@@ -253,9 +292,26 @@ public class AddFoodFragment extends Fragment {
         }
     }
 
+    /**
+     * Called when the fragment is made visible to set correct presets for
+     * amount and food input
+     *
+     * 10/2021: I think this is not very reliable, since the method has been deprecated. But it gets called
+     * when ViewPager changes the visible fragment, so probably will still work?
+     * @param isVisible indicates the visibility of the fragment
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisible) {
+        super.setUserVisibleHint(isVisible);
+        if(isVisible && isAdd){
+            setPresets();
+        }
+    }
+
+
 
     /**
-     * Create a new db entry
+     * Create a new db entry OR, if isAdd == false update the database entry
      * @param name Name of the food
      * @param amountString amount in g
      * @param caloriesString calories per 100g
@@ -270,6 +326,26 @@ public class AddFoodFragment extends Fragment {
             // We haven't explicitly chosen a product so the productId is 0 for unknown
             databaseFacade.insertEntry(amount, ((BaseAddFoodActivity) referenceActivity).date, name, calories,
                     MapHelper.getOrDefault(otherFieldValues, "carbs", 0.0f), MapHelper.getOrDefault(otherFieldValues, "sugar", 0.0f), MapHelper.getOrDefault(otherFieldValues, "protein", 0.0f), MapHelper.getOrDefault(otherFieldValues, "fat", 0.0f), MapHelper.getOrDefault(otherFieldValues, "satFat", 0.0f), MapHelper.getOrDefault(otherFieldValues, "salt", 0.0f), MapHelper.getOrDefault(otherFieldValues, "fiber", 0.0f), MapHelper.getOrDefault(otherFieldValues, "vitaminA_retinol", 0.0f), MapHelper.getOrDefault(otherFieldValues, "betaCarotin", 0.0f), MapHelper.getOrDefault(otherFieldValues, "vitaminD", 0.0f), MapHelper.getOrDefault(otherFieldValues, "vitaminE", 0.0f), MapHelper.getOrDefault(otherFieldValues, "vitaminK", 0.0f), MapHelper.getOrDefault(otherFieldValues, "thiamin_B1", 0.0f), MapHelper.getOrDefault(otherFieldValues, "riboflavin_B2", 0.0f), MapHelper.getOrDefault(otherFieldValues, "niacin", 0.0f), MapHelper.getOrDefault(otherFieldValues, "vitaminB6", 0.0f), MapHelper.getOrDefault(otherFieldValues, "folat", 0.0f), MapHelper.getOrDefault(otherFieldValues, "pantothenacid", 0.0f), MapHelper.getOrDefault(otherFieldValues, "biotin", 0.0f), MapHelper.getOrDefault(otherFieldValues, "cobalamin_B12", 0.0f), MapHelper.getOrDefault(otherFieldValues, "vitaminC", 0.0f), MapHelper.getOrDefault(otherFieldValues, "natrium", 0.0f), MapHelper.getOrDefault(otherFieldValues, "chlorid", 0.0f), MapHelper.getOrDefault(otherFieldValues, "kalium", 0.0f), MapHelper.getOrDefault(otherFieldValues, "calcium", 0.0f), MapHelper.getOrDefault(otherFieldValues, "phosphor", 0.0f), MapHelper.getOrDefault(otherFieldValues, "magnesium", 0.0f), MapHelper.getOrDefault(otherFieldValues, "eisen", 0.0f), MapHelper.getOrDefault(otherFieldValues, "jod", 0.0f), MapHelper.getOrDefault(otherFieldValues, "fluorid", 0.0f), MapHelper.getOrDefault(otherFieldValues, "zink", 0.0f), MapHelper.getOrDefault(otherFieldValues, "selen", 0.0f), MapHelper.getOrDefault(otherFieldValues, "kupfer", 0.0f), MapHelper.getOrDefault(otherFieldValues, "mangan", 0.0f), MapHelper.getOrDefault(otherFieldValues, "chrom", 0.0f), MapHelper.getOrDefault(otherFieldValues, "molybdaen", 0.0f), 0);
+        } catch (Exception e) {
+            // something went wrong so the entry wasn't successful
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    /***
+     *
+     * @param name
+     * @param productId ID of the product to update
+     * @param caloriesString
+     * @param otherFieldValues
+     * @return
+     */
+    private boolean makeUpdate(int productId, String name, String caloriesString, Map<String,Float> otherFieldValues) {
+        try {
+            float calories = Float.parseFloat(caloriesString);
+            databaseFacade.updateProductById(productId, name, calories, otherFieldValues);
         } catch (Exception e) {
             // something went wrong so the entry wasn't successful
             e.printStackTrace();
