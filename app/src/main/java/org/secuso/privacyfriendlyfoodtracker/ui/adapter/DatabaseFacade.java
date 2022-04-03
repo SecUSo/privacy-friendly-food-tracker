@@ -24,13 +24,15 @@ import org.secuso.privacyfriendlyfoodtracker.database.ApplicationDatabase;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntries;
 import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntriesDao;
+import org.secuso.privacyfriendlyfoodtracker.database.Goals;
+import org.secuso.privacyfriendlyfoodtracker.database.GoalsDao;
 import org.secuso.privacyfriendlyfoodtracker.database.Product;
 import org.secuso.privacyfriendlyfoodtracker.database.ProductDao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * Database access functions.
@@ -41,10 +43,12 @@ public class DatabaseFacade {
     ProductDao productDao;
     ConsumedEntriesDao consumedEntriesDao;
     ConsumedEntrieAndProductDao consumedEntrieAndProductDao;
+    GoalsDao goalsDao;
 
     public DatabaseFacade(Context context) throws Exception {
         this.productDao = ApplicationDatabase.getInstance(context).getProductDao();
         this.consumedEntriesDao = ApplicationDatabase.getInstance(context).getConsumedEntriesDao();
+        this.goalsDao = ApplicationDatabase.getInstance(context).getGoalsDao();
         this.consumedEntrieAndProductDao = ApplicationDatabase.getInstance(context).getConsumedEntriesAndProductDao();
     }
 
@@ -76,6 +80,19 @@ public class DatabaseFacade {
         });
     }
 
+    /**
+     * Insert a new consumed entry.
+     * @param dailycalorie the dailycalorie
+     * @param minweight the minweight
+     */
+    public void insertGoalEntry(final int dailycalorie, final int minweight){
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                goalsDao.insert(new Goals(0, dailycalorie, minweight, new java.sql.Date(new java.util.Date().getTime())));
+            }
+        });
+    }
 
     /**
      * Deletes a database entry by id.
@@ -189,5 +206,7 @@ public class DatabaseFacade {
         return productDao.findProductsByName("%" + name + "%");
     }
 
-
+    public Goals getLastGoals(){
+        return goalsDao.findMaxGoals();
+    }
 }
