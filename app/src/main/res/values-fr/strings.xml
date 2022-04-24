@@ -7,6 +7,7 @@
     <string name="action_settings">Paramètres</string>
     <string name="action_main">Calendrier</string>
     <string name="action_tutorial">Tutoriel</string>
+    <string name="action_database">Database</string>
     <string name="help">Aide</string>
     <string name="help_whatis">Qu\'est-ce que Privacy Frendly Food Tracker ?</string>
     <string name="help_whatis_answer">Privacy Friendly Food Tracker est une application qui vous permet de suivre votre apport calorique tout en préservant votre vie privée.</string>
@@ -25,6 +26,7 @@
     <string name="privacy_friendly">Cette application appartient au groupe des applications respectueuses de la vie privée développées par le Karlsruhe Institute of Technology (KIT). Code source sous licence GPLv3. Images copyright KIT et Google Inc.</string>
     <string name="more_info">Plus d\'informations sur :</string>
     <string name="title_activity_settings">Paramètres</string>
+    <string name="title_activity_database">Databse</string>
     <string name="pref_header_general">Général</string>
     <string name="slide1_heading">Bienvenue !</string>
     <string name="slide1_text">Cette application vous aide à suivre votre apport calorique quotidien sans partager vos habitudes alimentaires avec des tiers. Pour garantir cela, elle ne nécessite aucune autorisation spéciale. La recherche fait cependant des demandes à une base de données en ligne (www.openfoodfacts.org). Cela pourrait potentiellement exposer certaines données sur vos habitudes alimentaires à la dites base de données. Si vous ne le souhaitez pas, vous pouvez tout simplement ne pas utiliser la recherche en ligne (aucune donnée n\'est envoyée tant que vous n\'avez pas appuyé sur le bouton de recherche).</string>
@@ -72,4 +74,10 @@
     <string name="pref_example_switch">Example Switch</string>
     <string name="pref_example_switch_summary">Example Switch Summary</string>
     <string name="pref_example_summary">Example Summary</string>
+    <string name="export_db">Share full DB</string>
+    <string name="export_products_db">Share Product DB only</string>
+    <string name="import_db">Import DB</string>
+    <string name="db_number_products">Number of products in database:</string>
+    <string name="db_number_consumedentries">Number of consumed entries in database:</string>
+    <string name="title_activity_db_imp_exp_file_received">Database</string>
 </resources>

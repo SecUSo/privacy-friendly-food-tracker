@@ -20,8 +20,6 @@ import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
-import com.jjoe64.graphview.series.DataPoint;
-
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseEntry;
 
 import java.sql.Date;
@@ -43,8 +41,13 @@ public interface ConsumedEntrieAndProductDao {
     @Query("SELECT consumedEntries.amount AS amount, consumedEntries.id AS id,consumedEntries.name as name, product.energy as energy FROM consumedEntries INNER JOIN product ON consumedEntries.productId = product.id WHERE consumedEntries.date=:day")
     LiveData<List<DatabaseEntry>> findConsumedEntriesForDate(final Date day);
 
-    static class DateCalories
-    {
+    @Query("SELECT * FROM consumedentries")
+    List<ConsumedEntries> getAllConsumedEntries();
+
+    @Query("SELECT * FROM product")
+    List<Product> getAllProducts();
+
+    static class DateCalories {
         public Date unique1;
         public int unique2;
     }

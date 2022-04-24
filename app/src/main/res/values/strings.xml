@@ -9,6 +9,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_main">Calendar</string>
     <string name="action_tutorial">Tutorial</string>
+    <string name="action_database">Database</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -46,6 +47,7 @@
 
     <!-- ###SETTINGS### -->
     <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_database">Databse</string>
     <string name="pref_header_general">General</string>
     <string name="pref_example_switch">Example Switch</string>
     <string name="pref_example_switch_summary">Example Switch Summary</string>
@@ -110,4 +112,10 @@
     <string name="save">Save</string>
 
     <string name="search_for">Search for a product</string>
+    <string name="export_db">Share full DB</string>
+    <string name="export_products_db">Share Product DB only</string>
+    <string name="import_db">Import DB</string>
+    <string name="db_number_products">Number of products in database:</string>
+    <string name="db_number_consumedentries">Number of consumed entries in database:</string>
+    <string name="title_activity_db_imp_exp_file_received">Database</string>
 </resources>
