@@ -26,9 +26,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
+import org.secuso.privacyfriendlyfoodtracker.database.Product;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.AddFoodPagerAdapter;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Base code for tapped activity.
@@ -43,6 +46,18 @@ public class BaseAddFoodActivity extends AppCompatActivity {
     String name;
     // Calories per 100g
     float calories;
+    // carbs per 100g
+    float carbs;
+    // sugar per 100g
+    float sugar;
+    // protein per 100g
+    float protein;
+    // fat per 100g
+    float fat;
+    // satFat of the product
+    float satFat;
+    //the product selected
+    Product selectedProduct;
     // ID of the product
     int id;
 

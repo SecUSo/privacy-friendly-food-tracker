@@ -490,6 +490,19 @@ public class NetworkProduct {
         return "";
     }
 
+
+    /**
+     * @param key the nutriment's key in openfoodfacts, e.g. "salt"
+     * @return The nutriment's amount per 100g of product in grams
+     */
+    public String getNutrimentInGper100gByKey(String key) {
+        String off_field = String.format("%1$s_100g", key);
+        if(nutriments.containsKey(off_field)){
+            return nutriments.get(off_field).toString();
+        }
+        return "";
+    }
+
     /**
      * @return The Emb_codes
      */

@@ -110,4 +110,85 @@
     <string name="save">Save</string>
 
     <string name="search_for">Search for a product</string>
+    <string name="error_carbs_nan">Only numbers are allowed for carbs</string>
+    <string name="error_protein_nan">Only numbers are allowed for protein</string>
+    <string name="error_fat_nan">Only numbers are allowed for fat</string>
+    <string name="hint_food_macros">g/100g</string>
+    <string name="hint_food_carbs">Carbs in g/100g</string>
+    <string name="hint_food_protein">Protein in g/100g</string>
+    <string name="hint_food_fat">Fat in g/100g</string>
+    <string name="carbsPerWeek">Average carbs (sugar) per day</string>
+    <string name="proteinPerWeek">Average protein per day</string>
+    <string name="fatPerWeek">Average fat (saturated fat) per day</string>
+    <string name="hint_food_sugar">Sugar in g/100g</string>
+    <string name="hint_food_satFat">Saturated Fat in g/100g</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="title_activity_settings2">SettingsActivity2</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="action_settings2">Settings</string>
+    <string name="error_fieldname_nan">Only numbers are allowed for %1$s</string>
+    <string name="statistics_average_nutriments">Average %1$s per day:\n%2$s %3$s</string>
+    <string name="calories">Calories</string>
+    <string name="daily_goals_setting_category_heading">Your daily goals</string>
+    <string name="daily_goals_dont_exceed_setting">Don\'t exceed %1$s goal</string>
+    <string name="daily_goal_setting">%1$s goal in %2$s</string>
+    <string name="overview_nutriment_amount">%1$.1f %2$s</string>
+    <string name="overview_nutriment_amount_of_goal">%1$.1f/%2$.1f %3$s</string>
+    <string name="nutriment_name_carbs">Carbs</string>
+    <string name="nutriment_name_sugar">Sugar</string>
+    <string name="nutriment_name_protein">Protein</string>
+    <string name="nutriment_name_fat">Fat</string>
+    <string name="nutriment_name_sat_fat">Sat. Fat</string>
+    <string name="nutriment_name_salt">Salt</string>
+    <string name="nutriment_name_fiber">Fiber</string>
+    <string name="nutriment_name_vitamin_a">Vitamin A</string>
+    <string name="nutriment_name_beta_carotene">Beta-Carotene</string>
+    <string name="nutriment_name_vitamin_d">Vitamin D</string>
+    <string name="nutriment_name_vitamin_e">Vitamin E</string>
+    <string name="nutriment_name_vitamin_k">Vitamin K</string>
+    <string name="nutriment_name_vitamin_b1">Vitamin B1</string>
+    <string name="nutriment_name_vitamin_b2">Vitamin B2</string>
+    <string name="nutriment_name_vitamin_b6">Vitamin B6</string>
+    <string name="nutriment_name_vitamin_b12">Vitamin B12</string>
+    <string name="nutriment_name_vitamin_c">Vitamin C</string>
+    <string name="nutriment_name_niacin">Niacin</string>
+    <string name="nutriment_name_folate">Folate</string>
+    <string name="nutriment_name_pantothenic_acid">Pantothenic Acid</string>
+    <string name="nutriment_name_biotin">Biotin</string>
+    <string name="nutriment_name_natrium">Natrium</string>
+    <string name="nutriment_name_chloride">Chloride</string>
+    <string name="nutriment_name_potassium">Potassium</string>
+    <string name="nutriment_name_calcium">Calcium</string>
+    <string name="nutriment_name_phosphorous">Phosphorous</string>
+    <string name="nutriment_name_magnesium">Magnesium</string>
+    <string name="nutriment_name_iron">Iron</string>
+    <string name="nutriment_name_iodine">Iodine</string>
+    <string name="nutriment_name_fluoride">Fluoride</string>
+    <string name="nutriment_name_zinc">Zinc</string>
+    <string name="nutriment_name_selenium">Selenium</string>
+    <string name="nutriment_name_copper">Copper</string>
+    <string name="nutriment_name_manganese">Manganese</string>
+    <string name="nutriment_name_chromium">Chromium</string>
+    <string name="nutriment_name_molybdenum">Molybdenum</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

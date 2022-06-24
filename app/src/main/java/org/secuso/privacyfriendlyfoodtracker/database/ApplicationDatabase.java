@@ -23,6 +23,7 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -37,7 +38,7 @@ import org.secuso.privacyfriendlyfoodtracker.database.converter.DateConverter;
  *
  * @author Andre Lutz
  */
-@Database(entities = {ConsumedEntries.class, Product.class}, version = 1, exportSchema = true)
+@Database(entities = {ConsumedEntries.class, Product.class}, version = 2, exportSchema = true)
 @TypeConverters({DateConverter.class})
 public abstract class ApplicationDatabase extends RoomDatabase {
 
@@ -72,13 +73,45 @@ public abstract class ApplicationDatabase extends RoomDatabase {
                                         Log.e("ApplicationDatabase", e.getMessage());
                                     }
                                 }
-                            }).build();
+                            })
+                            .addMigrations(MIGRATION_1_2).addMigrations(MIGRATION_2_3).build();
 
                 }
             }
         }
         return sInstance;
     }
+
+    /*
+    Migrate the database so it contains columns with carbs,fat,satfat etc.
+     */
+    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            String[] newFields = new String[]{"carbs","sugar", "protein", "fat","satFat"};
+            for(String field : newFields) {
+                database.execSQL("ALTER TABLE Product "
+                        + " ADD COLUMN "+ field +" REAL NOT NULL default 0");
+            }
+        }
+    };
+
+    /***
+     * Migrate database so it also contains micro nutriments.
+     */
+    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            String[] newFields = new String[]{"salt", "fiber", "vitaminA_retinol", "betaCarotin", "vitaminD", "vitaminE", "vitaminK", "thiamin_B1", "riboflavin_B2", "niacin", "vitaminB6", "folat", "pantothenacid", "biotin", "cobalamin_B12", "vitaminC", "natrium", "chlorid", "kalium", "calcium", "phosphor", "magnesium", "eisen", "jod", "fluorid", "zink", "selen", "kupfer", "mangan", "chrom", "molybdaen"};
+            for(String field : newFields) {
+                database.execSQL("ALTER TABLE Product "
+                        + " ADD COLUMN "+ field +" REAL NOT NULL default 0");
+            }
+        }
+    };
+
+
+
 
     private void setDatabaseCreated() {
         mIsDatabaseCreated.postValue(true);

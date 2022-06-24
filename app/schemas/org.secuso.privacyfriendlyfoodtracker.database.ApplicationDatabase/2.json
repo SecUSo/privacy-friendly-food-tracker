@@ -1,0 +1,323 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "0d39dcea4fa6876bd9c51ff9ab3da6a0",
+    "entities": [
+      {
+        "tableName": "ConsumedEntries",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `productId` INTEGER NOT NULL, `amount` INTEGER NOT NULL, `date` INTEGER, `name` TEXT, FOREIGN KEY(`productId`) REFERENCES `Product`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "productId",
+            "columnName": "productId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "amount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "Product",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "productId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Product",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `energy` REAL NOT NULL, `carbs` REAL NOT NULL, `sugar` REAL NOT NULL, `protein` REAL NOT NULL, `fat` REAL NOT NULL, `satFat` REAL NOT NULL, `salt` REAL NOT NULL, `fiber` REAL NOT NULL, `vitaminA_retinol` REAL NOT NULL, `betaCarotin` REAL NOT NULL, `vitaminD` REAL NOT NULL, `vitaminE` REAL NOT NULL, `vitaminK` REAL NOT NULL, `thiamin_B1` REAL NOT NULL, `riboflavin_B2` REAL NOT NULL, `niacin` REAL NOT NULL, `vitaminB6` REAL NOT NULL, `folat` REAL NOT NULL, `pantothenacid` REAL NOT NULL, `biotin` REAL NOT NULL, `cobalamin_B12` REAL NOT NULL, `vitaminC` REAL NOT NULL, `natrium` REAL NOT NULL, `chlorid` REAL NOT NULL, `kalium` REAL NOT NULL, `calcium` REAL NOT NULL, `phosphor` REAL NOT NULL, `magnesium` REAL NOT NULL, `eisen` REAL NOT NULL, `jod` REAL NOT NULL, `fluorid` REAL NOT NULL, `zink` REAL NOT NULL, `selen` REAL NOT NULL, `kupfer` REAL NOT NULL, `mangan` REAL NOT NULL, `chrom` REAL NOT NULL, `molybdaen` REAL NOT NULL, `barcode` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "energy",
+            "columnName": "energy",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "carbs",
+            "columnName": "carbs",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sugar",
+            "columnName": "sugar",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "protein",
+            "columnName": "protein",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fat",
+            "columnName": "fat",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "satFat",
+            "columnName": "satFat",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "salt",
+            "columnName": "salt",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fiber",
+            "columnName": "fiber",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vitaminA_retinol",
+            "columnName": "vitaminA_retinol",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "betaCarotin",
+            "columnName": "betaCarotin",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vitaminD",
+            "columnName": "vitaminD",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vitaminE",
+            "columnName": "vitaminE",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vitaminK",
+            "columnName": "vitaminK",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "thiamin_B1",
+            "columnName": "thiamin_B1",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "riboflavin_B2",
+            "columnName": "riboflavin_B2",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "niacin",
+            "columnName": "niacin",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vitaminB6",
+            "columnName": "vitaminB6",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "folat",
+            "columnName": "folat",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pantothenacid",
+            "columnName": "pantothenacid",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "biotin",
+            "columnName": "biotin",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cobalamin_B12",
+            "columnName": "cobalamin_B12",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vitaminC",
+            "columnName": "vitaminC",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "natrium",
+            "columnName": "natrium",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chlorid",
+            "columnName": "chlorid",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kalium",
+            "columnName": "kalium",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "calcium",
+            "columnName": "calcium",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "phosphor",
+            "columnName": "phosphor",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "magnesium",
+            "columnName": "magnesium",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "eisen",
+            "columnName": "eisen",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "jod",
+            "columnName": "jod",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fluorid",
+            "columnName": "fluorid",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "zink",
+            "columnName": "zink",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "selen",
+            "columnName": "selen",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kupfer",
+            "columnName": "kupfer",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mangan",
+            "columnName": "mangan",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chrom",
+            "columnName": "chrom",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "molybdaen",
+            "columnName": "molybdaen",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "barcode",
+            "columnName": "barcode",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0d39dcea4fa6876bd9c51ff9ab3da6a0\")"
+    ]
+  }
+}

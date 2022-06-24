@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.WeekStatisticFragment">
+    tools:context=".ui.StatisticFragment">
 
 
     <ScrollView
@@ -83,6 +83,7 @@
                 card_view:cardCornerRadius="4dp">
 
                 <LinearLayout
+                    android:id="@+id/statisticLinLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -108,6 +109,7 @@
                         android:id="@+id/graph"
                         android:layout_width="match_parent"
                         android:layout_height="200dip" />
+
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>

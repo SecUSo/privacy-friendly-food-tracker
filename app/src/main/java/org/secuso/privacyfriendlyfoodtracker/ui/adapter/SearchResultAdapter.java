@@ -24,9 +24,12 @@ import android.view.LayoutInflater;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.database.Product;
+import org.secuso.privacyfriendlyfoodtracker.ui.FoodInfo;
+import org.secuso.privacyfriendlyfoodtracker.ui.FoodInfosToShow;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Implementation of SearchResultAdapter that uses a Fragment to manage each page. This class also handles saving and restoring of fragment's state.
@@ -34,8 +37,25 @@ import java.util.Locale;
  * @author Simon Reinkemeier
  */
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.SearchViewHolder> {
+    private Map<String, FoodInfo> mFoodInfosToShow;
     private List<Product> mDataset;
 
+
+    /***
+     * Given a product's id, return the product. This method is introduced to no more having to rely
+     * on parsing a CardViews TextViews to get calories, carbs etc. I do not know, why it was done
+     * like that in the first place.
+     * @param id The product id
+     * @return the product
+     */
+    public Product getProductFromId(int id) {
+        for(Product product : mDataset){
+            if(product.id == id){
+                return product;
+            }
+        }
+        return null;
+    }
 
 
     /**
@@ -61,9 +81,11 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     /**
      * Provide a suitable constructor (depends on the kind of dataset)
      * @param myDataset the dataset that is used for the item creation
+     * @param foodInfosToShow A map containing all food infos, which shall be shown by the app, according to the user configured settings.
      */
-    public SearchResultAdapter(List<Product> myDataset) {
+    public SearchResultAdapter(List<Product> myDataset, Map<String, FoodInfo> foodInfosToShow) {
         mDataset = myDataset;
+        mFoodInfosToShow = foodInfosToShow;
     }
 
     /**
@@ -92,7 +114,12 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         ((TextView) holder.mCardView.findViewById(R.id.resultName)).setText(mDataset.get(position).name);
-        ((TextView) holder.mCardView.findViewById(R.id.resultCalories)).setText(String.format(Locale.ENGLISH,"%.2f kCal", mDataset.get(position).energy));
+        //((TextView) holder.mCardView.findViewById(R.id.resultCalories)).setText(String.format(Locale.ENGLISH,"%.2f kCal", mDataset.get(position).energy));
+        String calPlusFoodInfoText =String.format(Locale.ENGLISH,"%.2f kCal", mDataset.get(position).energy);
+        for(Map.Entry<String, FoodInfo> foodInfoEntry: mFoodInfosToShow.entrySet()){
+            calPlusFoodInfoText += String.format(Locale.ENGLISH,"\n%.2f %s %s", FoodInfosToShow.getFoodInfoValueByKey(mDataset.get(position),foodInfoEntry.getKey(), foodInfoEntry.getValue(), holder.itemView.getContext()), foodInfoEntry.getValue().getUnit(),foodInfoEntry.getValue().getName());
+        }
+        ((TextView) holder.mCardView.findViewById(R.id.resultCalories)).setText(calPlusFoodInfoText);
         ((TextView) holder.mCardView.findViewById(R.id.resultId)).setText(String.format(Locale.ENGLISH, "%d", mDataset.get(position).id));
     }
 

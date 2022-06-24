@@ -52,8 +52,8 @@ public interface ProductDao {
     @Query("SELECT * FROM product WHERE id=:id")
     Product findProductById(final int id);
 
-    @Query("SELECT * FROM product WHERE name=:name AND energy=:energy AND barcode=:barcode")
-    List<Product> findExistingProducts(String name, float energy, String barcode);
+    @Query("SELECT * FROM product WHERE name=:name AND energy=:energy AND carbs=:carbs AND sugar=:sugar AND protein=:protein AND fat=:fat AND satFat=:satFat AND salt=:salt AND fiber=:fiber AND vitaminA_retinol=:vitaminA_retinol AND betaCarotin=:betaCarotin AND vitaminD=:vitaminD AND vitaminE=:vitaminE AND vitaminK=:vitaminK AND thiamin_B1=:thiamin_B1 AND riboflavin_B2=:riboflavin_B2 AND niacin=:niacin AND vitaminB6=:vitaminB6 AND folat=:folat AND pantothenacid=:pantothenacid AND biotin=:biotin AND cobalamin_B12=:cobalamin_B12 AND vitaminC=:vitaminC AND natrium=:natrium AND chlorid=:chlorid AND kalium=:kalium AND calcium=:calcium AND phosphor=:phosphor AND magnesium=:magnesium AND eisen=:eisen AND jod=:jod AND fluorid=:fluorid AND zink=:zink AND selen=:selen AND kupfer=:kupfer AND mangan=:mangan AND chrom=:chrom AND molybdaen=:molybdaen  AND barcode=:barcode")
+    List<Product> findExistingProducts(String name, float energy, float carbs, float sugar, float protein, float fat, float satFat, float salt, float fiber, float vitaminA_retinol, float betaCarotin, float vitaminD, float vitaminE, float vitaminK, float thiamin_B1, float riboflavin_B2, float niacin, float vitaminB6, float folat, float pantothenacid, float biotin, float cobalamin_B12, float vitaminC, float natrium, float chlorid, float kalium, float calcium, float phosphor, float magnesium, float eisen, float jod, float fluorid, float zink, float selen, float kupfer, float mangan, float chrom, float molybdaen, String barcode);
 
     @Query("SELECT * FROM product WHERE name LIKE :name")
     List<Product> findProductsByName(String name);
