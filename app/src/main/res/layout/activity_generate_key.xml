@@ -108,7 +108,7 @@
                     android:textSize="@dimen/slide_desc"></TextView>
             </LinearLayout>
         </LinearLayout>
-        <android.support.design.widget.CoordinatorLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
@@ -116,7 +116,7 @@
             >
 
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                 android:src="@drawable/button_confirm"
                 android:visibility="visible"
                 app:backgroundTint="@color/black" />
-        </android.support.design.widget.CoordinatorLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </RelativeLayout>
 
 </LinearLayout>
