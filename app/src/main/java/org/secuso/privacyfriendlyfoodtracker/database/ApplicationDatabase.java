@@ -16,21 +16,24 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 */
 package org.secuso.privacyfriendlyfoodtracker.database;
 
+import android.content.Context;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
-import android.content.Context;
-import androidx.annotation.NonNull;
-import android.util.Log;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.commonsware.cwac.saferoom.SafeHelperFactory;
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteDatabaseHook;
+import net.sqlcipher.database.SupportFactory;
 
-import org.secuso.privacyfriendlyfoodtracker.helpers.KeyGenHelper;
 import org.secuso.privacyfriendlyfoodtracker.database.converter.DateConverter;
+import org.secuso.privacyfriendlyfoodtracker.helpers.KeyGenHelper;
 
 /**
  * Database singleton.
@@ -44,7 +47,9 @@ public abstract class ApplicationDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "consumed_entries_database";
 
     public abstract ConsumedEntriesDao getConsumedEntriesDao();
+
     public abstract ProductDao getProductDao();
+
     public abstract ConsumedEntrieAndProductDao getConsumedEntriesAndProductDao();
 
     private static ApplicationDatabase sInstance;
@@ -55,9 +60,18 @@ public abstract class ApplicationDatabase extends RoomDatabase {
         if (sInstance == null) {
             synchronized (ApplicationDatabase.class) {
                 if (sInstance == null) {
-                    SafeHelperFactory factory = new SafeHelperFactory(KeyGenHelper.getSecretKeyAsChar(context));
+                    SupportFactory factory = new SupportFactory(SQLiteDatabase.getBytes(KeyGenHelper.getSecretKeyAsChar(context)), new SQLiteDatabaseHook() {
+                        @Override
+                        public void preKey(SQLiteDatabase database) {
+                        }
 
-                    sInstance = Room.databaseBuilder(context.getApplicationContext(),ApplicationDatabase.class, DATABASE_NAME)
+                        @Override
+                        public void postKey(SQLiteDatabase database) {
+                            database.rawExecSQL("PRAGMA cipher_compatibility = 3;");
+                        }
+                    });
+
+                    sInstance = Room.databaseBuilder(context.getApplicationContext(), ApplicationDatabase.class, DATABASE_NAME)
                             .openHelperFactory(factory)
                             .allowMainThreadQueries()
                             .addCallback(new Callback() {
@@ -86,6 +100,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
 
     /**
      * Indicates if the database is created.
+     *
      * @return if database is created
      */
     public LiveData<Boolean> getDatabaseCreated() {

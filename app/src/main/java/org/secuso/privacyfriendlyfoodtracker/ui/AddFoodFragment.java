@@ -16,12 +16,7 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 */
 package org.secuso.privacyfriendlyfoodtracker.ui;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputLayout;
-import androidx.fragment.app.Fragment;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
@@ -30,6 +25,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
+
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.SharedStatisticViewModel;
@@ -71,7 +74,7 @@ public class AddFoodFragment extends Fragment {
 
         referenceActivity = (BaseAddFoodActivity) getActivity();
         parentHolder = inflater.inflate(R.layout.content_food, container, false);
-        sharedStatisticViewModel = ViewModelProviders.of(getActivity()).get(SharedStatisticViewModel.class);
+        sharedStatisticViewModel = new ViewModelProvider(getActivity()).get(SharedStatisticViewModel.class);
         try {
             databaseFacade = new DatabaseFacade(referenceActivity.getApplicationContext());
         } catch (Exception e){

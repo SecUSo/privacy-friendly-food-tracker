@@ -21,7 +21,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -74,13 +75,13 @@
             android:name=".ui.BaseStatisticActivity"
             android:label="@string/action_statistic"
             android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.BaseAddFoodActivity"
             android:label="@string/title_activity_food"
             android:parentActivityName=".ui.OverviewActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
