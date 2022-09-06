@@ -97,13 +97,9 @@ The icons used in the nagivation drawer are licensed under the [CC BY 2.5](http:
 App-Icon: <br />
 Tatjana Albrandt<br />
 
-Github-Users: <br />
-Yonjuni (Karola Marky)<br />
-Kamuno (Christopher Beckmann) <br />
-cubi3192 (André Lutz) <br />
-simonre (Simon Reinkemeier)
-
-
+<a href="https://github.com/SecUSo/privacy-friendly-food-tracker/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=SecUSo/privacy-friendly-food-tracker&max=100&columns=20" />
+</a>
 
 
 
