@@ -8,8 +8,8 @@ android {
         applicationId "org.secuso.privacyfriendlyfoodtracker"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 4
-        versionName "1.1.0"
+        versionCode 5
+        versionName "1.2.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
         javaCompileOptions {
@@ -23,6 +23,12 @@ android {
         coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "pfa-food-tracker-${variant.name}-v${variant.versionName}.apk"
+        }
     }
 
     buildTypes {
