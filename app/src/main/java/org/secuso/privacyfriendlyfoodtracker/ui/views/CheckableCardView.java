@@ -17,7 +17,7 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 package org.secuso.privacyfriendlyfoodtracker.ui.views;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
+import androidx.cardview.widget.CardView;
 import android.widget.Checkable;
 
 /**

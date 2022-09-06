@@ -16,7 +16,7 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 */
 package org.secuso.privacyfriendlyfoodtracker.ui.adapter;
 
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 import android.content.Context;
 import android.util.Log;
 
@@ -30,7 +30,6 @@ import org.secuso.privacyfriendlyfoodtracker.database.ProductDao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * Database access functions.

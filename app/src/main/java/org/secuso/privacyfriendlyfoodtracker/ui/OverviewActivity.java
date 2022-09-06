@@ -16,50 +16,47 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 */
 package org.secuso.privacyfriendlyfoodtracker.ui;
 
-import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntries;
-import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseEntry;
-import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
-import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.OverviewViewModel;
-import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.SharedStatisticViewModel;
-import org.secuso.privacyfriendlyfoodtracker.ui.views.CheckableCardView;
-import org.secuso.privacyfriendlyfoodtracker.R;
-
 import android.app.AlertDialog;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
-import android.arch.persistence.room.Database;
 import android.content.DialogInterface;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.CardView;
+import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.secuso.privacyfriendlyfoodtracker.R;
+import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseEntry;
+import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.OverviewViewModel;
+import org.secuso.privacyfriendlyfoodtracker.ui.views.CheckableCardView;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -95,7 +92,7 @@ public class OverviewActivity extends AppCompatActivity {
         Intent intent = getIntent();
         date = intent.getLongExtra("DATE", System.currentTimeMillis());
 
-        viewModel = ViewModelProviders.of(this).get(OverviewViewModel.class);
+        viewModel = new ViewModelProvider(this).get(OverviewViewModel.class);
         viewModel.init(getDateForActivity());
 
         viewModel.getList().observe(this, new Observer<List<DatabaseEntry>>() {
