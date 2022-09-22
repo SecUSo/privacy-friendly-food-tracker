@@ -17,9 +17,9 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 package org.secuso.privacyfriendlyfoodtracker.ui.adapter;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.ui.MonthStatisticFragment;

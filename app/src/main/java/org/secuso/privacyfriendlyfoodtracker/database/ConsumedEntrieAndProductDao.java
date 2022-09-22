@@ -16,11 +16,9 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 */
 package org.secuso.privacyfriendlyfoodtracker.database;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Query;
-
-import com.jjoe64.graphview.series.DataPoint;
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+import androidx.room.Query;
 
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseEntry;
 

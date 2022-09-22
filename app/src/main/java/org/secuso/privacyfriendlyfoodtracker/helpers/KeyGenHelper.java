@@ -26,22 +26,15 @@ import android.util.Log;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
-import java.security.Key;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
-import java.security.KeyStoreException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
-import javax.crypto.spec.SecretKeySpec;
 import javax.security.auth.x500.X500Principal;
 
 
@@ -55,7 +48,7 @@ public class KeyGenHelper {
     private static final String AndroidKeyStore = "AndroidKeyStore";
     private static final String KEY_ALIAS = "FoodTrackerKeyAlias";
     private static final String SHARED_PREFERENCE_NAME = "FoodTrackerSharedPreferenceName";
-    private static final String ENCRYPTED_KEY = "FoodTrackerKey";
+    public static final String PREFERENCE_ENCRYPTED_KEY_NAME = "FoodTrackerKey";
     private static final String RSA_MODE = "RSA/ECB/PKCS1Padding";
 
     /**
@@ -113,13 +106,13 @@ public class KeyGenHelper {
     public static void generatePassphrase(Context context) throws Exception {
         SharedPreferences pref = context.getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
 
-        String enryptedKeyB64 = pref.getString(ENCRYPTED_KEY, null);
-        if(enryptedKeyB64 != null) return;
+        String encryptedKeyB64 = pref.getString(PREFERENCE_ENCRYPTED_KEY_NAME, null);
+        if(encryptedKeyB64 != null) return;
 
         byte[] encryptedKey = rsaEncrypt(generateKeyPassphrase());
-        enryptedKeyB64 = Base64.encodeToString(encryptedKey, Base64.DEFAULT);
+        encryptedKeyB64 = Base64.encodeToString(encryptedKey, Base64.DEFAULT);
         SharedPreferences.Editor edit = pref.edit();
-        edit.putString(ENCRYPTED_KEY, enryptedKeyB64);
+        edit.putString(PREFERENCE_ENCRYPTED_KEY_NAME, encryptedKeyB64);
         edit.apply();
     }
 
@@ -131,10 +124,10 @@ public class KeyGenHelper {
      */
     public static char[] getSecretKeyAsChar(Context context) throws Exception {
         SharedPreferences pref = context.getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
-        String enryptedKeyB64 = pref.getString(ENCRYPTED_KEY, null);
+        String encryptedKeyB64 = pref.getString(PREFERENCE_ENCRYPTED_KEY_NAME, null);
 
         // need to check null, omitted here
-        byte[] encryptedKey = Base64.decode(enryptedKeyB64, Base64.DEFAULT);
+        byte[] encryptedKey = Base64.decode(encryptedKeyB64, Base64.DEFAULT);
         byte[] key = rsaDecrypt(encryptedKey);
 
         return charFromBytes(key);
@@ -145,8 +138,8 @@ public class KeyGenHelper {
      * @param byteData the source byte array
      * @return source data as char array
      */
-    public static char[] charFromBytes(byte byteData[]) {
-        char charData[] = new char[byteData.length];
+    public static char[] charFromBytes(byte[] byteData) {
+        char[] charData = new char[byteData.length];
         for(int i = 0; i < charData.length; i++) {
             charData[i] = (char) (((int) byteData[i]) & 0xFF);
         }
@@ -197,7 +190,7 @@ public class KeyGenHelper {
      */
     private static byte[] generateKeyPassphrase() {
         SecureRandom random = new SecureRandom();
-        byte bytes[] = new byte[16];
+        byte[] bytes = new byte[16];
         random.nextBytes(bytes);
         return bytes;
     }

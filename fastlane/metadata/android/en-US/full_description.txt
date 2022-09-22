@@ -25,3 +25,8 @@ database. This would theoretically allow the database to track a users nutrition
 habits. For absolute privacy it is therefore recommended to not use the online
 search feature (The request is not triggered until the 'search' button is pressed).
 The app also works without an internet connection.
+
+You can reach us via
+Twitter - @SECUSOResearch https://twitter.com/secusoresearch
+Mastodon - @SECUSO_Research@bawü.social https://xn--baw-joa.social/@SECUSO_Research/
+Job opening - https://secuso.aifb.kit.edu/english/Job_Offers_1557.php
