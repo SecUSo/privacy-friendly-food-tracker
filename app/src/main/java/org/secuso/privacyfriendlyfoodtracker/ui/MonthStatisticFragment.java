@@ -16,13 +16,11 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 */
 package org.secuso.privacyfriendlyfoodtracker.ui;
 
+import static org.secuso.privacyfriendlyfoodtracker.ui.helper.MathHelper.round;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,23 +29,26 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.secuso.privacyfriendlyfoodtracker.R;
+import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
 import org.secuso.privacyfriendlyfoodtracker.ui.adapter.DatabaseFacade;
 import org.secuso.privacyfriendlyfoodtracker.ui.helper.DateHelper;
-import org.secuso.privacyfriendlyfoodtracker.database.ConsumedEntrieAndProductDao;
 import org.secuso.privacyfriendlyfoodtracker.ui.viewmodels.SharedStatisticViewModel;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import static org.secuso.privacyfriendlyfoodtracker.ui.helper.MathHelper.round;
 
 
 /**
@@ -73,7 +74,7 @@ public class MonthStatisticFragment extends Fragment {
 
         referenceActivity = getActivity();
         parentHolder = inflater.inflate(R.layout.fragment_month_statistic, container, false);
-        sharedStatisticViewModel = ViewModelProviders.of(getActivity()).get(SharedStatisticViewModel.class);
+        sharedStatisticViewModel = new ViewModelProvider(getActivity()).get(SharedStatisticViewModel.class);
         try {
             databaseFacade = new DatabaseFacade(referenceActivity.getApplicationContext());
         } catch (Exception e){
@@ -120,7 +121,7 @@ public class MonthStatisticFragment extends Fragment {
             }
         });
         UpdateGraph();
-        sharedStatisticViewModel.getLiveCalendar().observe(this, new Observer<Calendar>() {
+        sharedStatisticViewModel.getLiveCalendar().observe(getViewLifecycleOwner(), new Observer<Calendar>() {
             @Override
             public void onChanged(@Nullable Calendar calendar) {
                 editText.setText(DateHelper.dateToString(getMonthByValue(-1)) + System.getProperty("line.separator") + " - " + System.getProperty("line.separator") + DateHelper.dateToString(calendar.getTime()));

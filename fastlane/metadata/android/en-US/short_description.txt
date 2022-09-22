@@ -1,1 +1,1 @@
-Privacy Friendly Food Tracker allows tracking your daily calorie consumption.
+(SECUSO) Food Tracker allows tracking your daily calorie consumption.
