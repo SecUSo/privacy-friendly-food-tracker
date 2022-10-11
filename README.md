@@ -10,7 +10,7 @@
      width="120px"
      align="right"
      style="float: right; margin-right: 10px;" />
-## Privacy Friendly Pedometer
+## Privacy Friendly Food Tracker
 
 Privacy Friendly Food Tracker allows you to track your daily calorie consumption. 
 
