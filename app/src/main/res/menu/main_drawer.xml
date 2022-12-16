@@ -9,6 +9,10 @@
             android:title="@string/action_main" />
 
         <item
+            android:id="@+id/nav_goal"
+            android:icon="@android:drawable/ic_menu_view"
+            android:title="@string/action_goal" />
+        <item
             android:id="@+id/nav_statistic"
             android:icon="@mipmap/ic__chart"
             android:title="@string/action_statistic" />

@@ -72,4 +72,8 @@
     <string name="pref_example_switch">Example Switch</string>
     <string name="pref_example_switch_summary">Example Switch Summary</string>
     <string name="pref_example_summary">Example Summary</string>
+    <string name="action_goal">kCal Goal</string>
+    <string name="btn_goal_cancel">Cancel</string>
+    <string name="btn_goal_save">Save</string>
+    <string name="goal_title">Set your daily goal</string>
 </resources>

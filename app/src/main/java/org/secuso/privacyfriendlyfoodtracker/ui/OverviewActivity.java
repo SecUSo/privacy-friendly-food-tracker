@@ -17,6 +17,16 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 package org.secuso.privacyfriendlyfoodtracker.ui;
 
 import android.app.AlertDialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.arch.persistence.room.Database;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.CardView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -270,6 +280,7 @@ public class OverviewActivity extends AppCompatActivity {
     private void refreshTotalCalorieCounter(@Nullable List<DatabaseEntry> entries) {
         BigDecimal totalCalories = new BigDecimal("0");
         TextView heading = this.findViewById(R.id.overviewHeading);
+        TextView bottom = this.findViewById(R.id.bottomOverview);
         String cal = getString(R.string.total_calories);
         Date d = getDateForActivity();
         String formattedDate = getFormattedDate(d);
@@ -279,7 +290,18 @@ public class OverviewActivity extends AppCompatActivity {
                 // totalCalories += (e.energy * e.amount) / 100;
             }
         }
-        heading.setText(String.format(Locale.ENGLISH, "   %s: %.2f %s", formattedDate, totalCalories, cal));
+        BigDecimal maxCalories = getDailyGoal();
+        BigDecimal leftCalories = maxCalories.subtract(totalCalories);
+        heading.setText(String.format(Locale.ENGLISH, "%s: %.2f %s", formattedDate, totalCalories, cal));
+        bottom.setText(String.format(Locale.ENGLISH, "%.2f %s left", leftCalories, cal));
+    }
+
+    private BigDecimal getDailyGoal() {
+        SharedPreferences sharedPref = this.getSharedPreferences(getString(R.string.preference_file_key) ,Context.MODE_PRIVATE);
+        float tempGoal = sharedPref.getFloat("goal", new Float("0"));
+        BigDecimal goal = new BigDecimal(tempGoal);
+
+        return goal;
     }
 
     /**
