@@ -86,6 +86,10 @@
     <string name="action_confirm">Confirm</string>
     <string name="action_cancel">Cancel</string>
     <string name="delete_entry_prompt">Delete?</string>
+    <string name="grams">Grams</string>
+    <string name="calories">Calories</string>
+    <string name="x_equals_n">%1$s = %2$s</string>
+    <string name="calculate_kcal_per_100g">Calculate kCal/100g</string>
 
 
     <string name="setup_step_generating_key">Generating Key</string>
