@@ -63,6 +63,8 @@ public class AddFoodFragment extends Fragment {
     EditText amountField;
     TextInputLayout caloriesFieldLayout;
     EditText caloriesField;
+    TextView totalCaloriesField;
+
     /**
      * The required empty public constructor
      */
@@ -98,7 +100,9 @@ public class AddFoodFragment extends Fragment {
         caloriesField = parentHolder.findViewById(R.id.input_calories);
         amountField.setFilters(amountFilter);
         amountField.setInputType(InputType.TYPE_CLASS_NUMBER);
+        amountField.addTextChangedListener(fieldChangedWatcher);
         caloriesField.setFilters(caloriesFilter);
+        caloriesField.addTextChangedListener(fieldChangedWatcher);
         FloatingActionButton fab = parentHolder.findViewById(R.id.addEntry);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,9 +128,41 @@ public class AddFoodFragment extends Fragment {
             }
         });
 
+        totalCaloriesField = parentHolder.findViewById(R.id.total_calories);
 
         return parentHolder;
     }
+
+    public void updateTotalCaloriesField() {
+        String message = "";
+
+        try {
+            int amount = Integer.parseInt(amountField.getText().toString());
+            double caloriesPerOneHundredG = Double.parseDouble(caloriesField.getText().toString());
+            message = String.format(Locale.ENGLISH, "%,.2f", caloriesPerOneHundredG * (amount / 100.0));
+        } catch (NumberFormatException e) {
+            message = "~";
+        }
+
+        totalCaloriesField.setText(String.format(getString(R.string.total_calories_n), message));
+    }
+
+    private final TextWatcher fieldChangedWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            updateTotalCaloriesField();
+        }
+    };
 
     /**
      * Called when the fragment is made visible to set correct presets for
