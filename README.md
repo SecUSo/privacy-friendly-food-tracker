@@ -70,7 +70,9 @@ The Privacy Friendly Apps are a group of Android apps that are optimized regardi
 - Any that use of libraries that do not comply the license of the corresponding Privacy Friendly App (GPLv3 or Apache2).
 - Unnecessary use of Android permissions. If new functionality is added that requires the usage of an Android permission you should clearly explain the Pull Request why this permission is required.
 
+## Application Data Backup
 
+This application does not natively have a data backup feature. Please install and use the [SECUSO Privacy Friendly Backup](https://github.com/SecUSo/privacy-friendly-backup) to backup and restore this application's data. This feature is required when a user migrates their data to a new phone.
 
 ## License
 
