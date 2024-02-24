@@ -16,15 +16,24 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 */
 package org.secuso.privacyfriendlyfoodtracker.ui;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -52,6 +61,7 @@ public class AddFoodFragment extends Fragment {
     TextView textView;
     DatabaseFacade databaseFacade;
     EditText amountField;
+    TextInputLayout caloriesFieldLayout;
     EditText caloriesField;
     /**
      * The required empty public constructor
@@ -84,6 +94,7 @@ public class AddFoodFragment extends Fragment {
         InputFilter[] caloriesFilter = { new InputFilter.LengthFilter(10) };
 
         amountField = parentHolder.findViewById(R.id.input_amount);
+        caloriesFieldLayout = parentHolder.findViewById(R.id.inputCalories);
         caloriesField = parentHolder.findViewById(R.id.input_calories);
         amountField.setFilters(amountFilter);
         amountField.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -132,6 +143,8 @@ public class AddFoodFragment extends Fragment {
             nameField.setFocusable(false);
             nameField.setClickable(false);
             nameField.setTextColor(getResources().getColor(R.color.middlegrey));
+            caloriesFieldLayout.setEndIconActivated(false);
+            caloriesFieldLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
             caloriesField.setText(String.format(Locale.ENGLISH, "%.2f", referenceActivity.calories));
             caloriesField.setFocusable(false);
             caloriesField.setClickable(false);
@@ -144,6 +157,9 @@ public class AddFoodFragment extends Fragment {
             nameField.setFocusableInTouchMode(true);
             nameField.setClickable(true);
             nameField.setTextColor(getResources().getColor(R.color.black));
+            caloriesFieldLayout.setEndIconActivated(true);
+            caloriesFieldLayout.setEndIconMode(TextInputLayout.END_ICON_CUSTOM);
+            caloriesFieldLayout.setEndIconOnClickListener(caloriesPer100GCalculatorClickListener);
             caloriesField.setText("");
             caloriesField.setFocusable(true);
             caloriesField.setFocusableInTouchMode(true);
@@ -226,5 +242,97 @@ public class AddFoodFragment extends Fragment {
                     .setAction("Action", null).show();
         }
     }
+
+    private final View.OnClickListener caloriesPer100GCalculatorClickListener = v -> {
+        final Context context = getContext();
+        if (context == null) return;
+
+        final AlertDialog.Builder caloriesPer100GramsCalculatorDialog = new AlertDialog.Builder(context);
+
+        caloriesPer100GramsCalculatorDialog.setTitle(getString(R.string.calculate_kcal_per_100g));
+
+        LinearLayout container = new LinearLayout(context);
+        container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        container.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText calories = new EditText(context);
+        InputFilter[] caloriesInputFilter = new InputFilter[1];
+        caloriesInputFilter[0] = new InputFilter.LengthFilter(5);
+        calories.setFilters(caloriesInputFilter);
+        calories.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        final TextInputLayout caloriesLayout = new TextInputLayout(context);
+        caloriesLayout.addView(calories);
+        caloriesLayout.setHint(getString(R.string.calories));
+
+        final EditText grams = new EditText(context);
+        InputFilter[] gramsInputFilter = new InputFilter[1];
+        gramsInputFilter[0] = new InputFilter.LengthFilter(5);
+        grams.setFilters(gramsInputFilter);
+        grams.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        final TextInputLayout gramsLayout = new TextInputLayout(context);
+        gramsLayout.addView(grams);
+        gramsLayout.setHint(getString(R.string.grams));
+
+        final String emptyResult = String.format(getString(R.string.x_equals_n), getString(R.string.hint_food_calories), "~");
+
+        final TextView result = new TextView(context);
+        result.setGravity(Gravity.CENTER_HORIZONTAL);
+        result.setText(emptyResult);
+
+        final TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                try {
+                    Float caloriesAmount = Float.parseFloat(calories.getText().toString());
+                    Float gramsAmount = Float.parseFloat(grams.getText().toString());
+
+                    float caloriesPer100G = (caloriesAmount / gramsAmount) * 100;
+
+                    if (!Float.isNaN(caloriesPer100G) && !Float.isInfinite(caloriesPer100G)) {
+
+                        result.setText(String.format(getString(R.string.x_equals_n), getString(R.string.hint_food_calories), Float.toString(caloriesPer100G)));
+                        result.setTag(R.id.tag_calories_per_calculator_result, caloriesPer100G);
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    // no-op
+                }
+
+                result.setText(emptyResult);
+            }
+        };
+
+        calories.addTextChangedListener(textWatcher);
+        grams.addTextChangedListener(textWatcher);
+
+        container.addView(caloriesLayout);
+        container.addView(gramsLayout);
+        container.addView(result);
+
+        caloriesPer100GramsCalculatorDialog.setView(container);
+
+        caloriesPer100GramsCalculatorDialog.setPositiveButton(getResources().getString(R.string.save), (dialogInterface, i) -> {
+            Object tag = result.getTag(R.id.tag_calories_per_calculator_result);
+            if (tag instanceof Float) {
+                caloriesField.setText(Float.toString((float) tag));
+            }
+        });
+
+        caloriesPer100GramsCalculatorDialog.setNegativeButton(getResources().getString(R.string.decline), (dialog, whichButton) -> {});
+
+        caloriesPer100GramsCalculatorDialog.show();
+    };
 
 }
