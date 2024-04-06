@@ -72,4 +72,8 @@
     <string name="pref_example_switch">Example Switch</string>
     <string name="pref_example_switch_summary">Example Switch Summary</string>
     <string name="pref_example_summary">Example Summary</string>
+    <string name="grams">Grammes</string>
+    <string name="calories">Calories</string>
+    <string name="x_equals_n">%1$s = %2$s</string>
+    <string name="calculate_kcal_per_100g">Calculer kCal/100g</string>
 </resources>
