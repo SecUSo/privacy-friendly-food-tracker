@@ -30,6 +30,6 @@ der "Suchen"-Knopf gedrückt wird). Die App funktioniert auch problemlos ohne
 Internetzugriff.
 
 Kontaktieren Sie uns gerne über:
-Twitter - @SECUSOResearch https://twitter.com/secusoresearc)
+Bluesky - @secusoresearch.bsky.social https://bsky.app/profile/secusoresearch.bsky.social
 Mastodon - @SECUSO_Research@bawü.social https://xn--baw-joa.social/@SECUSO_Research/
-Offene Stellen - https://secuso.aifb.kit.edu/83_1557.php
+Offene Stellen - https://secuso.aifb.kit.edu/83.php
