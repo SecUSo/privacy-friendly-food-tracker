@@ -15,7 +15,7 @@ import java.io.OutputStream
 import java.io.OutputStreamWriter
 
 class BackupCreator : IBackupCreator {
-    override fun writeBackup(context: Context, outputStream: OutputStream) {
+    override fun writeBackup(context: Context, outputStream: OutputStream): Boolean {
         Log.d(TAG, "createBackup() started")
         val outputStreamWriter = OutputStreamWriter(outputStream, Charsets.UTF_8)
         val writer = JsonWriter(outputStreamWriter)
@@ -65,6 +65,7 @@ class BackupCreator : IBackupCreator {
         }
 
         Log.d(TAG, "Backup created successfully")
+        return true
     }
 
     companion object {
