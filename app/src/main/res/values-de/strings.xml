@@ -83,6 +83,7 @@
     <string name="action_confirm">Bestätigen</string>
     <string name="action_cancel">Abbrechen</string>
     <string name="delete_entry_prompt">Löschen?</string>
+    <string name="total_calories_n">Gesamtkalorien: %1$s</string>
 
     <string name="setup_step_generating_key">Erstelle Key</string>
     <string name="setup_step_generating_passphrase">Erstelle Passphrase</string>
