@@ -25,6 +25,7 @@ import android.widget.CalendarView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import org.secuso.privacyfriendlyfoodtracker.GoodbyeGoogleHelperKt;
 import org.secuso.privacyfriendlyfoodtracker.R;
 import org.secuso.privacyfriendlyfoodtracker.ui.helper.BaseActivity;
 
@@ -63,6 +64,7 @@ public class MainActivity extends BaseActivity {
             }
         });
         overridePendingTransition(0, 0);
+        GoodbyeGoogleHelperKt.checkGoodbyeGoogle(this, getLayoutInflater());
     }
 
     /**
