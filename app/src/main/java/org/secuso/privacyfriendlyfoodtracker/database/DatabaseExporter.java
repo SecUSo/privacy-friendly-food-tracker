@@ -17,6 +17,7 @@ along with Privacy friendly food tracker.  If not, see <https://www.gnu.org/lice
 
 package org.secuso.privacyfriendlyfoodtracker.database;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -108,6 +109,7 @@ public class DatabaseExporter {
      * @return a list of all table names, including android_metadata and sqlite_sequence (table that
      * contains current maximal ID of all tables)
      */
+    @SuppressLint("Range")
     public ArrayList<String> getTableNames() {
 
         SQLiteDatabase dataBase = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READONLY);

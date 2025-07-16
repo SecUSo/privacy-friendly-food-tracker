@@ -16,6 +16,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
@@ -55,7 +56,7 @@ public class ApiManagerTest {
         });
         signal.await();// wait for callback
         // uses the current location. To pass the test, the location must be "de"
-        assertTrue("Responds should contains 20 product informations ", productResponse.getProducts().size() == 20 );
+        assertEquals("Responds should contains 50 product informations ", 50, productResponse.getProducts().size());
     }
 
     @Test
