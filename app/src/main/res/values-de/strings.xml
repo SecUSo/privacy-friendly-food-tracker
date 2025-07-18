@@ -1,20 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Ernährungstracker</string>
     <string name="app_name_long">Privacy Friendly Ernährungstracker</string>
-
     <!-- ###DRAWER###-->
     <string name="action_help">Hilfe</string>
     <string name="action_about">Über</string>
     <string name="action_settings">Einstellungen</string>
     <string name="action_main">Kalender</string>
     <string name="action_tutorial">Tutorial</string>
-
-    <string name="navigation_drawer_open">Öffne Navigation Drawer</string>
-    <string name="navigation_drawer_close">Schliesse navigation drawer</string>
-
+    <string name="navigation_drawer_open">Navigationsmenü öffnen</string>
+    <string name="navigation_drawer_close">Navigationsmenü schließen</string>
     <!--###HELP###-->
     <string name="help">Hilfe</string>
-
     <string name="help_whatis">Was ist Privacy Friendly Ernährungstracker?</string>
     <string name="help_whatis_answer">Privacy Friendly Ernährungstracker ist ein Werkzeug, mit dem du deinen Kalorienverbrauch verfolgen kannst, ohne
         diese Informationen mit anderen Parteien zu teilen.</string>
@@ -31,7 +28,6 @@
     Wenn dich das stört, funktioniert die App auch gut ohne die Suchfunktion. Es werden keine Daten gesendet, bis der "Suche" Knopf gedrückt wird.</string>
     <string name="help_permission">Welche Berechtigungen braucht die App?</string>
     <string name="help_permission_answer">Privacy Friendly Ernährungstracker benötigt keine Berechtigungen.</string>
-
     <!--###ABOUT###-->
     <string name="about">Über</string>
     <string name="version_number">%s</string>
@@ -41,18 +37,15 @@
     <string name="about_affiliation">In Zusammenarbeit mit</string>
     <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps entwickelt von dem Karlsruher Institut für Technologie (KIT). Quelltext lizenziert unter GPLv3. Bilder copyright KIT und Google Inc.</string>
     <string name="more_info">Weitere Infos unter:</string>
-
     <!-- ###SETTINGS### -->
     <string name="title_activity_settings">Einstellungen</string>
     <string name="pref_header_general">Allgemein</string>
     <string name="pref_example_switch">Schwebend</string>
     <string name="pref_example_switch_summary">Beispiel Switch Summary</string>
-    <string name="pref_example_summary">Beispiel Summary</string>
-
+    <string name="pref_example_summary">Beispielzusammenfassung</string>
     <!-- ### WELCOME DIALOG ### -->
     <string name="okay">Okay</string>
-    <string name="viewhelp">Hilfe</string>
-
+    <string name="viewhelp">Hilfe anzeigen</string>
     <!-- ### TUTORIAL DIALOG ### -->
     <string name="slide1_heading">Willkommen!</string>
     <string name="slide1_text">Diese App soll dir die Möglichkeit geben, deine konsumierten Kalorien zu verfolgen,
@@ -61,10 +54,8 @@
     <string name="slide2_heading">Schlüsselelemente</string>
     <string name="slide2_text">Du kannst einen Eintrag hinzufügen, indem du auf der Übersichtsseite auf das "+"-Symbol klickst.
     Deine Kalorien werden für jeden Tag gespeichert, einen bestimmten Tag kannst du in der Kalender-Übersicht aussuchen.</string>
-
     <string name="slide3_heading">Github und Guide</string>
     <string name="slide3_text">Der Quellcode dieser App ist auf GitHub. Weitere Infos gibt es auf der "Hilfe"-Seite.</string>
-
     <string name="next">Weiter</string>
     <string name="skip">Überspringen</string>
     <string name="title_activity_food">Einen Eintrag hinzufügen</string>
@@ -83,14 +74,12 @@
     <string name="action_confirm">Bestätigen</string>
     <string name="action_cancel">Abbrechen</string>
     <string name="delete_entry_prompt">Löschen?</string>
-
     <string name="setup_step_generating_key">Erstelle Key</string>
     <string name="setup_step_generating_passphrase">Erstelle Passphrase</string>
     <string name="setup_step_creating_encrypted_databas">Verschlüssle Datenbank</string>
     <string name="generate_key_header">Vorbereitung</string>
     <string name="search">Suchen</string>
     <string name="add">Hinzufügen</string>
-
     <string name="action_statistic">Statistik</string>
     <string-array name="statisticPicker">
         <item>Woche</item>
@@ -103,7 +92,5 @@
     <string name="period">Zeitraum</string>
     <string name="decline">Abbrechen</string>
     <string name="save">Speichern</string>
-
     <string name="search_for">Nach einem Produkt suchen</string>
-
 </resources>
