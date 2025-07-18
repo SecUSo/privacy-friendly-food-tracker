@@ -20,7 +20,7 @@
     <string name="slide2_heading">Ключевые элементы</string>
     <string name="action_help">Справка</string>
     <string name="action_about">О приложении</string>
-    <string name="action_settings">Натсройки</string>
+    <string name="action_settings">Настройки</string>
     <string name="action_tutorial">Руководство</string>
     <string name="navigation_drawer_open">Открыть панель навигации</string>
     <string name="navigation_drawer_close">Закрыть панель навигации</string>
@@ -31,7 +31,7 @@
     <string name="version_number">%s</string>
     <string name="help_permission_answer">Это приложение не требует разрешений.</string>
     <string name="about_author_contributors">и другие участники.</string>
-    <string name="slide1_heading">Добро пожаловать!</string>
+    <string name="slide1_heading">Привет!</string>
     <string name="viewhelp">Показать справку</string>
     <string name="okay">Ладно</string>
     <string name="hint_food_amount">Количество в г</string>
