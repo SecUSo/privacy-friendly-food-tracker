@@ -24,7 +24,7 @@
     <string name="action_tutorial">Руководство</string>
     <string name="navigation_drawer_open">Открыть панель навигации</string>
     <string name="navigation_drawer_close">Закрыть панель навигации</string>
-    <string name="help">Справка</string>
+    <string name="help">Помощь</string>
     <string name="help_whatis">Что такое Слежение за питанием (PFA)?</string>
     <string name="help_whatis_answer">Слежение за питанием это приложение для учёта калорий съеденного и при этом оно приватное.</string>
     <string name="help_feature_one">Отслеживайте ваш приём пищи</string>
