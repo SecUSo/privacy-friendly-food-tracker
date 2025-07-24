@@ -4,7 +4,7 @@
     <string name="hint_food_name">Название</string>
     <string name="skip">Пропустить</string>
     <string name="add">Добавить</string>
-    <string name="about">О приложении</string>
+    <string name="about">О программе</string>
     <string name="slide2_text">Чтобы добавить запись, нажмите на день в календаре. Это приведёт вас к обзору потребляемых калорий на выбранную дату. Чтобы добавить запись, нажмите на символ + на обзорном экране.</string>
     <string name="version">Версия</string>
     <string name="action_cancel">Отмена</string>
@@ -24,7 +24,7 @@
     <string name="action_tutorial">Руководство</string>
     <string name="navigation_drawer_open">Открыть панель навигации</string>
     <string name="navigation_drawer_close">Закрыть панель навигации</string>
-    <string name="help">Справка</string>
+    <string name="help">Помощь</string>
     <string name="help_whatis">Что такое Слежение за питанием (PFA)?</string>
     <string name="help_whatis_answer">Слежение за питанием это приложение для учёта калорий съеденного и при этом оно приватное.</string>
     <string name="help_feature_one">Отслеживайте ваш приём пищи</string>
