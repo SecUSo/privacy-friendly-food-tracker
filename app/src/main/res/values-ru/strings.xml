@@ -32,8 +32,8 @@
     <string name="help_permission_answer">Это приложение не требует разрешений.</string>
     <string name="about_author_contributors">и другие участники.</string>
     <string name="slide1_heading">Привет!</string>
-    <string name="viewhelp">Смотреть Справку</string>
-    <string name="okay">Ладно</string>
+    <string name="viewhelp">Просмотр справки</string>
+    <string name="okay">Хорошо</string>
     <string name="hint_food_amount">Количество в г</string>
     <string name="action_confirm">Подтвердить</string>
     <string name="delete_entry_prompt">Удалить?</string>
