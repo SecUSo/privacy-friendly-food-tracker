@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="help">Yardım</string>
+    <string name="next">İleri</string>
+    <string name="skip">Atla</string>
+    <string name="title_activity_food">Yeni bir giriş ekle</string>
+    <string name="hint_food_name">Ad</string>
+    <string name="okay">Tamam</string>
+    <string name="edit_entry">Girişi düzenle</string>
+    <string name="slide1_heading">Hoş geldiniz!</string>
+    <string name="viewhelp">Yardımı Görüntüle</string>
+    <string name="title_activity_overview">Genel bakış</string>
+</resources>
