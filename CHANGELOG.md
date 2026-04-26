@@ -1,5 +1,18 @@
 # Changelog
 
+<a id="v1.2.3"></a>
+## [Food Tracker (Privacy Friendly) v1.2.3](https://github.com/SecUSo/privacy-friendly-food-tracker/releases/tag/v1.2.3) - 2025-07-16
+
+## What's Changed
+* Updates changelog and adds ci workflow by [@coderPaddyS](https://github.com/coderPaddyS) in [#115](https://github.com/SecUSo/privacy-friendly-food-tracker/pull/115)
+* Change versionCode to differentiate from last Google Play version by [@coderPaddyS](https://github.com/coderPaddyS) in [#116](https://github.com/SecUSo/privacy-friendly-food-tracker/pull/116)
+
+
+**Full Changelog**: https://github.com/SecUSo/privacy-friendly-food-tracker/compare/v1.2.2...v1.2.3
+
+[Changes][v1.2.3]
+
+
 <a id="v1.2.1"></a>
 ## [Food Tracker (Privacy Friendly) v1.2.1](https://github.com/SecUSo/privacy-friendly-food-tracker/releases/tag/v1.2.1) - 2024-04-02
 
@@ -64,6 +77,7 @@
 [Changes][v1.0]
 
 
+[v1.2.3]: https://github.com/SecUSo/privacy-friendly-food-tracker/compare/v1.2.1...v1.2.3
 [v1.2.1]: https://github.com/SecUSo/privacy-friendly-food-tracker/compare/v1.2.0...v1.2.1
 [v1.2.0]: https://github.com/SecUSo/privacy-friendly-food-tracker/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/SecUSo/privacy-friendly-food-tracker/compare/v1.0.1...v1.1.0
