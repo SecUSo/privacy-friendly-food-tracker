@@ -83,6 +83,10 @@
     <string name="action_confirm">Bestätigen</string>
     <string name="action_cancel">Abbrechen</string>
     <string name="delete_entry_prompt">Löschen?</string>
+    <string name="grams">Gramm</string>
+    <string name="calories">Kalorien</string>
+    <string name="x_equals_n">%1$s = %2$s</string>
+    <string name="calculate_kcal_per_100g">Berechnung kCal/100g</string>
 
     <string name="setup_step_generating_key">Erstelle Key</string>
     <string name="setup_step_generating_passphrase">Erstelle Passphrase</string>

@@ -57,6 +57,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/ic_calculate_24dp"
             app:layout_constraintTop_toBottomOf="@+id/inputFoodAmount">
 
             <EditText
